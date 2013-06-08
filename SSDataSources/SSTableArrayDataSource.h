@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "SSBaseDataSource.h"
+#import <CoreData/CoreData.h>
 
 /**
  * Generic table data source, useful when your data is an array of objects.

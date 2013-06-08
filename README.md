@@ -19,6 +19,8 @@ pod 'SSDataSources', :git => 'git@github.com:splinesoft/SSDataSources.git'
 
 ## Array Data Source
 
+Check out `ExampleTable` for a sample table that uses the array data source.
+
 Useful when your data is a simple array. See `SSTableArrayDataSource.h` for more details.
 
 ```

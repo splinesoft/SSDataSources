@@ -7,6 +7,7 @@
 //
 
 #import "SSDataSources.h"
+#import <CoreData/CoreData.h>
 
 @interface SSTableArrayDataSource ()
 @property (nonatomic, strong) NSMutableArray *items;
