@@ -1,0 +1,16 @@
+Pod::Spec.new do |s|
+  s.name         = "SSDataSources"
+  s.version      = "0.0.1"
+  s.summary      = "Simple data sources for your UITableView."
+  s.homepage     = "https://github.com/splinesoft/SSDataSources"
+  s.license      = { :type => 'MIT',  }
+  s.author       = { "Jonathan Hersh" => "jon@her.sh" }
+  s.source       = { :git => "git@github.com:splinesoft/SSDataSources.git", :tag => s.version.to_s }
+  s.platform     = :ios, '6.0'
+  s.requires_arc = true
+  s.source_files = 'SSDataSources/*.{h,m}'
+
+  s.ios.deployment_target = "6.0"
+
+  s.frameworks = 'UIKit'
+end
