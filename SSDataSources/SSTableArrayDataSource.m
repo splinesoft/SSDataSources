@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSMutableArray *items;
 
 + (NSArray *) indexPathArrayWithRange:(NSRange)range;
++ (NSArray *) indexPathArrayWithIndexSet:(NSIndexSet *)indexes;
 @end
 
 @implementation SSTableArrayDataSource
@@ -45,6 +46,16 @@
     return ret;
 }
 
++ (NSArray *)indexPathArrayWithIndexSet:(NSIndexSet *)indexes {
+    NSMutableArray *ret = [NSMutableArray array];
+    
+    [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+        [ret addObject:[NSIndexPath indexPathForRow:(NSInteger)index inSection:0]];
+    }];
+    
+    return ret;
+}
+
 #pragma mark - updating items
 
 - (void)clearItems {
@@ -71,6 +82,14 @@
     if( self.tableView )
         [self.tableView insertRowsAtIndexPaths:[SSTableArrayDataSource indexPathArrayWithRange:
                                                 NSMakeRange(count, [newItems count])]
+                              withRowAnimation:self.rowAnimation];
+}
+
+- (void)insertItems:(NSArray *)newItems atIndexes:(NSIndexSet *)indexes {    
+    [self.items insertObjects:newItems atIndexes:indexes];
+    
+    if( self.tableView )
+        [self.tableView insertRowsAtIndexPaths:[SSTableArrayDataSource indexPathArrayWithIndexSet:indexes]
                               withRowAnimation:self.rowAnimation];
 }
 

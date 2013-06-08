@@ -34,6 +34,12 @@
 - (void) appendItems:(NSArray *)newItems;
 
 /**
+ * Insert some items at the specified indexes.
+ * The count of `items` should be equal to the number of `indexes`.
+ */
+- (void) insertItems:(NSArray *)items atIndexes:(NSIndexSet *)indexes;
+
+/**
  * Returns all items, or updates them.
  */
 - (NSArray *) allItems;
@@ -54,11 +60,6 @@
  * Return the number of items in the data source.
  */
 - (NSUInteger) numberOfItems;
-
-/**
- * Return the item appearing at a given indexpath in the table.
- */
-- (id) itemAtIndexPath:(NSIndexPath *)indexPath;
 
 /**
  * Return the indexpath for a given item in the data source.

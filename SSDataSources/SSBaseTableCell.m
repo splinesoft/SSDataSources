@@ -1,6 +1,6 @@
 //
 //  SSBaseTableCell.m
-//  Mudrammer
+//  Splinesoft
 //
 //  Created by Jonathan Hersh on 1/5/13.
 //  Copyright (c) 2013 Jonathan Hersh. All rights reserved.
