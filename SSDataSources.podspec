@@ -9,8 +9,5 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '6.0'
   s.requires_arc = true
   s.source_files = 'SSDataSources/*.{h,m}'
-
-  s.ios.deployment_target = "6.0"
-
   s.frameworks = 'UIKit', 'CoreData'
 end
