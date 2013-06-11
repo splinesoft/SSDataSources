@@ -24,10 +24,7 @@
 }
 
 - (void)dealloc {
-    self.tableView = nil;
     self.cellConfigureBlock = nil;
-    self.cellClass = nil;
-    self.fallbackDataSource = nil;
 }
 
 #pragma mark - item access

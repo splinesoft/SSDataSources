@@ -25,7 +25,7 @@ typedef void (^SSTableViewCellConfigureBlock) (id cell, id object);
 /**
  * The class to use to instantiate new table cells.
  */
-@property (nonatomic, assign) Class cellClass;
+@property (nonatomic, weak) Class cellClass;
 
 /**
  * Cell configuration block, called once for each cell with the object to display in that cell.
@@ -42,13 +42,13 @@ typedef void (^SSTableViewCellConfigureBlock) (id cell, id object);
  * Optional data source fallback.
  * If this is set, it will receive data source delegate calls for editing/deleting cells.
  */
-@property (nonatomic, assign) id <UITableViewDataSource> fallbackDataSource;
+@property (nonatomic, weak) id <UITableViewDataSource> fallbackDataSource;
 
 /**
  * Optional: If the tableview property is assigned, the data source will perform
  * insert/reload/delete calls on it as data changes.
  */
-@property (nonatomic, assign) UITableView *tableView;
+@property (nonatomic, weak) UITableView *tableView;
 
 #pragma mark - item access
 
