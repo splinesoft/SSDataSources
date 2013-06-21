@@ -69,6 +69,18 @@ tableDataSource.tableView = self.tableView;
 [tableDataSource removeItemsInRange:NSMakeRange( 1, 2 )];
 ```
 
+Perhaps you have custom table cell classes or multiple classes in the same table:
+
+```objc
+tableDataSource.cellCreationBlock = ^id(NSString *wizard) {
+	if( [wizard isEqualToString:@"Gandalf"] )
+		return [MiddleEarthWizardCell cellForTableView:self.tableView];
+	else if( [wizard isEqualToString:@"Merlyn"] )
+		return [ArthurianWizardCell cellForTableView:self.tableView];
+};
+
+```
+
 Your view controller should continue to implement `UITableViewDelegate`. `SSDataSources` makes that easier too:
 
 ```objc

@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void (^SSTableViewCellConfigureBlock) (id cell, id object);
+typedef id (^SSTableViewCellCreationBlock)    (id object);
 
 /**
  * A generic data source object for table views. Takes care of creating new cells 
@@ -26,6 +27,11 @@ typedef void (^SSTableViewCellConfigureBlock) (id cell, id object);
  * The class to use to instantiate new table cells.
  */
 @property (nonatomic, weak) Class cellClass;
+
+/**
+ * Or, optionally, a block to use to instantiate new table cells.
+ */
+@property (nonatomic, copy) SSTableViewCellCreationBlock cellCreationBlock;
 
 /**
  * Cell configuration block, called once for each cell with the object to display in that cell.

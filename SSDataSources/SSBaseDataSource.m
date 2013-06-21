@@ -25,6 +25,7 @@
 
 - (void)dealloc {
     self.cellConfigureBlock = nil;
+    self.cellCreationBlock = nil;
 }
 
 #pragma mark - item access
@@ -42,11 +43,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    SSBaseTableCell *cell = [self.cellClass cellForTableView:tv];
-    
+        
     id item = [self itemAtIndexPath:indexPath];
+    id cell;
     
+    if( self.cellCreationBlock )
+        cell = self.cellCreationBlock( item );
+    else
+        cell = [self.cellClass cellForTableView:tv];
+        
     if( self.cellConfigureBlock )
         self.cellConfigureBlock( cell, item );
     
