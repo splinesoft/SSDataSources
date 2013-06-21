@@ -3,6 +3,8 @@ SSDataSources
 
 Simple data sources for your `UITableView`, because proper developers don't repeat themselves. :)
 
+By Jonathan Hersh ([electronic mail](mailto:jon@her.sh) | [@jhersh](https://twitter.com/jhersh))
+
 No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numberOfRowsInSection:` dance many times before. You may also have updated your data and neglected to update the table. Whoops -- crash! Is there a better way?
 
 `SSDataSources` is a collection of objects that conform to `UITableViewDataSource`. This is my own implementation of ideas featured in [objc.io's wonderful first issue](http://www.objc.io/issue-1/table-views.html).
@@ -14,7 +16,7 @@ No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numbe
 Install with [Cocoapods](http://cocoapods.org). Add to your podfile:
 
 ```
-pod 'SSDataSources', :git => 'https://github.com/splinesoft/SSDataSources.git'
+pod 'SSDataSources'
 ```
 
 ## Array Data Source
@@ -72,20 +74,22 @@ tableDataSource.tableView = self.tableView;
 Perhaps you have custom table cell classes or multiple classes in the same table:
 
 ```objc
+__weak typeof (self.tableView) weakTable = self.tableView;
+
 tableDataSource.cellCreationBlock = ^id(NSString *wizard) {
 	if( [wizard isEqualToString:@"Gandalf"] )
-		return [MiddleEarthWizardCell cellForTableView:self.tableView];
+		return [MiddleEarthWizardCell cellForTableView:weakTable];
 	else if( [wizard isEqualToString:@"Merlyn"] )
-		return [ArthurianWizardCell cellForTableView:self.tableView];
+		return [ArthurianWizardCell cellForTableView:weakTable];
 };
 
 ```
 
-Your view controller should continue to implement `UITableViewDelegate`. `SSDataSources` makes that easier too:
+Your view controller should continue to implement `UITableViewDelegate`. `SSDataSources` can help there too:
 
 ```objc
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	id item = [dataSource itemAtIndexPath:indexPath];
+	id item = [tableDataSource itemAtIndexPath:indexPath];
 	
 	// do something with `item`
 }
