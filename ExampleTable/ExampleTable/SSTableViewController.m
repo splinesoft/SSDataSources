@@ -21,17 +21,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add Row"
-                                                                             style:UIBarButtonItemStyleBordered
-                                                                            target:self
-                                                                            action:@selector(addRow)];
+    self.navigationItem.leftBarButtonItems = @[
+        [[UIBarButtonItem alloc] initWithTitle:@"Add Row"
+                                         style:UIBarButtonItemStyleBordered
+                                        target:self
+                                        action:@selector(addRow)],
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Remove Row"
-                                                                              style:UIBarButtonItemStyleBordered
-                                                                             target:self
-                                                                             action:@selector(removeRow)];
+        [[UIBarButtonItem alloc] initWithTitle:@"Remove Row"
+                                         style:UIBarButtonItemStyleBordered
+                                        target:self
+                                        action:@selector(removeRow)],
+      ];
     
-    dataSource = [[SSTableArrayDataSource alloc] initWithItems:@[ @1337, @1242, @1389 ]];
+    dataSource = [[SSTableArrayDataSource alloc] initWithItems:@[
+                  @1234, @5678, @1211, @8799, @7676, @8734, @1209
+                 ]];
     dataSource.tableView = self.tableView;
     dataSource.rowAnimation = UITableViewRowAnimationFade;
     dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, NSNumber *number) {

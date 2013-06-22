@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "SSDataSources"
-  s.version      = "0.0.3"
-  s.summary      = "Simple data sources for your UITableView."
+  s.version      = "0.0.4"
+  s.summary      = "Simple data sources for your UITableView. A collection of objects that conform to UITableViewDataSource."
   s.homepage     = "https://github.com/splinesoft/SSDataSources"
   s.license      = { :type => 'MIT', :file => 'LICENSE'  }
   s.author       = { "Jonathan Hersh" => "jon@her.sh" }
@@ -9,5 +9,5 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '6.0'
   s.requires_arc = true
   s.source_files = 'SSDataSources/*.{h,m}'
-  s.frameworks = 'UIKit', 'CoreData'
+  s.frameworks   = 'UIKit', 'CoreData'
 end

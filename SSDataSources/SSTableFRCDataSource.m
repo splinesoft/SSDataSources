@@ -52,6 +52,21 @@
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)tableView:(UITableView *)tableView
+sectionForSectionIndexTitle:(NSString *)title
+               atIndex:(NSInteger)index {
+    return [controller sectionForSectionIndexTitle:title atIndex:index];
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return [controller sectionIndexTitles];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    id <NSFetchedResultsSectionInfo> sectionInfo = [controller sections][(NSUInteger)section];
+    return [sectionInfo name];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return (NSInteger)[[controller sections] count];
 }
