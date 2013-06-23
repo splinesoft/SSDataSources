@@ -20,9 +20,7 @@
 @interface SSTableArrayDataSource : SSBaseDataSource
 
 /**
- * Create a new table data source by specifying an array of items and a
- * block to configure each cell with its item.
- * @param items - the array of items to display in the table.
+ * Create a new table data source by specifying an array of items.
  */
 - (instancetype) initWithItems:(NSArray *)items;
 
@@ -40,7 +38,7 @@
 - (void) insertItems:(NSArray *)items atIndexes:(NSIndexSet *)indexes;
 
 /**
- * Returns all items, or updates them.
+ * Returns all items, or replaces them.
  */
 - (NSArray *) allItems;
 - (void) updateItems:(NSArray *)newItems;
@@ -75,5 +73,6 @@
  * Remove all objects in the data source.
  */
 - (void) clearItems;
+- (void) removeAllItems;
 
 @end

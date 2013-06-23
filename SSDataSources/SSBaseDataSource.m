@@ -76,4 +76,25 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
 
+#pragma mark - indexpath helpers
+
++ (NSArray *)indexPathArrayWithRange:(NSRange)range {
+    NSMutableArray *ret = [NSMutableArray array];
+    
+    for( NSUInteger i = range.location; i < NSMaxRange(range); i++ )
+        [ret addObject:[NSIndexPath indexPathForRow:(NSInteger)i inSection:0]];
+    
+    return ret;
+}
+
++ (NSArray *)indexPathArrayWithIndexSet:(NSIndexSet *)indexes {
+    NSMutableArray *ret = [NSMutableArray array];
+    
+    [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+        [ret addObject:[NSIndexPath indexPathForRow:(NSInteger)index inSection:0]];
+    }];
+    
+    return ret;
+}
+
 @end

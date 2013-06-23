@@ -33,13 +33,16 @@
                                         action:@selector(removeRow)],
       ];
     
-    dataSource = [[SSTableArrayDataSource alloc] initWithItems:@[
-                  @1234, @5678, @1211, @8799, @7676, @8734, @1209
-                 ]];
+    NSMutableArray *items = [NSMutableArray array];
+    
+    for( NSUInteger i = 0; i < 5; i++ )
+        [items addObject:@(arc4random() % 10000)];
+    
+    dataSource = [[SSTableArrayDataSource alloc] initWithItems:items];
     dataSource.tableView = self.tableView;
     dataSource.rowAnimation = UITableViewRowAnimationFade;
     dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, NSNumber *number) {
-        cell.textLabel.text = [NSString stringWithFormat:@"%@", number];
+        cell.textLabel.text = [number stringValue];
     };
     
     self.tableView.dataSource = dataSource;

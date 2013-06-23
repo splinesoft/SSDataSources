@@ -11,9 +11,6 @@
 
 @interface SSTableArrayDataSource ()
 @property (nonatomic, strong) NSMutableArray *items;
-
-+ (NSArray *) indexPathArrayWithRange:(NSRange)range;
-+ (NSArray *) indexPathArrayWithIndexSet:(NSIndexSet *)indexes;
 @end
 
 @implementation SSTableArrayDataSource
@@ -35,33 +32,16 @@
   self.items = nil;
 }
 
-#pragma mark - indexpath helper
-
-+ (NSArray *)indexPathArrayWithRange:(NSRange)range {
-    NSMutableArray *ret = [NSMutableArray array];
-    
-    for( NSUInteger i = range.location; i < NSMaxRange(range); i++ )
-        [ret addObject:[NSIndexPath indexPathForRow:(NSInteger)i inSection:0]];
-    
-    return ret;
-}
-
-+ (NSArray *)indexPathArrayWithIndexSet:(NSIndexSet *)indexes {
-    NSMutableArray *ret = [NSMutableArray array];
-    
-    [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-        [ret addObject:[NSIndexPath indexPathForRow:(NSInteger)index inSection:0]];
-    }];
-    
-    return ret;
-}
-
 #pragma mark - updating items
 
 - (void)clearItems {
     [self.items removeAllObjects];
     
     [self.tableView reloadData];
+}
+
+- (void)removeAllItems {
+    [self clearItems];
 }
 
 - (void)updateItems:(NSArray *)newItems {
@@ -80,7 +60,7 @@
     [self.items addObjectsFromArray:newItems];
     
     if( self.tableView )
-        [self.tableView insertRowsAtIndexPaths:[SSTableArrayDataSource indexPathArrayWithRange:
+        [self.tableView insertRowsAtIndexPaths:[[self class] indexPathArrayWithRange:
                                                 NSMakeRange(count, [newItems count])]
                               withRowAnimation:self.rowAnimation];
 }
@@ -89,7 +69,7 @@
     [self.items insertObjects:newItems atIndexes:indexes];
     
     if( self.tableView )
-        [self.tableView insertRowsAtIndexPaths:[SSTableArrayDataSource indexPathArrayWithIndexSet:indexes]
+        [self.tableView insertRowsAtIndexPaths:[[self class] indexPathArrayWithIndexSet:indexes]
                               withRowAnimation:self.rowAnimation];
 }
 
@@ -107,7 +87,7 @@
     [self.items removeObjectsInRange:range];
     
     if( self.tableView )
-        [self.tableView deleteRowsAtIndexPaths:[SSTableArrayDataSource indexPathArrayWithRange:range]
+        [self.tableView deleteRowsAtIndexPaths:[[self class] indexPathArrayWithRange:range]
                               withRowAnimation:self.rowAnimation];
 }
 

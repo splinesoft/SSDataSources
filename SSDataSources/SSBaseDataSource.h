@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void (^SSTableViewCellConfigureBlock) (id cell, id object);
-typedef id (^SSTableViewCellCreationBlock)    (id object);
+typedef id   (^SSTableViewCellCreationBlock)  (id object);
 
 /**
  * A generic data source object for table views. Takes care of creating new cells 
@@ -62,5 +62,11 @@ typedef id (^SSTableViewCellCreationBlock)    (id object);
  * Return the item at a given index path. Override me in your subclass.
  */
 - (id) itemAtIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ * Helper functions to generate arrays of NSIndexPaths.
+ */
++ (NSArray *) indexPathArrayWithRange:(NSRange)range;
++ (NSArray *) indexPathArrayWithIndexSet:(NSIndexSet *)indexes;
 
 @end

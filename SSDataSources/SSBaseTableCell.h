@@ -21,7 +21,7 @@
 
 + (id) cellForTableView:(UITableView *)tableView;
 
-// Called after init.
+// Called once for each cell after initial init.
 - (void) configureCell;
 
 @end

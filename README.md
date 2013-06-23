@@ -16,7 +16,7 @@ No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numbe
 Install with [Cocoapods](http://cocoapods.org). Add to your podfile:
 
 ```
-pod 'SSDataSources'
+pod 'SSDataSources', :head
 ```
 
 ## Array Data Source
@@ -26,25 +26,26 @@ Check out `ExampleTable` for a sample table that uses the array data source.
 Useful when your data is a simple array. See `SSTableArrayDataSource.h` for more details.
 
 ```objc
-@interface SSTableViewController : UITableViewController
+@interface WizardicTableViewController : UITableViewController
 @end
 
-@implementation SSTableViewController {
-    SSTableArrayDataSource *tableDataSource;
+@implementation WizardicTableViewController {
+    SSTableArrayDataSource *wizardDataSource;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    tableDataSource = [[SSTableArrayDataSource alloc] initWithItems:@[ @1337, @1242, @1389 ]];
+    wizardDataSource = [[SSTableArrayDataSource alloc] initWithItems:
+                        @[ @"Merlyn", @"Gandalf", @"Melisandre" ]];
 
 	// The configure block is called for each cell with the object being presented in that cell.
-    tableDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, NSNumber *number) {
-        cell.textLabel.text = [NSString stringWithFormat:@"%@", number];
+    wizardDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, NSString *wizard) {
+        cell.textLabel.text = wizard;
     };
     
     // Set the table's data source.
-    self.tableView.dataSource = dataSource;
+    self.tableView.dataSource = wizardDataSource;
 }
 @end
 ```
@@ -55,20 +56,20 @@ Perhaps your data changes:
 
 ```objc
 // Optional - row animation for table updates.
-tableDataSource.rowAnimation = UITableViewRowAnimationFade;
+wizardDataSource.rowAnimation = UITableViewRowAnimationFade;
 
 // Optional - if you set the tableView property, the data source will perform
-// insert/reload/delete calls as its data changes.
-tableDataSource.tableView = self.tableView;
+// insert/reload/delete calls on the table as its data changes.
+wizardDataSource.tableView = self.tableView;
 	
-// Automatically inserts two new cells at the end of the table
-[tableDataSource appendItems:@[ @6, @7 ]];
+// Automatically inserts two new cells at the end of the table.
+[wizardDataSource appendItems:@[ @"Saruman", @"Alatar" ]];
 
-// Update the fourth item. Reloads the fourth row.
-[tableDatasource replaceItemAtIndex:3 withItem:@11];
+// Update the fourth item; reloads the fourth row.
+[wizardDataSource replaceItemAtIndex:3 withItem:@"Pallando"];
 	
 // Remove the second and third cells.
-[tableDataSource removeItemsInRange:NSMakeRange( 1, 2 )];
+[wizardDataSource removeItemsInRange:NSMakeRange( 1, 2 )];
 ```
 
 Perhaps you have custom table cell classes or multiple classes in the same table:
@@ -76,7 +77,7 @@ Perhaps you have custom table cell classes or multiple classes in the same table
 ```objc
 __weak typeof (self.tableView) weakTable = self.tableView;
 
-tableDataSource.cellCreationBlock = ^id(NSString *wizard) {
+wizardDataSource.cellCreationBlock = ^id(NSString *wizard) {
 	if( [wizard isEqualToString:@"Gandalf"] )
 		return [MiddleEarthWizardCell cellForTableView:weakTable];
 	else if( [wizard isEqualToString:@"Merlyn"] )
@@ -89,9 +90,9 @@ Your view controller should continue to implement `UITableViewDelegate`. `SSData
 
 ```objc
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	id item = [tableDataSource itemAtIndexPath:indexPath];
+	NSString *wizard = [wizardDataSource itemAtIndexPath:indexPath];
 	
-	// do something with `item`
+	// do something with `wizard`
 }
 ```
 

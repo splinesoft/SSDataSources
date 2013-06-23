@@ -50,6 +50,15 @@
     self.controller = nil;
 }
 
+- (NSUInteger)itemCount {
+    NSUInteger count = 0;
+    
+    for( id <NSFetchedResultsSectionInfo> section in [controller sections] )
+        count += [section numberOfObjects];
+    
+    return count;
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView
