@@ -1,6 +1,6 @@
 //
 //  SSBaseDataSource.m
-//  SSPods
+//  Splinesoft
 //
 //  Created by Jonathan Hersh on 6/8/13.
 //  Copyright (c) 2013 Splinesoft. All rights reserved.
@@ -10,7 +10,9 @@
 
 @implementation SSBaseDataSource
 
-@synthesize cellConfigureBlock, cellClass, fallbackDataSource, tableView, rowAnimation;
+@synthesize cellConfigureBlock, cellClass, fallbackCollectionDataSource;
+@synthesize fallbackTableDataSource, tableView, rowAnimation;
+@synthesize collectionView, collectionCellCreationBlock;
 
 #pragma mark - init
 
@@ -26,6 +28,7 @@
 - (void)dealloc {
     self.cellConfigureBlock = nil;
     self.cellCreationBlock = nil;
+    self.collectionCellCreationBlock = nil;
 }
 
 #pragma mark - item access
@@ -51,7 +54,7 @@
         cell = self.cellCreationBlock( item );
     else
         cell = [self.cellClass cellForTableView:tv];
-        
+
     if( self.cellConfigureBlock )
         self.cellConfigureBlock( cell, item );
     
@@ -59,8 +62,8 @@
 }
 
 - (BOOL)tableView:(UITableView *)tv canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if( [self.fallbackDataSource respondsToSelector:@selector(tableView:canEditRowAtIndexPath:)] )
-        return [self.fallbackDataSource tableView:tv canEditRowAtIndexPath:indexPath];
+    if( [self.fallbackTableDataSource respondsToSelector:@selector(tableView:canEditRowAtIndexPath:)] )
+        return [self.fallbackTableDataSource tableView:tv canEditRowAtIndexPath:indexPath];
     
     return NO;
 }
@@ -69,11 +72,49 @@
 commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if( [self.fallbackDataSource respondsToSelector:@selector(tableView:commitEditingStyle:forRowAtIndexPath:)] )
-        [self.fallbackDataSource tableView:tv
-                        commitEditingStyle:editingStyle
-                         forRowAtIndexPath:indexPath];
+    if( [self.fallbackTableDataSource respondsToSelector:@selector(tableView:commitEditingStyle:forRowAtIndexPath:)] )
+        [self.fallbackTableDataSource tableView:tv
+                             commitEditingStyle:editingStyle
+                              forRowAtIndexPath:indexPath];
     
+}
+
+#pragma mark - UICollectionViewDataSource
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)cv
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    id item = [self itemAtIndexPath:indexPath];
+    id cell;
+    
+    if( self.collectionCellCreationBlock )
+        cell = self.collectionCellCreationBlock( item, indexPath );
+    else
+        cell = [self.cellClass cellForCollectionView:cv
+                                           indexPath:indexPath];
+    
+    if( self.cellConfigureBlock )
+        self.cellConfigureBlock( cell, item );
+    
+    return cell;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:[NSString stringWithFormat:@"Did you forget to override %@?",
+                                           NSStringFromSelector(_cmd)]
+                                 userInfo:nil];
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)cv
+           viewForSupplementaryElementOfKind:(NSString *)kind
+                                 atIndexPath:(NSIndexPath *)indexPath {
+    if( [self.fallbackCollectionDataSource respondsToSelector:@selector(collectionView:viewForSupplementaryElementOfKind:atIndexPath:)] )
+        return [self.fallbackCollectionDataSource collectionView:cv
+                               viewForSupplementaryElementOfKind:kind
+                                                     atIndexPath:indexPath];
+    
+    return nil;
 }
 
 #pragma mark - indexpath helpers

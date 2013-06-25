@@ -10,8 +10,9 @@
 #define __SS_DATASOURCES__
 
 #import "SSBaseTableCell.h"
+#import "SSBaseCollectionCell.h"
 #import "SSBaseDataSource.h"
-#import "SSTableArrayDataSource.h"
-#import "SSTableFRCDataSource.h"
+#import "SSArrayDataSource.h"
+#import "SSCoreDataSource.h"
 
 #endif

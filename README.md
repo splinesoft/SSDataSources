@@ -1,13 +1,11 @@
 SSDataSources
 =============
 
-Simple data sources for your `UITableView`, because proper developers don't repeat themselves. :)
+Simple data sources for your `UITableView` and `UICollectionView` because proper developers don't repeat themselves. :)
 
-By Jonathan Hersh ([electronic mail](mailto:jon@her.sh) | [@jhersh](https://twitter.com/jhersh))
+No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numberOfRowsInSection:` (and `collectionView:cellForItemAtIndexPath:` and `collectionView:numberOfItemsInSection:`) dance many times before. You may also have updated your data and neglected to update the table or collection view. Whoops -- crash! Is there a better way?
 
-No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numberOfRowsInSection:` dance many times before. You may also have updated your data and neglected to update the table. Whoops -- crash! Is there a better way?
-
-`SSDataSources` is a collection of objects that conform to `UITableViewDataSource`. This is my own implementation of ideas featured in [objc.io's wonderful first issue](http://www.objc.io/issue-1/table-views.html).
+`SSDataSources` is a collection of objects that conform to `UITableViewDataSource` and `UICollectionViewDataSource`. This is my own implementation of ideas featured in [objc.io's wonderful first issue](http://www.objc.io/issue-1/table-views.html).
 
 `SSDataSources` powers various tables in my app [MUDRammer - a modern MUD client for iPhone and iPad](https://itunes.apple.com/us/app/mudrammer-a-modern-mud-client/id597157072?mt=8). Let me know if you use it in your app!
 
@@ -21,22 +19,23 @@ pod 'SSDataSources', :head
 
 ## Array Data Source
 
-Check out `ExampleTable` for a sample table that uses the array data source.
+Useful when your data is a simple array. See `SSArrayDataSource.h` for more details.
 
-Useful when your data is a simple array. See `SSTableArrayDataSource.h` for more details.
+Check out `ExampleTable` and `ExampleCollectionView` for sample table and collection views that use the array data source.
+
 
 ```objc
 @interface WizardicTableViewController : UITableViewController
 @end
 
 @implementation WizardicTableViewController {
-    SSTableArrayDataSource *wizardDataSource;
+    SSArrayDataSource *wizardDataSource;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    wizardDataSource = [[SSTableArrayDataSource alloc] initWithItems:
+    wizardDataSource = [[SSArrayDataSource alloc] initWithItems:
                         @[ @"Merlyn", @"Gandalf", @"Melisandre" ]];
 
 	// The configure block is called for each cell with the object being presented in that cell.
@@ -98,14 +97,14 @@ Your view controller should continue to implement `UITableViewDelegate`. `SSData
 
 ## Core Data
 
-You're a scholar, a man-/woman-about-internet, and sometimes you want to present a `UITableView` backed by a core data fetch request or fetched results controller. `SSDataSources` has got you covered with `SSTableFRCDataSource`, featured here with a cameo by [MagicalRecord](https://github.com/magicalpanda/MagicalRecord).
+You're a scholar, a man-/woman-about-internet, and sometimes you want to present a `UITableView` or `UICollectionView` backed by a core data fetch request or fetched results controller. `SSDataSources` has got you covered with `SSCoreDataSource`, featured here with a cameo by [MagicalRecord](https://github.com/magicalpanda/MagicalRecord).
 
 ```objc
 @interface SSCoreDataTableViewController : UITableViewController
 @end
 
 @implementation SSCoreDataTableViewController {
-    SSTableFRCDataSource *dataSource;
+    SSCoreDataSource *dataSource;
 }
 
 - (void) viewDidLoad {
@@ -114,9 +113,9 @@ You're a scholar, a man-/woman-about-internet, and sometimes you want to present
 	NSFetchRequest *triggerFetch = [Trigger MR_requestAllSortedBy:[Trigger defaultSortField]
                                                         ascending:[Trigger defaultSortAscending]];
    
-    dataSource = [[SSTableFRCDataSource alloc] initWithFetchRequest:worldFetch
-                                                          inContext:[NSManagedObjectContext MR_defaultContext]
-                                                 sectionNameKeyPath:nil];
+    dataSource = [[SSCoreDataSource alloc] initWithFetchRequest:worldFetch
+                                                      inContext:[NSManagedObjectContext MR_defaultContext]
+                                             sectionNameKeyPath:nil];
                                                  
     dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, Trigger *trigger) {
         cell.textLabel.text = trigger.name;
@@ -132,15 +131,15 @@ You're a scholar, a man-/woman-about-internet, and sometimes you want to present
     // Optional - row animation to use for update events.
     dataSource.rowAnimation = UITableViewRowAnimationFade;
     
-    // Optional - setting the fallbackDataSource will call 
+    // Optional - setting the fallbackTableDataSource will call 
     // tableView:canEditRowAtIndexPath: and
     // tableView:commitEditingStyle:forRowAtIndexPath 
     // on your fallback delegate, so you can implement editing if necessary.
-    dataSource.fallbackDataSource = self;
+    dataSource.fallbackTableDataSource = self;
 }
 @end
 ```
 
 ## Thanks!
 
-Coming soon: data sources for `UICollectionView`.
+`SSDataSources` is a [@jhersh](https://github.com/jhersh) production -- ([electronic mail](mailto:jon@her.sh) | [@jhersh](https://twitter.com/jhersh))

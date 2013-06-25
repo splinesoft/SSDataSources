@@ -1,5 +1,5 @@
 //
-//  SSTableFRCDataSource.m
+//  SSCoreDataSource.m
 //  Splinesoft
 //
 //  Created by Jonathan Hersh on 6/7/13.
@@ -8,13 +8,24 @@
 
 #import "SSDataSources.h"
 
-@interface SSTableFRCDataSource ()
+@interface SSCoreDataSource ()
 @property (nonatomic, strong) NSFetchedResultsController *controller;
 @end
 
-@implementation SSTableFRCDataSource
+@implementation SSCoreDataSource {
+    // For UICollectionView
+    NSMutableArray *sectionUpdates;
+    NSMutableArray *objectUpdates;
+}
 
 @synthesize controller;
+
+- (instancetype)init {
+    if( ( self = [super init] ) ) {
+        sectionUpdates = [NSMutableArray new];
+        objectUpdates = [NSMutableArray new];
+    }
+}
 
 - (instancetype) initWithFetchedResultsController:(NSFetchedResultsController *)aController {
     if( ( self = [self init] ) ) {
@@ -48,6 +59,8 @@
 
 - (void)dealloc {
     self.controller = nil;
+    [sectionUpdates removeAllObjects];
+    [objectUpdates removeAllObjects];
 }
 
 - (NSUInteger)itemCount {
@@ -85,6 +98,17 @@ sectionForSectionIndexTitle:(NSString *)title
     return (NSInteger)[sectionInfo numberOfObjects];
 }
 
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return (NSInteger)[[controller sections] count];
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    id <NSFetchedResultsSectionInfo> sectionInfo = [controller sections][(NSUInteger)section];
+    return (NSInteger)[sectionInfo numberOfObjects];
+}
+
 #pragma mark - NSFetchedResultsController Delegate Methods
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
@@ -97,29 +121,37 @@ sectionForSectionIndexTitle:(NSString *)title
      forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath {
     
+    NSMutableDictionary *change = [NSMutableDictionary new];
+    
     switch(type) {
         case NSFetchedResultsChangeInsert:
+            change[@(type)] = newIndexPath;
             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
                                   withRowAnimation:self.rowAnimation];
             break;
             
         case NSFetchedResultsChangeDelete:
+            change[@(type)] = indexPath;
             [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                                   withRowAnimation:self.rowAnimation];
             break;
             
         case NSFetchedResultsChangeUpdate:
+            change[@(type)] = indexPath;
             [self.tableView reloadRowsAtIndexPaths:@[ indexPath ]
                                   withRowAnimation:self.rowAnimation];
             break;
             
         case NSFetchedResultsChangeMove:
+            change[@(type)] = @[ indexPath, newIndexPath ];
             [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                                   withRowAnimation:self.rowAnimation];
             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
                                   withRowAnimation:self.rowAnimation];
             break;
     }
+    
+    [objectUpdates addObject:change];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller
@@ -127,22 +159,82 @@ sectionForSectionIndexTitle:(NSString *)title
            atIndex:(NSUInteger)sectionIndex
      forChangeType:(NSFetchedResultsChangeType)type {
     
+    NSMutableDictionary *change = [NSMutableDictionary new];
+    
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
                           withRowAnimation:self.rowAnimation];
+            change[@(type)] = @[@(sectionIndex)];
             break;
             
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
                           withRowAnimation:self.rowAnimation];
+            change[@(type)] = @[@(sectionIndex)];
             break;
     }
+    
+    [sectionUpdates addObject:change];
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
+    
+    if( self.collectionView ) {
+        
+        if( [sectionUpdates count] > 0 ) {
+            [self.collectionView performBatchUpdates:^{
+                for( NSDictionary *change in sectionUpdates ) {
+                    [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id secnum, BOOL *stop) {
+                        NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+                        NSIndexSet *section = [NSIndexSet indexSetWithIndex:[secnum unsignedIntegerValue]];
+                        
+                        switch( type ) {
+                            case NSFetchedResultsChangeInsert:
+                                [self.collectionView insertSections:section];
+                                break;
+                            case NSFetchedResultsChangeDelete:
+                                [self.collectionView deleteSections:section];
+                                break;
+                            case NSFetchedResultsChangeUpdate:
+                                [self.collectionView reloadSections:section];
+                                break;
+                        }
+                    }];
+                }
+            } completion:nil];
+        }
+        
+        if ([objectUpdates count] > 0 && [sectionUpdates count] == 0) {
+            [self.collectionView performBatchUpdates:^{
+                for( NSDictionary *change in objectUpdates ) {
+                    [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id indexPath, BOOL *stop) {
+                        NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+                        
+                        switch( type ) {
+                            case NSFetchedResultsChangeInsert:
+                                [self.collectionView insertItemsAtIndexPaths:@[ indexPath ]];
+                                break;
+                            case NSFetchedResultsChangeDelete:
+                                [self.collectionView deleteItemsAtIndexPaths:@[ indexPath ]];
+                                break;
+                            case NSFetchedResultsChangeUpdate:
+                                [self.collectionView reloadItemsAtIndexPaths:@[ indexPath ]];
+                                break;
+                            case NSFetchedResultsChangeMove:
+                                [self.collectionView moveItemAtIndexPath:indexPath[0]
+                                                             toIndexPath:indexPath[1]];
+                                break;
+                        }
+                    }];
+                }
+            } completion:nil];
+        }
+    }
+    
+    [sectionUpdates removeAllObjects];
+    [objectUpdates removeAllObjects];
 }
-
 
 @end

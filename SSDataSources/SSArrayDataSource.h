@@ -1,5 +1,5 @@
 //
-//  SSTableArrayDataSource.h
+//  SSArrayDataSource.h
 //  Splinesoft
 //
 //  Created by Jonathan Hersh on 6/7/13.
@@ -12,15 +12,16 @@
 #import <CoreData/CoreData.h>
 
 /**
- * Generic table data source, useful when your data is an array of objects.
- * If this datasource's `tableView` property is set to your tableview, the data source will
+ * Generic table/collection data source, useful when your data is an array of objects.
+ * If this datasource's `tableView` or `collectionView` property is set to your 
+ * tableview or collection view, the data source will
  * perform insert/reload/delete calls when the data changes.
  */
 
-@interface SSTableArrayDataSource : SSBaseDataSource
+@interface SSArrayDataSource : SSBaseDataSource
 
 /**
- * Create a new table data source by specifying an array of items.
+ * Create a new array data source by specifying an array of items.
  */
 - (instancetype) initWithItems:(NSArray *)items;
 

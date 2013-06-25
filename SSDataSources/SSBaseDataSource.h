@@ -1,6 +1,6 @@
 //
 //  SSBaseDataSource.h
-//  SSPods
+//  Splinesoft
 //
 //  Created by Jonathan Hersh on 6/8/13.
 //  Copyright (c) 2013 Splinesoft. All rights reserved.
@@ -9,34 +9,43 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-typedef void (^SSTableViewCellConfigureBlock) (id cell, id object);
-typedef id   (^SSTableViewCellCreationBlock)  (id object);
+typedef void (^SSCellConfigureBlock)          (id cell, id object);
+typedef id   (^SSTableCellCreationBlock)      (id object);
+typedef id   (^SSCollectionCellCreationBlock) (id object, NSIndexPath *indexPath);
 
 /**
- * A generic data source object for table views. Takes care of creating new cells 
+ * A generic data source object for table and collection views. Takes care of creating new cells 
  * and exposes a block interface to configure cells with the object they represent.
- * Don't use this class directly - instead, see SSTableArrayDataSource and
- * SSTableFRCDataSource.
+ * Don't use this class directly except to subclass - instead, see SSArrayDataSource and
+ * SSCoreDataSource.
  */
 
-@interface SSBaseDataSource : NSObject <UITableViewDataSource>
+@interface SSBaseDataSource : NSObject <UITableViewDataSource, UICollectionViewDataSource>
 
 - (instancetype) init;
 
+#pragma mark - base data source
+
 /**
- * The class to use to instantiate new table cells.
+ * The base class to use to instantiate new cells.
+ * Assumed to be a subclass of SSBaseTableCell or SSBaseCollectionCell.
+ * If you use a different cell class or want to specify your own custom
+ * cell creation logic, specify either a cellCreationBlock (for UITableView) 
+ * or collectionCellCreationBlock (for UICollectionView).
  */
 @property (nonatomic, weak) Class cellClass;
 
 /**
- * Or, optionally, a block to use to instantiate new table cells.
+ * Cell configuration block, called for each cell with the object to display in that cell.
  */
-@property (nonatomic, copy) SSTableViewCellCreationBlock cellCreationBlock;
+@property (nonatomic, copy) SSCellConfigureBlock cellConfigureBlock;
+
+#pragma mark - UITableView
 
 /**
- * Cell configuration block, called once for each cell with the object to display in that cell.
+ * Optional block to use to instantiate new table cells.
  */
-@property (nonatomic, copy) SSTableViewCellConfigureBlock cellConfigureBlock;
+@property (nonatomic, copy) SSTableCellCreationBlock cellCreationBlock;
 
 /**
  * Optional animation to use when updating the table.
@@ -48,7 +57,7 @@ typedef id   (^SSTableViewCellCreationBlock)  (id object);
  * Optional data source fallback.
  * If this is set, it will receive data source delegate calls for editing/deleting cells.
  */
-@property (nonatomic, weak) id <UITableViewDataSource> fallbackDataSource;
+@property (nonatomic, weak) id <UITableViewDataSource> fallbackTableDataSource;
 
 /**
  * Optional: If the tableview property is assigned, the data source will perform
@@ -56,12 +65,34 @@ typedef id   (^SSTableViewCellCreationBlock)  (id object);
  */
 @property (nonatomic, weak) UITableView *tableView;
 
+#pragma mark - UICollectionView
+
+/**
+ * Optional block to use to create new collection cells.
+ */
+@property (nonatomic, copy) SSCollectionCellCreationBlock collectionCellCreationBlock;
+
+/**
+ * Optional data source fallback for supplementary elements.
+ * If this is set, it will receive data source delegate calls for
+ * collectionView:viewForSupplementaryElementOfKind:atIndexPath:
+ */
+@property (nonatomic, weak) id <UICollectionViewDataSource> fallbackCollectionDataSource;
+
+/**
+ * Optional: If the collectionview property is assigned, the data source will perform
+ * insert/reload/delete calls on it as data changes.
+ */
+@property (nonatomic, weak) UICollectionView *collectionView;
+
 #pragma mark - item access
 
 /**
  * Return the item at a given index path. Override me in your subclass.
  */
 - (id) itemAtIndexPath:(NSIndexPath *)indexPath;
+
+#pragma mark - helpers
 
 /**
  * Helper functions to generate arrays of NSIndexPaths.

@@ -11,7 +11,7 @@
 @implementation SSBaseTableCell
 
 + (NSString *)identifier {
-    return NSStringFromClass([self class]);
+    return NSStringFromClass(self);
 }
 
 + (UITableViewCellStyle)cellStyle {

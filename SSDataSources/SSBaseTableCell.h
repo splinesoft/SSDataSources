@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 /**
- * A simple base table cell. Subclass me and override configureCell.
- * Override cellStyle and identifier only if necessary.
+ * A simple base table cell. Subclass me and override configureCell
+ * to add custom one-time logic (e.g. creating subviews).
+ * You probably don't need to override cellStyle and identifier.
  */
 
 @interface SSBaseTableCell : UITableViewCell

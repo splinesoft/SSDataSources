@@ -15,7 +15,7 @@
 @end
 
 @implementation SSTableViewController {
-    SSTableArrayDataSource *dataSource;
+    SSArrayDataSource *dataSource;
 }
 
 - (void)viewDidLoad {
@@ -38,7 +38,7 @@
     for( NSUInteger i = 0; i < 5; i++ )
         [items addObject:@(arc4random() % 10000)];
     
-    dataSource = [[SSTableArrayDataSource alloc] initWithItems:items];
+    dataSource = [[SSArrayDataSource alloc] initWithItems:items];
     dataSource.tableView = self.tableView;
     dataSource.rowAnimation = UITableViewRowAnimationFade;
     dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, NSNumber *number) {

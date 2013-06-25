@@ -1,5 +1,5 @@
 //
-//  SSTableArrayDataSource.m
+//  SSArrayDataSource.m
 //  Splinesoft
 //
 //  Created by Jonathan Hersh on 6/7/13.
@@ -9,11 +9,11 @@
 #import "SSDataSources.h"
 #import <CoreData/CoreData.h>
 
-@interface SSTableArrayDataSource ()
+@interface SSArrayDataSource ()
 @property (nonatomic, strong) NSMutableArray *items;
 @end
 
-@implementation SSTableArrayDataSource
+@implementation SSArrayDataSource
 
 @synthesize items;
 
@@ -38,6 +38,7 @@
     [self.items removeAllObjects];
     
     [self.tableView reloadData];
+    [self.collectionView reloadData];
 }
 
 - (void)removeAllItems {
@@ -48,6 +49,7 @@
     self.items = [NSMutableArray arrayWithArray:newItems];
     
     [self.tableView reloadData];
+    [self.collectionView reloadData];
 }
 
 - (NSArray *)allItems {
@@ -63,6 +65,11 @@
         [self.tableView insertRowsAtIndexPaths:[[self class] indexPathArrayWithRange:
                                                 NSMakeRange(count, [newItems count])]
                               withRowAnimation:self.rowAnimation];
+    
+    if( self.collectionView )
+        [self.collectionView insertItemsAtIndexPaths:
+         [[self class] indexPathArrayWithRange:
+          NSMakeRange(count, [newItems count])]];
 }
 
 - (void)insertItems:(NSArray *)newItems atIndexes:(NSIndexSet *)indexes {    
@@ -71,6 +78,10 @@
     if( self.tableView )
         [self.tableView insertRowsAtIndexPaths:[[self class] indexPathArrayWithIndexSet:indexes]
                               withRowAnimation:self.rowAnimation];
+    
+    if( self.collectionView )
+        [self.collectionView insertItemsAtIndexPaths:
+         [[self class] indexPathArrayWithIndexSet:indexes]];
 }
 
 - (void)replaceItemAtIndex:(NSUInteger)index withItem:(id)item {
@@ -81,6 +92,11 @@
             [NSIndexPath indexPathForRow:(NSInteger)index inSection:0]
          ]
                               withRowAnimation:self.rowAnimation];
+    
+    if( self.collectionView )
+        [self.collectionView reloadItemsAtIndexPaths:@[
+            [NSIndexPath indexPathForRow:(NSInteger)index inSection:0]
+         ]];
 }
 
 - (void)removeItemsInRange:(NSRange)range {    
@@ -89,6 +105,9 @@
     if( self.tableView )
         [self.tableView deleteRowsAtIndexPaths:[[self class] indexPathArrayWithRange:range]
                               withRowAnimation:self.rowAnimation];
+    
+    if( self.collectionView )
+        [self.collectionView deleteItemsAtIndexPaths:[[self class] indexPathArrayWithRange:range]];
 }
 
 - (void)removeItemAtIndex:(NSUInteger)index {
@@ -99,6 +118,11 @@
             [NSIndexPath indexPathForRow:(NSInteger)index inSection:0]
          ]
                               withRowAnimation:self.rowAnimation];
+    
+    if( self.collectionView )
+        [self.collectionView deleteItemsAtIndexPaths:@[
+            [NSIndexPath indexPathForRow:(NSInteger)index inSection:0]
+         ]];
 }
 
 #pragma mark - item access
@@ -124,26 +148,36 @@
 }
 
 - (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)itemId {
-  NSUInteger row = [self.items indexOfObjectPassingTest:^BOOL( NSManagedObject *object,
-                                                               NSUInteger index,
-                                                               BOOL *stop ) {
-    return [[object objectID] isEqual:itemId];
-  }];
+    NSUInteger row = [self.items indexOfObjectPassingTest:^BOOL( NSManagedObject *object,
+                                                                 NSUInteger index,
+                                                                 BOOL *stop ) {
+      return [[object objectID] isEqual:itemId];
+    }];
   
-  if( row == NSNotFound )
-    return nil;
+    if( row == NSNotFound )
+        return nil;
   
-  return [NSIndexPath indexPathForRow:(NSInteger)row inSection:0];
+    return [NSIndexPath indexPathForRow:(NSInteger)row inSection:0];
 }
 
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return 1;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return (NSInteger)[self.items count];
+    return (NSInteger)[self.items count];
+}
+
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return (NSInteger)[self.items count];
 }
 
 @end
