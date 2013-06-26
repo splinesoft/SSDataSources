@@ -25,6 +25,8 @@
         sectionUpdates = [NSMutableArray new];
         objectUpdates = [NSMutableArray new];
     }
+    
+    return self;
 }
 
 - (instancetype) initWithFetchedResultsController:(NSFetchedResultsController *)aController {
