@@ -99,6 +99,25 @@
          ]];
 }
 
+- (void)moveItemAtIndex:(NSUInteger)index1 toIndex:(NSUInteger)index2 {
+    NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:index1
+                                                 inSection:0],
+                *indexPath2 = [NSIndexPath indexPathForRow:index2
+                                                 inSection:0];
+    
+    id item = [self itemAtIndexPath:indexPath1];
+    [self.items removeObject:item];
+    [self.items insertObject:item atIndex:index2];
+    
+    if( self.tableView )
+        [self.tableView moveRowAtIndexPath:indexPath1
+                               toIndexPath:indexPath2];
+    
+    if( self.collectionView )
+        [self.collectionView moveItemAtIndexPath:indexPath1
+                                     toIndexPath:indexPath2];
+}
+
 - (void)removeItemsInRange:(NSRange)range {    
     [self.items removeObjectsInRange:range];
     
@@ -168,6 +187,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return (NSInteger)[self.items count];
+}
+
+- (void)tableView:(UITableView *)tableView
+moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
+      toIndexPath:(NSIndexPath *)destinationIndexPath {
+    
+    id item = [self itemAtIndexPath:sourceIndexPath];
+    [self.items removeObject:item];
+    [self.items insertObject:item atIndex:destinationIndexPath.row];
 }
 
 #pragma mark - UICollectionViewDataSource

@@ -9,9 +9,9 @@
 #import "SSTableViewController.h"
 #import <SSDataSources.h>
 
-@interface SSTableViewController ()
+@interface SSTableViewController () <UITableViewDataSource>
 - (void) addRow;
-- (void) removeRow;
+- (void) toggleEditing;
 @end
 
 @implementation SSTableViewController {
@@ -21,17 +21,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItems = @[
-        [[UIBarButtonItem alloc] initWithTitle:@"Add Row"
-                                         style:UIBarButtonItemStyleBordered
-                                        target:self
-                                        action:@selector(addRow)],
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add Row"
+                                                                             style:UIBarButtonItemStyleBordered
+                                                                            target:self
+                                                                            action:@selector(addRow)];
     
-        [[UIBarButtonItem alloc] initWithTitle:@"Remove Row"
-                                         style:UIBarButtonItemStyleBordered
-                                        target:self
-                                        action:@selector(removeRow)],
-      ];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                                                                           target:self
+                                                                                           action:@selector(toggleEditing)];
     
     NSMutableArray *items = [NSMutableArray array];
     
@@ -41,6 +38,7 @@
     dataSource = [[SSArrayDataSource alloc] initWithItems:items];
     dataSource.tableView = self.tableView;
     dataSource.rowAnimation = UITableViewRowAnimationFade;
+    dataSource.fallbackTableDataSource = self;
     dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, NSNumber *number) {
         cell.textLabel.text = [number stringValue];
     };
@@ -54,9 +52,36 @@
     [dataSource appendItems:@[ @( arc4random() % 10000 ) ]];
 }
 
-- (void)removeRow {
-    if( [dataSource numberOfItems] > 0 )
-        [dataSource removeItemAtIndex:( arc4random() % [dataSource numberOfItems] )];
+- (void)toggleEditing {
+    [self.tableView setEditing:![self.tableView isEditing]
+                      animated:YES];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
+                                              initWithBarButtonSystemItem:( [self.tableView isEditing]
+                                                                            ? UIBarButtonSystemItemDone
+                                                                           : UIBarButtonSystemItemEdit )
+                                              target:self
+                                              action:@selector(toggleEditing)];
+}
+
+#pragma mark - fallback UITableViewDataSource (for edit/move)
+
+// We don't have to implement tableView:moveRowAtIndexPath:toIndexPath: - SSArrayDataSource
+// does the actual move for us
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView
+commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if( editingStyle == UITableViewCellEditingStyleDelete )
+        [dataSource removeItemAtIndex:indexPath.row];
 }
 
 #pragma mark - UITableViewDelegate

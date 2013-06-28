@@ -61,9 +61,18 @@
     return cell;    
 }
 
+- (BOOL)tableView:(UITableView *)tv canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    if( [self.fallbackTableDataSource respondsToSelector:@selector(tableView:canMoveRowAtIndexPath:)] )
+        return [self.fallbackTableDataSource tableView:tv
+                                 canMoveRowAtIndexPath:indexPath];
+    
+    return NO;
+}
+
 - (BOOL)tableView:(UITableView *)tv canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     if( [self.fallbackTableDataSource respondsToSelector:@selector(tableView:canEditRowAtIndexPath:)] )
-        return [self.fallbackTableDataSource tableView:tv canEditRowAtIndexPath:indexPath];
+        return [self.fallbackTableDataSource tableView:tv
+                                 canEditRowAtIndexPath:indexPath];
     
     return NO;
 }

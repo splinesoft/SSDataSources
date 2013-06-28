@@ -43,6 +43,12 @@ typedef id   (^SSCollectionCellCreationBlock) (id object, NSIndexPath *indexPath
 #pragma mark - UITableView
 
 /**
+ * Optional: If the tableview property is assigned, the data source will perform
+ * insert/reload/delete calls on it as data changes.
+ */
+@property (nonatomic, weak) UITableView *tableView;
+
+/**
  * Optional block to use to instantiate new table cells.
  */
 @property (nonatomic, copy) SSTableCellCreationBlock cellCreationBlock;
@@ -55,17 +61,23 @@ typedef id   (^SSCollectionCellCreationBlock) (id object, NSIndexPath *indexPath
 
 /**
  * Optional data source fallback.
- * If this is set, it will receive data source delegate calls for editing/deleting cells.
+ * If this is set, it will receive data source delegate calls for:
+ * tableView:canEditRowAtIndexPath:
+ * tableView:commitEditingStyle:forRowAtIndexPath:
+ * tableView:canMoveRowAtIndexPath:
+ * but not tableView:moveRowAtIndexPath:toIndexPath: - SSArrayDataSource does this for you.
+ *
+ * See 'ExampleTable' for an example of editing, deleting, and drag-to-reorder rows.
  */
 @property (nonatomic, weak) id <UITableViewDataSource> fallbackTableDataSource;
 
+#pragma mark - UICollectionView
+
 /**
- * Optional: If the tableview property is assigned, the data source will perform
+ * Optional: If the collectionview property is assigned, the data source will perform
  * insert/reload/delete calls on it as data changes.
  */
-@property (nonatomic, weak) UITableView *tableView;
-
-#pragma mark - UICollectionView
+@property (nonatomic, weak) UICollectionView *collectionView;
 
 /**
  * Optional block to use to create new collection cells.
@@ -78,12 +90,6 @@ typedef id   (^SSCollectionCellCreationBlock) (id object, NSIndexPath *indexPath
  * collectionView:viewForSupplementaryElementOfKind:atIndexPath:
  */
 @property (nonatomic, weak) id <UICollectionViewDataSource> fallbackCollectionDataSource;
-
-/**
- * Optional: If the collectionview property is assigned, the data source will perform
- * insert/reload/delete calls on it as data changes.
- */
-@property (nonatomic, weak) UICollectionView *collectionView;
 
 #pragma mark - item access
 

@@ -19,7 +19,7 @@ pod 'SSDataSources', :head
 
 ## Array Data Source
 
-Useful when your data is a simple array. See `SSArrayDataSource.h` for more details.
+Useful when your data is an array. See `SSArrayDataSource.h` for more details.
 
 Check out `ExampleTable` and `ExampleCollectionView` for sample table and collection views that use the array data source.
 
@@ -66,6 +66,9 @@ wizardDataSource.tableView = self.tableView;
 
 // Update the fourth item; reloads the fourth row.
 [wizardDataSource replaceItemAtIndex:3 withItem:@"Pallando"];
+
+// Sorry Merlyn :(
+[wizardDataSource moveItemAtIndex:0 toIndex:1];
 	
 // Remove the second and third cells.
 [wizardDataSource removeItemsInRange:NSMakeRange( 1, 2 )];

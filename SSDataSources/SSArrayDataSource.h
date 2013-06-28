@@ -56,6 +56,11 @@
 - (void) removeItemAtIndex:(NSUInteger)index;
 
 /**
+ * Move an item to a new index.
+ */
+- (void) moveItemAtIndex:(NSUInteger)index1 toIndex:(NSUInteger)index2;
+
+/**
  * Return the number of items in the data source.
  */
 - (NSUInteger) numberOfItems;
