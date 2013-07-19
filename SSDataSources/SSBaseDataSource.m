@@ -12,7 +12,7 @@
 
 @synthesize cellConfigureBlock, cellClass, fallbackCollectionDataSource;
 @synthesize fallbackTableDataSource, tableView, rowAnimation;
-@synthesize collectionView, collectionCellCreationBlock;
+@synthesize cellCreationBlock, collectionView, collectionCellCreationBlock;
 
 #pragma mark - init
 
@@ -59,6 +59,10 @@
         self.cellConfigureBlock( cell, item );
     
     return cell;    
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 0;
 }
 
 - (BOOL)tableView:(UITableView *)tv canMoveRowAtIndexPath:(NSIndexPath *)indexPath {

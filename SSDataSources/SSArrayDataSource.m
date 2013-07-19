@@ -100,9 +100,9 @@
 }
 
 - (void)moveItemAtIndex:(NSUInteger)index1 toIndex:(NSUInteger)index2 {
-    NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:index1
+    NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:(NSInteger)index1
                                                  inSection:0],
-                *indexPath2 = [NSIndexPath indexPathForRow:index2
+                *indexPath2 = [NSIndexPath indexPathForRow:(NSInteger)index2
                                                  inSection:0];
     
     id item = [self itemAtIndexPath:indexPath1];
@@ -195,7 +195,7 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     
     id item = [self itemAtIndexPath:sourceIndexPath];
     [self.items removeObject:item];
-    [self.items insertObject:item atIndex:destinationIndexPath.row];
+    [self.items insertObject:item atIndex:(NSUInteger)destinationIndexPath.row];
 }
 
 #pragma mark - UICollectionViewDataSource
