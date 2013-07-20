@@ -19,7 +19,6 @@
 		492A5D2B179B29B600A137CC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 492A5D0B179B29B600A137CC /* UIKit.framework */; };
 		492A5D2C179B29B600A137CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 492A5D0D179B29B600A137CC /* Foundation.framework */; };
 		492A5D34179B29B600A137CC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 492A5D32179B29B600A137CC /* InfoPlist.strings */; };
-		492A5D37179B29B600A137CC /* ExampleSSDataSourcesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 492A5D36179B29B600A137CC /* ExampleSSDataSourcesTests.m */; };
 		492A5D48179B2AC800A137CC /* SSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 492A5D41179B2AC800A137CC /* SSAppDelegate.m */; };
 		492A5D49179B2AC800A137CC /* SSCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 492A5D43179B2AC800A137CC /* SSCollectionViewController.m */; };
 		492A5D4A179B2AC800A137CC /* SSSolidColorCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 492A5D45179B2AC800A137CC /* SSSolidColorCollectionCell.m */; };
@@ -55,8 +54,6 @@
 		492A5D29179B29B600A137CC /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		492A5D31179B29B600A137CC /* ExampleSSDataSourcesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ExampleSSDataSourcesTests-Info.plist"; sourceTree = "<group>"; };
 		492A5D33179B29B600A137CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		492A5D35179B29B600A137CC /* ExampleSSDataSourcesTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExampleSSDataSourcesTests.h; sourceTree = "<group>"; };
-		492A5D36179B29B600A137CC /* ExampleSSDataSourcesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExampleSSDataSourcesTests.m; sourceTree = "<group>"; };
 		492A5D40179B2AC800A137CC /* SSAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSAppDelegate.h; sourceTree = "<group>"; };
 		492A5D41179B2AC800A137CC /* SSAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSAppDelegate.m; sourceTree = "<group>"; };
 		492A5D42179B2AC800A137CC /* SSCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSCollectionViewController.h; sourceTree = "<group>"; };
@@ -163,8 +160,6 @@
 		492A5D2F179B29B600A137CC /* ExampleSSDataSourcesTests */ = {
 			isa = PBXGroup;
 			children = (
-				492A5D35179B29B600A137CC /* ExampleSSDataSourcesTests.h */,
-				492A5D36179B29B600A137CC /* ExampleSSDataSourcesTests.m */,
 				492A5D30179B29B600A137CC /* Supporting Files */,
 			);
 			path = ExampleSSDataSourcesTests;
@@ -365,7 +360,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				492A5D37179B29B600A137CC /* ExampleSSDataSourcesTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
