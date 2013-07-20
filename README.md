@@ -38,7 +38,8 @@ Check out `ExampleTable` and `ExampleCollectionView` for sample table and collec
     wizardDataSource = [[SSArrayDataSource alloc] initWithItems:
                         @[ @"Merlyn", @"Gandalf", @"Melisandre" ]];
 
-	// The configure block is called for each cell with the object being presented in that cell.
+	// The configure block is called for each cell with 
+	// the object being presented in that cell.
     wizardDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, NSString *wizard) {
         cell.textLabel.text = wizard;
     };

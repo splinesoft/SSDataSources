@@ -43,7 +43,7 @@
     NSMutableArray *items = [NSMutableArray array];
     
     for( NSUInteger i = 0; i < 15; i++ )
-        [items addObject:@(arc4random() % 10000)];
+        [items addObject:@( arc4random_uniform( 10000 ) )];
     
     dataSource = [[SSArrayDataSource alloc] initWithItems:items];
     dataSource.cellClass = [SSSolidColorCollectionCell class];
@@ -56,16 +56,18 @@
 }
 
 - (void)addItem {
-    [dataSource appendItems:@[ @(arc4random() % 10000)]];
+    [dataSource appendItem:@( arc4random_uniform( 10000 ))];
 }
 
 - (void)removeItem {
     if( [dataSource numberOfItems] > 0 )
-        [dataSource removeItemAtIndex:(arc4random() % [dataSource numberOfItems])];
+        [dataSource removeItemAtIndex:(arc4random_uniform([dataSource numberOfItems]))];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"selected item %@", [dataSource itemAtIndexPath:indexPath] );
+    NSNumber *item = [dataSource itemAtIndexPath:indexPath];
+    
+    NSLog(@"selected item %@", item );
 }
 
 @end

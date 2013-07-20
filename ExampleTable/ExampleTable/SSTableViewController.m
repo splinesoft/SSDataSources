@@ -21,23 +21,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add Row"
-                                                                             style:UIBarButtonItemStyleBordered
-                                                                            target:self
-                                                                            action:@selector(addRow)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
+                                             initWithTitle:@"Add Row"
+                                             style:UIBarButtonItemStyleBordered
+                                             target:self
+                                             action:@selector(addRow)];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                                                                           target:self
-                                                                                           action:@selector(toggleEditing)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
+                                              initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                              target:self
+                                              action:@selector(toggleEditing)];
     
     NSMutableArray *items = [NSMutableArray array];
     
     for( NSUInteger i = 0; i < 5; i++ )
-        [items addObject:@(arc4random() % 10000)];
+        [items addObject:@( arc4random_uniform( 10000 ) )];
     
     dataSource = [[SSArrayDataSource alloc] initWithItems:items];
     dataSource.tableView = self.tableView;
-    dataSource.rowAnimation = UITableViewRowAnimationFade;
+    dataSource.rowAnimation = UITableViewRowAnimationRight;
     dataSource.fallbackTableDataSource = self;
     dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, NSNumber *number) {
         cell.textLabel.text = [number stringValue];
@@ -49,7 +51,7 @@
 #pragma mark - actions
 
 - (void)addRow {
-    [dataSource appendItems:@[ @( arc4random() % 10000 ) ]];
+    [dataSource appendItem:@( arc4random_uniform( 10000 ) )];
 }
 
 - (void)toggleEditing {
@@ -59,7 +61,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
                                               initWithBarButtonSystemItem:( [self.tableView isEditing]
                                                                             ? UIBarButtonSystemItemDone
-                                                                           : UIBarButtonSystemItemEdit )
+                                                                            : UIBarButtonSystemItemEdit )
                                               target:self
                                               action:@selector(toggleEditing)];
 }
@@ -87,7 +89,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"selected item %@", [dataSource itemAtIndexPath:indexPath]);
+    NSNumber *item = [dataSource itemAtIndexPath:indexPath];
+    
+    NSLog(@"selected item %@", item);
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

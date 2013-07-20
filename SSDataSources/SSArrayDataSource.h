@@ -30,6 +30,7 @@
 /**
  * Add some more items to the end of the items array.
  */
+- (void) appendItem:(id)item;
 - (void) appendItems:(NSArray *)newItems;
 
 /**

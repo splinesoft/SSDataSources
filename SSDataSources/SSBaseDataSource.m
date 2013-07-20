@@ -66,7 +66,8 @@
 }
 
 - (BOOL)tableView:(UITableView *)tv canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    if( [self.fallbackTableDataSource respondsToSelector:@selector(tableView:canMoveRowAtIndexPath:)] )
+    if( [self.fallbackTableDataSource respondsToSelector:
+         @selector(tableView:canMoveRowAtIndexPath:)] )
         return [self.fallbackTableDataSource tableView:tv
                                  canMoveRowAtIndexPath:indexPath];
     
@@ -74,7 +75,8 @@
 }
 
 - (BOOL)tableView:(UITableView *)tv canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if( [self.fallbackTableDataSource respondsToSelector:@selector(tableView:canEditRowAtIndexPath:)] )
+    if( [self.fallbackTableDataSource respondsToSelector:
+         @selector(tableView:canEditRowAtIndexPath:)] )
         return [self.fallbackTableDataSource tableView:tv
                                  canEditRowAtIndexPath:indexPath];
     
@@ -85,7 +87,8 @@
 commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if( [self.fallbackTableDataSource respondsToSelector:@selector(tableView:commitEditingStyle:forRowAtIndexPath:)] )
+    if( [self.fallbackTableDataSource respondsToSelector:
+         @selector(tableView:commitEditingStyle:forRowAtIndexPath:)] )
         [self.fallbackTableDataSource tableView:tv
                              commitEditingStyle:editingStyle
                               forRowAtIndexPath:indexPath];
@@ -112,9 +115,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     return cell;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
     @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:[NSString stringWithFormat:@"Did you forget to override %@?",
+                                   reason:[NSString stringWithFormat:
+                                           @"Did you forget to override %@?",
                                            NSStringFromSelector(_cmd)]
                                  userInfo:nil];
 }
@@ -122,7 +127,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (UICollectionReusableView *)collectionView:(UICollectionView *)cv
            viewForSupplementaryElementOfKind:(NSString *)kind
                                  atIndexPath:(NSIndexPath *)indexPath {
-    if( [self.fallbackCollectionDataSource respondsToSelector:@selector(collectionView:viewForSupplementaryElementOfKind:atIndexPath:)] )
+    if( [self.fallbackCollectionDataSource respondsToSelector:
+         @selector(collectionView:viewForSupplementaryElementOfKind:atIndexPath:)] )
         return [self.fallbackCollectionDataSource collectionView:cv
                                viewForSupplementaryElementOfKind:kind
                                                      atIndexPath:indexPath];

@@ -6,19 +6,19 @@
 //  Copyright (c) 2013 Splinesoft. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-
-typedef void (^SSCellConfigureBlock)          (id cell, id object);
-typedef id   (^SSTableCellCreationBlock)      (id object);
-typedef id   (^SSCollectionCellCreationBlock) (id object, NSIndexPath *indexPath);
-
 /**
  * A generic data source object for table and collection views. Takes care of creating new cells 
  * and exposes a block interface to configure cells with the object they represent.
  * Don't use this class directly except to subclass - instead, see SSArrayDataSource and
  * SSCoreDataSource.
  */
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+typedef void (^SSCellConfigureBlock)          (id cell, id object);
+typedef id   (^SSTableCellCreationBlock)      (id object);
+typedef id   (^SSCollectionCellCreationBlock) (id object, NSIndexPath *indexPath);
 
 @interface SSBaseDataSource : NSObject <UITableViewDataSource, UICollectionViewDataSource>
 
@@ -29,14 +29,17 @@ typedef id   (^SSCollectionCellCreationBlock) (id object, NSIndexPath *indexPath
 /**
  * The base class to use to instantiate new cells.
  * Assumed to be a subclass of SSBaseTableCell or SSBaseCollectionCell.
- * If you use a different cell class or want to specify your own custom
- * cell creation logic, specify either a cellCreationBlock (for UITableView) 
- * or collectionCellCreationBlock (for UICollectionView).
+ * If you use a cell class that does not inherit one of those two,
+ * or if you want to specify your own custom cell creation logic, you can 
+ * ignore this property and instead specify either a
+ * cellCreationBlock (for UITableView) or
+ * collectionCellCreationBlock (for UICollectionView).
  */
 @property (nonatomic, weak) Class cellClass;
 
 /**
- * Cell configuration block, called for each cell with the object to display in that cell.
+ * Cell configuration block, called for each table and collection 
+ * cell with the object to display in that cell.
  */
 @property (nonatomic, copy) SSCellConfigureBlock cellConfigureBlock;
 

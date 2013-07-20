@@ -56,6 +56,10 @@
     return self.items;
 }
 
+- (void)appendItem:(id)item {
+    [self appendItems:@[ item ]];
+}
+
 - (void)appendItems:(NSArray *)newItems {
     NSUInteger count = [self numberOfItems];
     
