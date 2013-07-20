@@ -21,16 +21,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
-                                             initWithTitle:@"Add Row"
-                                             style:UIBarButtonItemStyleBordered
-                                             target:self
-                                             action:@selector(addRow)];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                              initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                              target:self
-                                              action:@selector(toggleEditing)];
+    self.navigationItem.rightBarButtonItems = @[ [[UIBarButtonItem alloc]
+                                                  initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                                  target:self
+                                                  action:@selector(toggleEditing)],
+                                                 [[UIBarButtonItem alloc]
+                                                  initWithTitle:@"Add Row"
+                                                  style:UIBarButtonItemStyleBordered
+                                                  target:self
+                                                  action:@selector(addRow)]
+                                               ];
     
     NSMutableArray *items = [NSMutableArray array];
     
