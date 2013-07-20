@@ -63,6 +63,7 @@
 		492A5D45179B2AC800A137CC /* SSSolidColorCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSolidColorCollectionCell.m; sourceTree = "<group>"; };
 		492A5D46179B2AC800A137CC /* SSTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTableViewController.h; sourceTree = "<group>"; };
 		492A5D47179B2AC800A137CC /* SSTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSTableViewController.m; sourceTree = "<group>"; };
+		4958CB47179B4CBD006AB61C /* SSTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTestHelper.h; sourceTree = "<group>"; };
 		498D871F179B30CF00C8C365 /* SSBaseDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSBaseDataSourceTests.m; sourceTree = "<group>"; };
 		51DB34876E1C4A29A4580FA5 /* Pods-ExampleSSDataSourcesTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSSDataSourcesTests.xcconfig"; path = "Pods/Pods-ExampleSSDataSourcesTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 		60DE92F2CD3643D180EFBAC8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -173,6 +174,7 @@
 			children = (
 				492A5D31179B29B600A137CC /* ExampleSSDataSourcesTests-Info.plist */,
 				492A5D32179B29B600A137CC /* InfoPlist.strings */,
+				4958CB47179B4CBD006AB61C /* SSTestHelper.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
