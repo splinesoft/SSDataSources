@@ -3,3 +3,9 @@ platform :ios, '6.0'
 xcodeproj 'ExampleSSDataSources'
 
 pod 'SSDataSources', :path => "../"
+
+target :ExampleSSDataSourcesTests, :exclusive => true do
+  # A Matcher Framework for Objective-C/Cocoa with nicer assertions
+  # than OCUnit's (though it still works within SenTestCase subclasses).
+  pod 'Expecta', '~> 0.2.1'
+end
