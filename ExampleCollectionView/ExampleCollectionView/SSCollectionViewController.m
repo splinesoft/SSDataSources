@@ -23,10 +23,9 @@
     [super viewDidLoad];
     
     self.navigationItem.leftBarButtonItems = @[
-        [[UIBarButtonItem alloc] initWithTitle:@"Add Cell"
-                                         style:UIBarButtonItemStyleBordered
-                                        target:self
-                                        action:@selector(addItem)],
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                      target:self
+                                                      action:@selector(addItem)],
         
         [[UIBarButtonItem alloc] initWithTitle:@"Remove Cell"
                                          style:UIBarButtonItemStyleBordered

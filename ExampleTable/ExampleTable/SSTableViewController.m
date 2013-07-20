@@ -22,8 +22,7 @@
     [super viewDidLoad];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
-                                             initWithTitle:@"Add Row"
-                                             style:UIBarButtonItemStyleBordered
+                                             initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                                              target:self
                                              action:@selector(addRow)];
     
