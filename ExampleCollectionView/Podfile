@@ -2,4 +2,4 @@ platform :ios, '6.0'
 
 xcodeproj 'ExampleCollectionView'
 
-pod 'SSDataSources', :local => "../"
+pod 'SSDataSources', :path => "../"
