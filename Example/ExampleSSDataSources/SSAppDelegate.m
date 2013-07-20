@@ -8,7 +8,7 @@
 
 #import "SSAppDelegate.h"
 
-@interface SSRootViewController : UIViewController
+@interface SSRootViewController : UITableViewController
 @end
 
 @implementation SSAppDelegate
@@ -16,7 +16,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[SSRootViewController new]];
+    id vc = [[SSRootViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:vc];
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -26,11 +27,12 @@
 #pragma mark -
 
 #import "SSCollectionViewController.h"
+#import <SSDataSources/SSArrayDataSource.h>
+#import <SSDataSources/SSBaseTableCell.h>
 #import "SSTableViewController.h"
 
 @interface SSRootViewController ()
-@property (nonatomic, strong) UIButton *tableButton;
-@property (nonatomic, strong) UIButton *collectionButton;
+@property (nonatomic, strong) SSBaseDataSource *dataSource;
 @end
 
 @implementation SSRootViewController
@@ -40,30 +42,15 @@
     [super viewDidLoad];
 
     self.title = NSLocalizedString(@"SSDataSources Examples", nil);
-    self.view.backgroundColor = UIColor.lightGrayColor;
 
-    [self.view addSubview:self.tableButton];
-    [self.view addSubview:self.collectionButton];
-}
-
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-
-    CGFloat buttonWidth = 302.0;
-    CGFloat buttonXOffset = floorf((self.view.bounds.size.width - buttonWidth) / 2.0);
-    CGFloat buttonVerticalPadding = 44.0;
-    CGSize buttonSize = { .width = buttonWidth, .height = 44.0 };
-    self.tableButton.frame = (CGRect) {
-        .origin.x = buttonXOffset,
-        .origin.y = floorf(self.view.bounds.size.height / 2.0) - buttonVerticalPadding*2,
-        .size = buttonSize
+    self.dataSource = [[SSArrayDataSource alloc] initWithItems:@[
+        NSLocalizedString(@"Table View Example", nil),
+        NSLocalizedString(@"Collection View Example", nil)
+    ]];
+    self.dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, NSString *title) {
+        cell.textLabel.text = title;
     };
-    self.collectionButton.frame = (CGRect) {
-        .origin.x = buttonXOffset,
-        .origin.y = floorf(self.view.bounds.size.height / 2.0),
-        .size = buttonSize
-    };
+    self.tableView.dataSource = self.dataSource;
 }
 
 - (void)tableButtonTouched:(id)sender
@@ -85,24 +72,10 @@
     [self.navigationController pushViewController:cv animated:YES];
 }
 
-- (UIButton *)tableButton
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_tableButton == nil) {
-        _tableButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [_tableButton setTitle:NSLocalizedString(@"Table View Example", nil) forState:UIControlStateNormal];
-        [_tableButton addTarget:self action:@selector(tableButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _tableButton;
-}
-
-- (UIButton *)collectionButton
-{
-    if (_collectionButton == nil) {
-        _collectionButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        [_collectionButton setTitle:NSLocalizedString(@"Collection View Example", nil) forState:UIControlStateNormal];
-        [_collectionButton addTarget:self action:@selector(collectionButtonTouched:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _collectionButton;
+    if (indexPath.row == 0) [self tableButtonTouched:nil];
+    else if (indexPath.row == 1) [self collectionButtonTouched:nil];
 }
 
 @end
