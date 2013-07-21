@@ -1,6 +1,6 @@
 //
 //  main.m
-//  ExampleCollectionView
+//  ExampleSSDataSources
 //
 //  Created by Jonathan Hersh on 6/24/13.
 //  Copyright (c) 2013 Splinesoft. All rights reserved.
@@ -13,6 +13,8 @@
 int main(int argc, char *argv[])
 {
     @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([SSAppDelegate class]));
+        return UIApplicationMain(argc, argv,
+                                 NSStringFromClass([SSAppDelegate class]),
+                                 NSStringFromClass([SSAppDelegate class]));
     }
 }

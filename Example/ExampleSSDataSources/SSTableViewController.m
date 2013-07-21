@@ -12,6 +12,8 @@
 @interface SSTableViewController () <UITableViewDataSource>
 - (void) addRow;
 - (void) toggleEditing;
+
+- (void) updateBarButtonItems;
 @end
 
 @implementation SSTableViewController {
@@ -21,15 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
-                                             initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                             target:self
-                                             action:@selector(addRow)];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                              initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                              target:self
-                                              action:@selector(toggleEditing)];
+    [self updateBarButtonItems];
     
     NSMutableArray *items = [NSMutableArray array];
     
@@ -57,12 +51,22 @@
     [self.tableView setEditing:![self.tableView isEditing]
                       animated:YES];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                              initWithBarButtonSystemItem:( [self.tableView isEditing]
-                                                                            ? UIBarButtonSystemItemDone
-                                                                            : UIBarButtonSystemItemEdit )
-                                              target:self
-                                              action:@selector(toggleEditing)];
+    [self updateBarButtonItems];
+}
+
+- (void)updateBarButtonItems {
+    self.navigationItem.rightBarButtonItems = @[
+        [[UIBarButtonItem alloc]
+         initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+         target:self
+         action:@selector(addRow)],
+        [[UIBarButtonItem alloc]
+         initWithBarButtonSystemItem:( [self.tableView isEditing]
+                                      ? UIBarButtonSystemItemDone
+                                      : UIBarButtonSystemItemEdit )
+         target:self
+         action:@selector(toggleEditing)]
+    ];
 }
 
 #pragma mark - fallback UITableViewDataSource (for edit/move)

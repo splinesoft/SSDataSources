@@ -21,7 +21,7 @@ pod 'SSDataSources', :head
 
 Useful when your data is an array. See `SSArrayDataSource.h` for more details.
 
-Check out `ExampleTable` and `ExampleCollectionView` for sample table and collection views that use the array data source.
+Check out the example project for sample table and collection views that use the array data source.
 
 
 ```objc

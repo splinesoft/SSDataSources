@@ -10,4 +10,6 @@
 
 @interface SSCollectionViewController : UICollectionViewController
 
+- (instancetype) init;
+
 @end
