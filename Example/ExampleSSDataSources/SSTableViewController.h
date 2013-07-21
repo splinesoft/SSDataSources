@@ -1,5 +1,5 @@
 //
-//  SSViewController.h
+//  SSTableViewController.h
 //  ExampleTable
 //
 //  Created by Jonathan Hersh on 6/8/13.
@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SSTableViewController : UITableViewController
+
+- (instancetype) init;
 
 @end

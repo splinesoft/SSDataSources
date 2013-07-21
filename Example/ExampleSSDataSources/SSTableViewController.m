@@ -1,5 +1,5 @@
 //
-//  SSViewController.m
+//  SSTableViewController.m
 //  ExampleTable
 //
 //  Created by Jonathan Hersh on 6/8/13.
@@ -9,7 +9,7 @@
 #import "SSTableViewController.h"
 #import <SSDataSources.h>
 
-@interface SSTableViewController () <UITableViewDataSource>
+@interface SSTableViewController ()
 - (void) addRow;
 - (void) toggleEditing;
 
@@ -18,6 +18,14 @@
 
 @implementation SSTableViewController {
     SSArrayDataSource *dataSource;
+}
+
+- (instancetype)init {
+    if( ( self = [self initWithStyle:UITableViewStylePlain] ) ) {
+        
+    }
+    
+    return self;
 }
 
 - (void)viewDidLoad {

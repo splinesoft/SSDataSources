@@ -23,10 +23,10 @@
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.minimumInteritemSpacing = 4.0f;
     layout.minimumLineSpacing = 10.0f;
-    layout.sectionInset = UIEdgeInsetsMake( 10, 5, 10, 5 );
-    layout.itemSize = CGSizeMake(65, 50);
+    layout.sectionInset = UIEdgeInsetsMake( 5, 5, 5, 5 );
+    layout.itemSize = CGSizeMake(70, 50);
     
-    if( ( self = [super initWithCollectionViewLayout:layout] ) ) {
+    if( ( self = [self initWithCollectionViewLayout:layout] ) ) {
         
     }
     

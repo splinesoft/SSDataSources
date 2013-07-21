@@ -56,10 +56,10 @@ typedef NS_ENUM( NSUInteger, SSDataSourcesExample ) {
     
     switch( example ) {
         case SSDataSourcesExampleTable:
-            viewController = [[SSTableViewController alloc] initWithStyle:UITableViewStylePlain];
+            viewController = [SSTableViewController new];
             break;
         case SSDataSourcesExampleCollectionView:
-            viewController = [[SSCollectionViewController alloc] init];
+            viewController = [SSCollectionViewController new];
             break;
         default:
             break;
