@@ -1,6 +1,5 @@
 #import "SSTestHelper.h"
-#import <SSDataSources/SSArrayDataSource.h>
-#import <SSDataSources/SSBaseCollectionCell.h>
+#import <SSDataSources.h>
 
 @interface SSArrayDataSourceTests : SenTestCase
 @end

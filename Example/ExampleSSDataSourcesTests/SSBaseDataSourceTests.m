@@ -1,6 +1,5 @@
 #import "SSTestHelper.h"
-#import <SSDataSources/SSBaseDataSource.h>
-#import <SSDataSources/SSBaseTableCell.h>
+#import <SSDataSources.h>
 
 @interface SSBaseDataSourceTests : SenTestCase
 @end
