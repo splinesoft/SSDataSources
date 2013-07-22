@@ -30,7 +30,10 @@ typedef NS_ENUM( NSUInteger, SSDataSourcesExample ) {
                     @(SSDataSourcesExampleCollectionView)
                  ]];
     
-    dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, NSNumber *exampleType) {
+    dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
+                                      NSNumber *exampleType, 
+                                      UITableView *tableView,
+                                      NSIndexPath *indexPath) {
         NSString *title;
         
         switch( [exampleType unsignedIntegerValue] ) {

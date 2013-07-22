@@ -42,7 +42,10 @@
     dataSource.tableView = self.tableView;
     dataSource.rowAnimation = UITableViewRowAnimationRight;
     dataSource.fallbackTableDataSource = self;
-    dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, NSNumber *number) {
+    dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
+                                      NSNumber *number, 
+                                      UITableView *tableView,
+                                      NSIndexPath *ip ) {
         cell.textLabel.text = [number stringValue];
     };
     

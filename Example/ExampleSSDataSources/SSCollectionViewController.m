@@ -59,7 +59,10 @@
     
     dataSource = [[SSArrayDataSource alloc] initWithItems:items];
     dataSource.cellClass = [SSSolidColorCollectionCell class];
-    dataSource.cellConfigureBlock = ^(SSSolidColorCollectionCell *cell, NSNumber *number ) {
+    dataSource.cellConfigureBlock = ^(SSSolidColorCollectionCell *cell, 
+                                      NSNumber *number, 
+                                      UICollectionView *collectionView,
+                                      NSIndexPath *ip ) {
         cell.label.text = [number stringValue];
     };
     dataSource.collectionView = self.collectionView;

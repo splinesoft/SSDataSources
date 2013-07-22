@@ -39,8 +39,12 @@ Check out the example project for sample table and collection views that use the
                         @[ @"Merlyn", @"Gandalf", @"Melisandre" ]];
 
 	// The configure block is called for each cell with 
-	// the object being presented in that cell.
-    wizardDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, NSString *wizard) {
+	// the object being presented in that cell
+	// and the index path at which the cell appears.
+    wizardDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
+                                            NSString *wizard,
+                                            UITableView *tableView,
+                                            NSIndexPath *indexPath ) {
         cell.textLabel.text = wizard;
     };
     
@@ -80,7 +84,9 @@ Perhaps you have custom table cell classes or multiple classes in the same table
 ```objc
 __weak typeof (self.tableView) weakTable = self.tableView;
 
-wizardDataSource.cellCreationBlock = ^id(NSString *wizard) {
+wizardDataSource.cellCreationBlock = ^id(NSString *wizard, 
+                                         UITableView *tableView, 
+                                         NSIndexPath *indexPath) {
 	if( [wizard isEqualToString:@"Gandalf"] )
 		return [MiddleEarthWizardCell cellForTableView:weakTable];
 	else if( [wizard isEqualToString:@"Merlyn"] )
@@ -121,7 +127,10 @@ You're a scholar, a man-/woman-about-internet, and sometimes you want to present
                                                       inContext:[NSManagedObjectContext MR_defaultContext]
                                              sectionNameKeyPath:nil];
                                                  
-    dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, Trigger *trigger) {
+    dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
+                                      Trigger *trigger, 
+                                      UITableView *tableView,
+                                      NSIndexPath *indexPath ) {
         cell.textLabel.text = trigger.name;
     };
     
