@@ -16,9 +16,16 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-typedef void (^SSCellConfigureBlock)          (id cell, id object);
-typedef id   (^SSTableCellCreationBlock)      (id object);
-typedef id   (^SSCollectionCellCreationBlock) (id object, NSIndexPath *indexPath);
+// Block called to configure each table and collection cell.
+typedef void (^SSCellConfigureBlock) (id cell,                 // The cell to configure
+                                      id object,               // The object being presented in this cell
+                                      id parentView,           // The parent table or collection view
+                                      NSIndexPath *indexPath); // Index path for this cell
+
+// Optional block used to create a table or collection cell.
+typedef id   (^SSCellCreationBlock)  (id object,               // The object being presented in this cell
+                                      id parentView,           // The parent table or collection view
+                                      NSIndexPath *indexPath); // Index path for this cell
 
 @interface SSBaseDataSource : NSObject <UITableViewDataSource, UICollectionViewDataSource>
 
@@ -30,18 +37,22 @@ typedef id   (^SSCollectionCellCreationBlock) (id object, NSIndexPath *indexPath
  * The base class to use to instantiate new cells.
  * Assumed to be a subclass of SSBaseTableCell or SSBaseCollectionCell.
  * If you use a cell class that does not inherit one of those two,
- * or if you want to specify your own custom cell creation logic, you can 
- * ignore this property and instead specify either a
- * cellCreationBlock (for UITableView) or
- * collectionCellCreationBlock (for UICollectionView).
+ * or if you want to specify your own custom cell creation logic, 
+ * you can ignore this property and instead specify a cellCreationBlock.
  */
 @property (nonatomic, weak) Class cellClass;
 
 /**
  * Cell configuration block, called for each table and collection 
- * cell with the object to display in that cell.
+ * cell with the object to display in that cell. See block signature above.
  */
 @property (nonatomic, copy) SSCellConfigureBlock cellConfigureBlock;
+
+/**
+ * Optional block to use to instantiate new table and collection cells.
+ * See block signature above.
+ */
+@property (nonatomic, copy) SSCellCreationBlock cellCreationBlock;
 
 #pragma mark - UITableView
 
@@ -50,11 +61,6 @@ typedef id   (^SSCollectionCellCreationBlock) (id object, NSIndexPath *indexPath
  * insert/reload/delete calls on it as data changes.
  */
 @property (nonatomic, weak) UITableView *tableView;
-
-/**
- * Optional block to use to instantiate new table cells.
- */
-@property (nonatomic, copy) SSTableCellCreationBlock cellCreationBlock;
 
 /**
  * Optional animation to use when updating the table.
@@ -81,11 +87,6 @@ typedef id   (^SSCollectionCellCreationBlock) (id object, NSIndexPath *indexPath
  * insert/reload/delete calls on it as data changes.
  */
 @property (nonatomic, weak) UICollectionView *collectionView;
-
-/**
- * Optional block to use to create new collection cells.
- */
-@property (nonatomic, copy) SSCollectionCellCreationBlock collectionCellCreationBlock;
 
 /**
  * Optional data source fallback for supplementary elements.

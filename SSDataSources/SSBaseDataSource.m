@@ -12,7 +12,7 @@
 
 @synthesize cellConfigureBlock, cellClass, fallbackCollectionDataSource;
 @synthesize fallbackTableDataSource, tableView, rowAnimation;
-@synthesize cellCreationBlock, collectionView, collectionCellCreationBlock;
+@synthesize cellCreationBlock, collectionView;
 
 #pragma mark - init
 
@@ -28,7 +28,6 @@
 - (void)dealloc {
     self.cellConfigureBlock = nil;
     self.cellCreationBlock = nil;
-    self.collectionCellCreationBlock = nil;
 }
 
 #pragma mark - item access
@@ -51,12 +50,12 @@
     id cell;
     
     if( self.cellCreationBlock )
-        cell = self.cellCreationBlock( item );
+        cell = self.cellCreationBlock( item, tv, indexPath );
     else
         cell = [self.cellClass cellForTableView:tv];
 
     if( self.cellConfigureBlock )
-        self.cellConfigureBlock( cell, item );
+        self.cellConfigureBlock( cell, item, tv, indexPath );
     
     return cell;    
 }
@@ -107,14 +106,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     id item = [self itemAtIndexPath:indexPath];
     id cell;
     
-    if( self.collectionCellCreationBlock )
-        cell = self.collectionCellCreationBlock( item, indexPath );
+    if( self.cellCreationBlock )
+        cell = self.cellCreationBlock( item, cv, indexPath );
     else
         cell = [self.cellClass cellForCollectionView:cv
                                            indexPath:indexPath];
     
     if( self.cellConfigureBlock )
-        self.cellConfigureBlock( cell, item );
+        self.cellConfigureBlock( cell, item, cv, indexPath );
     
     return cell;
 }

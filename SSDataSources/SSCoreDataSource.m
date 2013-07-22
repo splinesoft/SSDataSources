@@ -55,14 +55,16 @@
     return self;
 }
 
-- (id)itemAtIndexPath:(NSIndexPath *)indexPath {
-    return [controller objectAtIndexPath:indexPath];
-}
-
 - (void)dealloc {
     self.controller = nil;
     [sectionUpdates removeAllObjects];
     [objectUpdates removeAllObjects];
+}
+
+#pragma mark - item access
+
+- (id)itemAtIndexPath:(NSIndexPath *)indexPath {
+  return [controller objectAtIndexPath:indexPath];
 }
 
 - (NSUInteger)itemCount {
