@@ -9,9 +9,21 @@ No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numbe
 
 `SSDataSources` powers various tables in my app [MUDRammer - a modern MUD client for iPhone and iPad](https://itunes.apple.com/us/app/mudrammer-a-modern-mud-client/id597157072?mt=8). Let me know if you use it in your app!
 
+## Example
+
+If you don't have [Cocoapods](http://cocoapods.org): `[sudo] gem install cocoapods`
+
+
+```
+git clone https://github.com/splinesoft/SSDataSources.git
+cd SSDataSources
+pod install
+open ExampleSSDataSources.xcworkspace
+```
+
 ## Install
 
-Install with [Cocoapods](http://cocoapods.org). Add to your podfile:
+Add to your podfile:
 
 ```
 pod 'SSDataSources', :head
@@ -39,7 +51,8 @@ Check out the example project for sample table and collection views that use the
                         @[ @"Merlyn", @"Gandalf", @"Melisandre" ]];
 
 	// The configure block is called for each cell with 
-	// the object being presented in that cell
+	// the object being presented in that cell,
+	// the parent table or collection view,
 	// and the index path at which the cell appears.
     wizardDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
                                             NSString *wizard,
@@ -107,7 +120,7 @@ Your view controller should continue to implement `UITableViewDelegate`. `SSData
 
 ## Core Data
 
-You're a scholar, a man-/woman-about-internet, and sometimes you want to present a `UITableView` or `UICollectionView` backed by a core data fetch request or fetched results controller. `SSDataSources` has got you covered with `SSCoreDataSource`, featured here with a cameo by [MagicalRecord](https://github.com/magicalpanda/MagicalRecord).
+You're a modern man-/woman-about-Internet and sometimes you want to present a `UITableView` or `UICollectionView` backed by a core data fetch request or fetched results controller. `SSDataSources` has you covered with `SSCoreDataSource`, featured here with a cameo by [MagicalRecord](https://github.com/magicalpanda/MagicalRecord).
 
 ```objc
 @interface SSCoreDataTableViewController : UITableViewController
@@ -137,17 +150,18 @@ You're a scholar, a man-/woman-about-internet, and sometimes you want to present
     // Set the table data source.
     self.tableView.dataSource = dataSource;
     
-    // Optional - setting the `tableView` property will automatically update the table in response to core data
-    // insert, update, and delete events.
+    // Optional - setting the `tableView` property will automatically update the table 
+    // in response to core data insert, update, and delete events.
     dataSource.tableView = self.tableView;
     
     // Optional - row animation to use for update events.
     dataSource.rowAnimation = UITableViewRowAnimationFade;
     
     // Optional - setting the fallbackTableDataSource will call 
-    // tableView:canEditRowAtIndexPath: and
+    // tableView:canEditRowAtIndexPath:
+    // tableView:canMoveRowAtIndexPath:
     // tableView:commitEditingStyle:forRowAtIndexPath 
-    // on your fallback delegate, so you can implement editing if necessary.
+    // on your fallback delegate if you need to implement editing and moving
     dataSource.fallbackTableDataSource = self;
 }
 @end
