@@ -9,24 +9,24 @@ No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numbe
 
 `SSDataSources` powers various tables in my app [MUDRammer - a modern MUD client for iPhone and iPad](https://itunes.apple.com/us/app/mudrammer-a-modern-mud-client/id597157072?mt=8). Let me know if you use it in your app!
 
-## Example
+## Install
+
+Add to your podfile:
+
+```
+pod 'SSDataSources'
+```
+
+## Samples
 
 If you don't have [Cocoapods](http://cocoapods.org): `[sudo] gem install cocoapods`
 
 
 ```
 git clone https://github.com/splinesoft/SSDataSources.git
-cd SSDataSources
+cd SSDataSources/Example
 pod install
 open ExampleSSDataSources.xcworkspace
-```
-
-## Install
-
-Add to your podfile:
-
-```
-pod 'SSDataSources', :head
 ```
 
 ## Array Data Source
