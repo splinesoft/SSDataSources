@@ -67,6 +67,23 @@
   return [controller objectAtIndexPath:indexPath];
 }
 
+- (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)objectId {
+  for( NSUInteger section = 0; section < [[controller sections] count]; section++ ) {
+    id <NSFetchedResultsSectionInfo> sec = [controller sections][section];
+        
+    NSUInteger index = [[sec objects] indexOfObjectPassingTest:^BOOL( NSManagedObject *object, 
+                                                                      NSUInteger idx, 
+                                                                      BOOL *stop) {
+      return [[object objectID] isEqual:objectId];
+    }];
+    
+    if( index != NSNotFound )
+      return [NSIndexPath indexPathForRow:(NSInteger)index inSection:(NSInteger)section];
+  }
+  
+  return nil;
+}
+
 - (NSUInteger)itemCount {
     NSUInteger count = 0;
     

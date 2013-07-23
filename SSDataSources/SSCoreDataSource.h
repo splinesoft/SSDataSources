@@ -38,4 +38,9 @@
  */
 - (NSUInteger) itemCount;
 
+/**
+ * Determine an indexpath for the record with a given managed object ID.
+ */
+- (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)objectId;
+
 @end
