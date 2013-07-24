@@ -11,16 +11,13 @@ No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numbe
 
 ## Install
 
-Add to your podfile:
+Install with [Cocoapods](http://cocoapods.org). Add to your podfile:
 
 ```
 pod 'SSDataSources'
 ```
 
 ## Samples
-
-If you don't have [Cocoapods](http://cocoapods.org): `[sudo] gem install cocoapods`
-
 
 ```
 git clone https://github.com/splinesoft/SSDataSources.git
@@ -57,7 +54,7 @@ Check out the example project for sample table and collection views that use the
     wizardDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
                                             NSString *wizard,
                                             UITableView *tableView,
-                                            NSIndexPath *indexPath ) {
+                                            NSIndexPath *indexPath) {
         cell.textLabel.text = wizard;
     };
     
@@ -95,15 +92,13 @@ wizardDataSource.tableView = self.tableView;
 Perhaps you have custom table cell classes or multiple classes in the same table:
 
 ```objc
-__weak typeof (self.tableView) weakTable = self.tableView;
-
 wizardDataSource.cellCreationBlock = ^id(NSString *wizard, 
                                          UITableView *tableView, 
                                          NSIndexPath *indexPath) {
 	if( [wizard isEqualToString:@"Gandalf"] )
-		return [MiddleEarthWizardCell cellForTableView:weakTable];
+		return [MiddleEarthWizardCell cellForTableView:tableView];
 	else if( [wizard isEqualToString:@"Merlyn"] )
-		return [ArthurianWizardCell cellForTableView:weakTable];
+		return [ArthurianWizardCell cellForTableView:tableView];
 };
 
 ```
