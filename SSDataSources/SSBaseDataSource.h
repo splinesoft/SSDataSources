@@ -72,8 +72,8 @@ typedef id   (^SSCellCreationBlock)  (id object,               // The object bei
  * Optional data source fallback.
  * If this is set, it will receive data source delegate calls for:
  * tableView:canEditRowAtIndexPath:
- * tableView:commitEditingStyle:forRowAtIndexPath:
  * tableView:canMoveRowAtIndexPath:
+ * tableView:commitEditingStyle:forRowAtIndexPath:
  * but not tableView:moveRowAtIndexPath:toIndexPath: - SSArrayDataSource does this for you.
  *
  * See 'ExampleTable' for an example of editing, deleting, and drag-to-reorder rows.

@@ -14,7 +14,7 @@ No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numbe
 Install with [Cocoapods](http://cocoapods.org). Add to your podfile:
 
 ```
-pod 'SSDataSources'
+pod 'SSDataSources', :head # YOLO
 ```
 
 ## Samples
@@ -47,7 +47,8 @@ Check out the example project for sample table and collection views that use the
     wizardDataSource = [[SSArrayDataSource alloc] initWithItems:
                         @[ @"Merlyn", @"Gandalf", @"Melisandre" ]];
 
-	// The configure block is called for each cell with 
+	// SSDataSources creates your cell and calls
+	// this configure block for each cell with 
 	// the object being presented in that cell,
 	// the parent table or collection view,
 	// and the index path at which the cell appears.
@@ -58,7 +59,7 @@ Check out the example project for sample table and collection views that use the
         cell.textLabel.text = wizard;
     };
     
-    // Set the table's data source.
+    // Set the table data source.
     self.tableView.dataSource = wizardDataSource;
 }
 @end
@@ -72,7 +73,7 @@ Perhaps your data changes:
 // Optional - row animation for table updates.
 wizardDataSource.rowAnimation = UITableViewRowAnimationFade;
 
-// Optional - if you set the tableView property, the data source will perform
+// Set the tableView property and the data source will perform
 // insert/reload/delete calls on the table as its data changes.
 wizardDataSource.tableView = self.tableView;
 	
@@ -115,7 +116,7 @@ Your view controller should continue to implement `UITableViewDelegate`. `SSData
 
 ## Core Data
 
-You're a modern man-/woman-about-Internet and sometimes you want to present a `UITableView` or `UICollectionView` backed by a core data fetch request or fetched results controller. `SSDataSources` has you covered with `SSCoreDataSource`, featured here with a cameo by [MagicalRecord](https://github.com/magicalpanda/MagicalRecord).
+You're a modern wo/man-about-Internet and sometimes you want to present a `UITableView` or `UICollectionView` backed by a core data fetch request or fetched results controller. `SSDataSources` has you covered with `SSCoreDataSource`, featured here with a cameo by [MagicalRecord](https://github.com/magicalpanda/MagicalRecord).
 
 ```objc
 @interface SSCoreDataTableViewController : UITableViewController
@@ -132,7 +133,8 @@ You're a modern man-/woman-about-Internet and sometimes you want to present a `U
                                                         ascending:[Trigger defaultSortAscending]];
    
     dataSource = [[SSCoreDataSource alloc] initWithFetchRequest:worldFetch
-                                                      inContext:[NSManagedObjectContext MR_defaultContext]
+                                                      inContext:[NSManagedObjectContext 
+                                                                 MR_defaultContext]
                                              sectionNameKeyPath:nil];
                                                  
     dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
@@ -142,11 +144,9 @@ You're a modern man-/woman-about-Internet and sometimes you want to present a `U
         cell.textLabel.text = trigger.name;
     };
     
-    // Set the table data source.
-    self.tableView.dataSource = dataSource;
-    
-    // Optional - setting the `tableView` property will automatically update the table 
-    // in response to core data insert, update, and delete events.
+    // SSCoreDataSource conforms to NSFetchedResultsControllerDelegate.
+    // Set the `tableView` property to automatically update the table 
+    // after changes in the data source's managed object context.
     dataSource.tableView = self.tableView;
     
     // Optional - row animation to use for update events.
@@ -158,6 +158,9 @@ You're a modern man-/woman-about-Internet and sometimes you want to present a `U
     // tableView:commitEditingStyle:forRowAtIndexPath 
     // on your fallback delegate if you need to implement editing and moving
     dataSource.fallbackTableDataSource = self;
+    
+    // Set the table data source.
+    self.tableView.dataSource = dataSource;
 }
 @end
 ```
