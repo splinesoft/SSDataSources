@@ -10,15 +10,17 @@
 
 @implementation SSBaseDataSource
 
-@synthesize cellConfigureBlock, cellClass, fallbackCollectionDataSource;
+@synthesize cellConfigureBlock, cellClass;
 @synthesize fallbackTableDataSource, tableView, rowAnimation;
-@synthesize cellCreationBlock, collectionView;
+@synthesize cellCreationBlock, collectionView, collectionSupplementaryConfigureBlock;
+@synthesize collectionSupplementaryCreationBlock, collectionViewSupplementaryElementClass;
 
 #pragma mark - init
 
 - (instancetype)init {
     if( ( self = [super init] ) ) {
         self.cellClass = [SSBaseTableCell class];
+        self.collectionViewSupplementaryElementClass = [SSBaseCollectionReusableView class];
         self.rowAnimation = UITableViewRowAnimationNone;
     }
     
@@ -28,6 +30,8 @@
 - (void)dealloc {
     self.cellConfigureBlock = nil;
     self.cellCreationBlock = nil;
+    self.collectionSupplementaryConfigureBlock = nil;
+    self.collectionSupplementaryCreationBlock = nil;
 }
 
 #pragma mark - item access
@@ -130,13 +134,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (UICollectionReusableView *)collectionView:(UICollectionView *)cv
            viewForSupplementaryElementOfKind:(NSString *)kind
                                  atIndexPath:(NSIndexPath *)indexPath {
-    if( [self.fallbackCollectionDataSource respondsToSelector:
-         @selector(collectionView:viewForSupplementaryElementOfKind:atIndexPath:)] )
-        return [self.fallbackCollectionDataSource collectionView:cv
-                               viewForSupplementaryElementOfKind:kind
-                                                     atIndexPath:indexPath];
     
-    return nil;
+    UICollectionReusableView *supplementaryView;
+    
+    if( self.collectionSupplementaryCreationBlock )
+        supplementaryView = self.collectionSupplementaryCreationBlock( cv, kind, indexPath );
+    else
+        supplementaryView = [self.collectionViewSupplementaryElementClass
+                             supplementaryViewForCollectionView:cv
+                             kind:kind
+                             indexPath:indexPath];
+            
+    if( self.collectionSupplementaryConfigureBlock )
+        self.collectionSupplementaryConfigureBlock( supplementaryView, cv, kind, indexPath );
+
+    return supplementaryView;
 }
 
 #pragma mark - indexpath helpers

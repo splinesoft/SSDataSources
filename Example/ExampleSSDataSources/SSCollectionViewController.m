@@ -9,6 +9,7 @@
 #import "SSCollectionViewController.h"
 #import <SSDataSources.h>
 #import "SSSolidColorCollectionCell.h"
+#import "SSCollectionViewSectionHeader.h"
 
 @interface SSCollectionViewController ()
 - (void) addItem;
@@ -25,6 +26,8 @@
     layout.minimumLineSpacing = 10.0f;
     layout.sectionInset = UIEdgeInsetsMake( 5, 5, 5, 5 );
     layout.itemSize = CGSizeMake(70, 50);
+    layout.headerReferenceSize = CGSizeMake( 320, 40 );
+    layout.footerReferenceSize = CGSizeMake( 320, 40 );
     
     if( ( self = [self initWithCollectionViewLayout:layout] ) ) {
         
@@ -51,6 +54,12 @@
     
     [self.collectionView registerClass:[SSSolidColorCollectionCell class]
             forCellWithReuseIdentifier:[SSSolidColorCollectionCell identifier]];
+    [self.collectionView registerClass:[SSCollectionViewSectionHeader class]
+            forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                   withReuseIdentifier:[SSCollectionViewSectionHeader identifier]];
+    [self.collectionView registerClass:[SSCollectionViewSectionHeader class]
+            forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
+                   withReuseIdentifier:[SSCollectionViewSectionHeader identifier]];
     
     NSMutableArray *items = [NSMutableArray array];
     
@@ -59,12 +68,22 @@
     
     dataSource = [[SSArrayDataSource alloc] initWithItems:items];
     dataSource.cellClass = [SSSolidColorCollectionCell class];
+    dataSource.collectionViewSupplementaryElementClass = [SSCollectionViewSectionHeader class];
     dataSource.cellConfigureBlock = ^(SSSolidColorCollectionCell *cell, 
                                       NSNumber *number, 
                                       UICollectionView *collectionView,
                                       NSIndexPath *ip ) {
         cell.label.text = [number stringValue];
     };
+    dataSource.collectionSupplementaryConfigureBlock = ^(SSCollectionViewSectionHeader *header,
+                                                         UICollectionView *collectionView,
+                                                         NSString *kind,
+                                                         NSIndexPath *indexPath) {
+        header.label.text = ( [kind isEqualToString:UICollectionElementKindSectionHeader]
+                              ? @"A section header"
+                              : @"A section footer" );
+    };
+    
     dataSource.collectionView = self.collectionView;
     
     self.collectionView.dataSource = dataSource;

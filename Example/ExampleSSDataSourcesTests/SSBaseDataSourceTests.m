@@ -128,20 +128,27 @@
     expect([ds collectionView:collectionView viewForSupplementaryElementOfKind:kind atIndexPath:ip]).to.beNil();
 }
 
-#pragma mark fallbackCollectionDataSource
+#pragma mark UICollectionView reusable views
 
-- (void)testForwardRequestForViewForSupplementaryElementToFallbackCollectionDataSource
-{
-    id kind = UICollectionElementKindSectionHeader;
-    id ip = [NSIndexPath indexPathForItem:0 inSection:0];
+- (void) testReusableCollectionViewNotNil {
+    
+    // TODO - this doesn't work.
+    // Perhaps because OCMock objects of UICollectionView cannot properly register supplementary view classes?
+    
+    /*
+    NSString *kind = UICollectionElementKindSectionHeader;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+    
+    UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+    layout.headerReferenceSize = CGSizeMake(20, 20);
+    
+    [collectionView setCollectionViewLayout:layout animated:NO];
+    [collectionView registerClass:[SSBaseCollectionReusableView class]
+       forSupplementaryViewOfKind:kind
+              withReuseIdentifier:[SSBaseCollectionReusableView identifier]];
 
-    id mockFallback = [OCMockObject niceMockForProtocol:@protocol(UICollectionViewDataSource)];
-    [[mockFallback expect] collectionView:collectionView viewForSupplementaryElementOfKind:kind atIndexPath:ip];
-
-    ds.fallbackCollectionDataSource = mockFallback;
-    [ds collectionView:collectionView viewForSupplementaryElementOfKind:kind atIndexPath:ip];
-
-    [mockFallback verify];
+    expect([ds collectionView:collectionView viewForSupplementaryElementOfKind:kind atIndexPath:indexPath]).toNot.beNil();
+     */
 }
 
 #pragma mark Helpers

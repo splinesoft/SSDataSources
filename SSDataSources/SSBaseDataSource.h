@@ -16,6 +16,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#pragma mark - SSDataSources block signatures
+
 // Block called to configure each table and collection cell.
 typedef void (^SSCellConfigureBlock) (id cell,                 // The cell to configure
                                       id object,               // The object being presented in this cell
@@ -27,11 +29,25 @@ typedef id   (^SSCellCreationBlock)  (id object,               // The object bei
                                       id parentView,           // The parent table or collection view
                                       NSIndexPath *indexPath); // Index path for this cell
 
+// Optional block used to create a UICollectionView supplementary view.
+typedef UICollectionReusableView * (^SSCollectionSupplementaryViewCreationBlock)
+                                                            (UICollectionView *cv,    // the parent collection view
+                                                             NSString *kind,          // the kind of reusable view
+                                                             NSIndexPath *indexPath); // index path for this view
+
+// Optional block used to configure UICollectionView supplementary views.
+typedef void (^SSCollectionSupplementaryViewConfigureBlock) (id view, // the header/footer view
+                                                             UICollectionView *cv, // the parent collection view
+                                                             NSString *kind,                 // the kind of reusable view
+                                                             NSIndexPath *indexPath);        // index path where this view appears
+
+#pragma mark - SSBaseDataSource
+
 @interface SSBaseDataSource : NSObject <UITableViewDataSource, UICollectionViewDataSource>
 
 - (instancetype) init;
 
-#pragma mark - base data source
+#pragma mark - base data source setup
 
 /**
  * The base class to use to instantiate new cells.
@@ -89,11 +105,23 @@ typedef id   (^SSCellCreationBlock)  (id object,               // The object bei
 @property (nonatomic, weak) UICollectionView *collectionView;
 
 /**
- * Optional data source fallback for supplementary elements.
- * If this is set, it will receive data source delegate calls for
- * collectionView:viewForSupplementaryElementOfKind:atIndexPath:
+ * The base class to use to instantiate new supplementary collection view elements.
+ * These are assumed to be subclasses of SSBaseCollectionReusableView.
+ * If you want to use a class that does not inherit SSBaseCollectionReusableView,
+ * or if you want to use your own custom logic to create supplementary elements,
+ * then you can ignore this property and instead specify a collectionSupplementaryCreationBlock.
  */
-@property (nonatomic, weak) id <UICollectionViewDataSource> fallbackCollectionDataSource;
+@property (nonatomic, weak) Class collectionViewSupplementaryElementClass;
+
+/**
+ * Optional block used to create supplementary collection view elements.
+ */
+@property (nonatomic, copy) SSCollectionSupplementaryViewCreationBlock collectionSupplementaryCreationBlock;
+
+/**
+ * Optional configure block for supplementary collection view elements.
+ */
+@property (nonatomic, copy) SSCollectionSupplementaryViewConfigureBlock collectionSupplementaryConfigureBlock;
 
 #pragma mark - item access
 
