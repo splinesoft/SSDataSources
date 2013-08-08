@@ -36,10 +36,10 @@ typedef UICollectionReusableView * (^SSCollectionSupplementaryViewCreationBlock)
                                                              NSIndexPath *indexPath); // index path for this view
 
 // Optional block used to configure UICollectionView supplementary views.
-typedef void (^SSCollectionSupplementaryViewConfigureBlock) (id view, // the header/footer view
-                                                             UICollectionView *cv, // the parent collection view
-                                                             NSString *kind,                 // the kind of reusable view
-                                                             NSIndexPath *indexPath);        // index path where this view appears
+typedef void (^SSCollectionSupplementaryViewConfigureBlock) (id view,                 // the header/footer view
+                                                             UICollectionView *cv,    // the parent collection view
+                                                             NSString *kind,          // the kind of reusable view
+                                                             NSIndexPath *indexPath); // index path where this view appears
 
 #pragma mark - SSBaseDataSource
 
