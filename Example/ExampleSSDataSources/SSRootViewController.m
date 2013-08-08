@@ -48,6 +48,7 @@ typedef NS_ENUM( NSUInteger, SSDataSourcesExample ) {
         }
         
         cell.textLabel.text = title;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     };
     
     self.tableView.dataSource = dataSource;
