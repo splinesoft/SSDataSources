@@ -8,10 +8,6 @@
 
 #import "SSDataSources.h"
 
-@interface SSCoreDataSource ()
-@property (nonatomic, strong) NSFetchedResultsController *controller;
-@end
-
 @implementation SSCoreDataSource {
     // For UICollectionView
     NSMutableArray *sectionUpdates;

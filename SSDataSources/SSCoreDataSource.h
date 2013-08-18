@@ -20,6 +20,12 @@
 @interface SSCoreDataSource : SSBaseDataSource <NSFetchedResultsControllerDelegate>
 
 /**
+ * The data source's fetched results controller. You probably don't need to set this directly
+ * as both initializers will do this for you.
+ */
+@property (nonatomic, strong) NSFetchedResultsController *controller;
+
+/**
  * Create a data source with a fetched results controller.
  * @param controller - the FRC backing this data source
  */
