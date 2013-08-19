@@ -132,23 +132,33 @@
 
 - (void) testReusableCollectionViewNotNil {
     
-    // TODO - this doesn't work.
-    // Perhaps because OCMock objects of UICollectionView cannot properly register supplementary view classes?
-    
-    /*
+    // setup environment
     NSString *kind = UICollectionElementKindSectionHeader;
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.headerReferenceSize = CGSizeMake(20, 20);
     
-    [collectionView setCollectionViewLayout:layout animated:NO];
+    collectionView = [[UICollectionView alloc] initWithFrame:(CGRect){}
+                                        collectionViewLayout:layout];
+    
     [collectionView registerClass:[SSBaseCollectionReusableView class]
        forSupplementaryViewOfKind:kind
               withReuseIdentifier:[SSBaseCollectionReusableView identifier]];
-
+    
+    ds = [[SSArrayDataSource alloc] initWithItems:@[ @"item" ]];
+    ds.collectionView = collectionView;
+    
+    collectionView.dataSource = ds;
+    
+    // Force a simulation of a view that's preparing for presentation.
+    // Production code should never send the -layoutSubviews message explicitly,
+    // but for the purposes of this test we need to immediately simulate the use
+    // of a UICollectionView (within the current run loop of this test) within a
+    // layout hierarchy.
+    [collectionView layoutSubviews];
+    
     expect([ds collectionView:collectionView viewForSupplementaryElementOfKind:kind atIndexPath:indexPath]).toNot.beNil();
-     */
 }
 
 #pragma mark Helpers
