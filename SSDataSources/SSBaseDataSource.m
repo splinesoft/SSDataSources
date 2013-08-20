@@ -102,6 +102,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if( [self.fallbackTableDataSource respondsToSelector:
+         @selector(tableView:titleForHeaderInSection:)] )
+        return [self.fallbackTableDataSource tableView:tableView
+                                 titleForHeaderInSection:section];
+    
+    return nil;
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv
