@@ -126,7 +126,7 @@ sectionForSectionIndexTitle:(NSString *)title
     return (NSInteger)[sectionInfo numberOfObjects];
 }
 
-#pragma mark - NSFetchedResultsController Delegate Methods
+#pragma mark - NSFetchedResultsControllerDelegate
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView beginUpdates];
@@ -143,13 +143,13 @@ sectionForSectionIndexTitle:(NSString *)title
     switch(type) {
         case NSFetchedResultsChangeInsert:
             change[@(type)] = newIndexPath;
-            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+            [self.tableView insertRowsAtIndexPaths:@[ newIndexPath ]
                                   withRowAnimation:self.rowAnimation];
             break;
             
         case NSFetchedResultsChangeDelete:
             change[@(type)] = indexPath;
-            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+            [self.tableView deleteRowsAtIndexPaths:@[ indexPath ]
                                   withRowAnimation:self.rowAnimation];
             break;
             
@@ -161,9 +161,9 @@ sectionForSectionIndexTitle:(NSString *)title
             
         case NSFetchedResultsChangeMove:
             change[@(type)] = @[ indexPath, newIndexPath ];
-            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+            [self.tableView deleteRowsAtIndexPaths:@[ indexPath ]
                                   withRowAnimation:self.rowAnimation];
-            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+            [self.tableView insertRowsAtIndexPaths:@[ newIndexPath ]
                                   withRowAnimation:self.rowAnimation];
             break;
     }
@@ -204,7 +204,7 @@ sectionForSectionIndexTitle:(NSString *)title
             [self.collectionView performBatchUpdates:^{
                 for( NSDictionary *change in sectionUpdates ) {
                     [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id secnum, BOOL *stop) {
-                        NSFetchedResultsChangeType type = [key unsignedIntegerValue];
+                        NSFetchedResultsChangeType type = (NSFetchedResultsChangeType)[key unsignedIntegerValue];
                         NSIndexSet *section = [NSIndexSet indexSetWithIndex:[secnum unsignedIntegerValue]];
                         
                         switch( type ) {
