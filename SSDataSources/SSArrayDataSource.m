@@ -155,6 +155,9 @@
 }
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
+    if( !indexPath )
+      return nil;
+  
     if( indexPath.row < (NSInteger)[self.items count] )
       return self.items[(NSUInteger)indexPath.row];
     
