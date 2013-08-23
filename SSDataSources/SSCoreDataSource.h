@@ -40,11 +40,6 @@
                    sectionNameKeyPath:(NSString *)sectionNameKeyPath;
 
 /**
- * Returns the total number of fetched items across all sections.
- */
-- (NSUInteger) itemCount;
-
-/**
  * Determine an indexpath for the record with a given managed object ID.
  */
 - (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)objectId;

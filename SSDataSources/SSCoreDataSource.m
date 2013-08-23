@@ -80,7 +80,7 @@
   return nil;
 }
 
-- (NSUInteger)itemCount {
+- (NSUInteger)numberOfItems {
     NSUInteger count = 0;
     
     for( id <NSFetchedResultsSectionInfo> section in [controller sections] )

@@ -45,6 +45,15 @@
                                  userInfo:nil];
 }
 
+- (NSUInteger)numberOfItems {
+    // override me!
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:[NSString stringWithFormat:
+                                           @"Did you forget to override %@?",
+                                           NSStringFromSelector(_cmd)]
+                                 userInfo:nil];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tv

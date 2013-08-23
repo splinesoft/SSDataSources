@@ -62,11 +62,6 @@
 - (void) moveItemAtIndex:(NSUInteger)index1 toIndex:(NSUInteger)index2;
 
 /**
- * Return the number of items in the data source.
- */
-- (NSUInteger) numberOfItems;
-
-/**
  * Return the indexpath for a given item in the data source.
  */
 - (NSIndexPath *) indexPathForItem:(id)item;

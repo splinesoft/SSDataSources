@@ -130,6 +130,11 @@ typedef void (^SSCollectionSupplementaryViewConfigureBlock) (id view,           
  */
 - (id) itemAtIndexPath:(NSIndexPath *)indexPath;
 
+/**
+ * Return the total number of items in the data source. Override me in your subclass.
+ */
+- (NSUInteger) numberOfItems;
+
 #pragma mark - helpers
 
 /**
