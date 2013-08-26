@@ -1,6 +1,8 @@
 SSDataSources
 =============
 
+![](http://cocoapod-badges.herokuapp.com/v/SSDataSources/badge.png) &nbsp; ![](http://cocoapod-badges.herokuapp.com/p/SSDataSources/badge.png)
+
 Simple data sources for your `UITableView` and `UICollectionView` because proper developers don't repeat themselves. :)
 
 No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numberOfRowsInSection:` (and `collectionView:cellForItemAtIndexPath:` and `collectionView:numberOfItemsInSection:`) dance many times before. You may also have updated your data and neglected to update the table or collection view. Whoops -- crash! Is there a better way?
