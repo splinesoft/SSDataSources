@@ -135,6 +135,16 @@ typedef void (^SSCollectionSupplementaryViewConfigureBlock) (id view,           
  */
 - (NSUInteger) numberOfItems;
 
+/**
+ * Return the total number of sections in the data source. Override me!
+ */
+- (NSUInteger) numberOfSections;
+
+/**
+ * Return the total number of items in a given section. Override me!
+ */
+- (NSUInteger) numberOfItemsInSection:(NSUInteger)section;
+
 #pragma mark - helpers
 
 /**

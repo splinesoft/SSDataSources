@@ -54,6 +54,24 @@
                                  userInfo:nil];
 }
 
+- (NSUInteger)numberOfSections {
+    // override me!
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:[NSString stringWithFormat:
+                                          @"Did you forget to override %@?",
+                                           NSStringFromSelector(_cmd)]
+                                 userInfo:nil];
+}
+
+- (NSUInteger)numberOfItemsInSection:(NSUInteger)section {
+    // override me!
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException
+                                   reason:[NSString stringWithFormat:
+                                           @"Did you forget to override %@?",
+                                           NSStringFromSelector(_cmd)]
+                                 userInfo:nil];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tv
@@ -73,12 +91,12 @@
     return cell;    
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [self numberOfSections];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:[NSString stringWithFormat:
-                                           @"Did you forget to override %@?",
-                                           NSStringFromSelector(_cmd)]
-                                 userInfo:nil];
+    return [self numberOfItemsInSection:section];
 }
 
 - (BOOL)tableView:(UITableView *)tv canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -131,13 +149,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     return cell;
 }
 
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return [self numberOfSections];
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:[NSString stringWithFormat:
-                                           @"Did you forget to override %@?",
-                                           NSStringFromSelector(_cmd)]
-                                 userInfo:nil];
+  
+    return [self numberOfItemsInSection:section];
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)cv

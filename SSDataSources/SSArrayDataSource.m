@@ -32,6 +32,30 @@
   self.items = nil;
 }
 
+#pragma mark - Base Data source
+
+- (NSUInteger)numberOfSections {
+    return 1;
+}
+
+- (NSUInteger)numberOfItemsInSection:(NSUInteger)section {
+    return [self.items count];
+}
+
+- (NSUInteger)numberOfItems {
+    return [self.items count];
+}
+
+- (id)itemAtIndexPath:(NSIndexPath *)indexPath {
+    if( !indexPath )
+      return nil;
+  
+    if( indexPath.row < (NSInteger)[self.items count] )
+      return self.items[(NSUInteger)indexPath.row];
+  
+    return nil;
+}
+
 #pragma mark - updating items
 
 - (void)clearItems {
@@ -150,20 +174,6 @@
 
 #pragma mark - item access
 
-- (NSUInteger)numberOfItems {
-  return [self.items count];
-}
-
-- (id)itemAtIndexPath:(NSIndexPath *)indexPath {
-    if( !indexPath )
-      return nil;
-  
-    if( indexPath.row < (NSInteger)[self.items count] )
-      return self.items[(NSUInteger)indexPath.row];
-    
-    return nil;
-}
-
 - (NSIndexPath *)indexPathForItem:(id)item {
   NSUInteger row = [self.items indexOfObjectIdenticalTo:item];
   
@@ -188,14 +198,6 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return (NSInteger)[self.items count];
-}
-
 - (void)tableView:(UITableView *)tableView
 moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
       toIndexPath:(NSIndexPath *)destinationIndexPath {
@@ -203,16 +205,6 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     id item = [self itemAtIndexPath:sourceIndexPath];
     [self.items removeObject:item];
     [self.items insertObject:item atIndex:(NSUInteger)destinationIndexPath.row];
-}
-
-#pragma mark - UICollectionViewDataSource
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return (NSInteger)[self.items count];
 }
 
 @end

@@ -57,6 +57,26 @@
     [objectUpdates removeAllObjects];
 }
 
+#pragma mark - Base data source
+
+- (NSUInteger)numberOfSections {
+    return (NSInteger)[[controller sections] count];
+}
+
+- (NSUInteger)numberOfItemsInSection:(NSUInteger)section {
+    id <NSFetchedResultsSectionInfo> sectionInfo = [controller sections][(NSUInteger)section];
+    return (NSInteger)[sectionInfo numberOfObjects];
+}
+
+- (NSUInteger)numberOfItems {
+    NSUInteger count = 0;
+  
+    for( id <NSFetchedResultsSectionInfo> section in [controller sections] )
+        count += [section numberOfObjects];
+  
+    return count;
+}
+
 #pragma mark - item access
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
@@ -80,15 +100,6 @@
   return nil;
 }
 
-- (NSUInteger)numberOfItems {
-    NSUInteger count = 0;
-    
-    for( id <NSFetchedResultsSectionInfo> section in [controller sections] )
-        count += [section numberOfObjects];
-    
-    return count;
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView
@@ -104,26 +115,6 @@ sectionForSectionIndexTitle:(NSString *)title
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [controller sections][(NSUInteger)section];
     return [sectionInfo name];
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return (NSInteger)[[controller sections] count];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [controller sections][(NSUInteger)section];
-    return (NSInteger)[sectionInfo numberOfObjects];
-}
-
-#pragma mark - UICollectionViewDataSource
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return (NSInteger)[[controller sections] count];
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [controller sections][(NSUInteger)section];
-    return (NSInteger)[sectionInfo numberOfObjects];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
