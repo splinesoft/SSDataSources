@@ -11,23 +11,17 @@
 
 @implementation SSSolidColorCollectionCell
 
-+ (id)cellForCollectionView:(UICollectionView *)collectionView indexPath:(NSIndexPath *)indexPath {
-    SSSolidColorCollectionCell *cell = [super cellForCollectionView:collectionView indexPath:indexPath];
-    
-    if( !cell.label ) {
-        cell.label = [[UILabel alloc] initWithFrame:CGRectZero];
-        cell.label.backgroundColor = [UIColor clearColor];
-        cell.label.textColor = [UIColor whiteColor];
-        cell.label.font = [UIFont boldSystemFontOfSize:18.0f];
-        cell.label.textAlignment = NSTextAlignmentCenter;
-        
-        [cell addSubview:cell.label];
-    }
-    
-    cell.backgroundColor = [UIColor lightGrayColor];
-    cell.layer.cornerRadius = 4.0f;
-    
-    return cell;
+- (void)configureCell {
+    self.backgroundColor = [UIColor lightGrayColor];
+    self.layer.cornerRadius = 4.0f;
+  
+    self.label = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.label.backgroundColor = [UIColor clearColor];
+    self.label.textColor = [UIColor whiteColor];
+    self.label.font = [UIFont boldSystemFontOfSize:18.0f];
+    self.label.textAlignment = NSTextAlignmentCenter;
+  
+    [self addSubview:self.label];
 }
 
 - (void)layoutSubviews {

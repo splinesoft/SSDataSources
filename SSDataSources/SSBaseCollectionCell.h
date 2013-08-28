@@ -8,6 +8,8 @@
 
 /**
  * Generic collection view cell. Subclass me!
+ * Override `configureCell` to do one-time setup at cell creation, like creating subviews.
+ * You probably don't need to override `identifier`.
  */
 
 #import <UIKit/UIKit.h>
@@ -18,5 +20,8 @@
 
 + (id) cellForCollectionView:(UICollectionView *)collectionView
                    indexPath:(NSIndexPath *)indexPath;
+
+// Override me!
+- (void) configureCell;
 
 @end

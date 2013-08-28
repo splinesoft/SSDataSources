@@ -8,15 +8,35 @@
 
 #import "SSBaseCollectionCell.h"
 
+@interface SSBaseCollectionCell ()
+
+@property (nonatomic, assign) BOOL didCompleteSetup;
+
+@end
+
 @implementation SSBaseCollectionCell
+
+@synthesize didCompleteSetup;
 
 + (NSString *)identifier {
     return NSStringFromClass(self);
 }
 
 + (id)cellForCollectionView:(UICollectionView *)collectionView indexPath:(NSIndexPath *)indexPath {
-    return [collectionView dequeueReusableCellWithReuseIdentifier:[self identifier]
-                                                     forIndexPath:indexPath];
+    SSBaseCollectionCell *cell = (SSBaseCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:[self identifier]
+                                                                                                   forIndexPath:indexPath];
+  
+    if( !cell.didCompleteSetup ) {
+        [cell configureCell];
+      
+        cell.didCompleteSetup = YES;
+    }
+  
+    return cell;
+}
+
+- (void)configureCell {
+    // override me!
 }
 
 @end
