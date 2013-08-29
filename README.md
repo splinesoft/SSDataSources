@@ -30,7 +30,7 @@ open ExampleSSDataSources.xcworkspace
 
 ## Array Data Source
 
-Useful when your data is an array. See `SSArrayDataSource.h` for more details.
+`SSArrayDataSource` powers a table or collection view with a single section. See `SSArrayDataSource.h` for more details.
 
 Check out the example project for sample table and collection views that use the array data source.
 
@@ -114,6 +114,59 @@ Your view controller should continue to implement `UITableViewDelegate`. `SSData
 	
 	// do something with `wizard`
 }
+```
+
+## Sectioned Data Source
+
+`SSSectionedDataSource` powers a table or collection view with multiple sections. Each section is modeled with an `SSSection` object, which stores the section's items and a few other configurable bits. See `SSSectionedDataSource.h` for more details.
+
+Check out the example project for a sample table that uses the sectioned data source.
+
+```objc
+@interface ElementalTableViewController : UITableViewController
+@end
+
+@implementation ElementalTableViewController {
+    SSSectionedDataSource *elementDataSource;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    // Let's start with one section
+    elementDataSource = [[SSSectionedDataSource alloc] initWithItems:@[ @"Earth" ]];
+
+    elementDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
+                                             NSString *element,
+                                             UITableView *tableView,
+                                             NSIndexPath *indexPath) {
+        cell.textLabel.text = element;
+    };
+    
+    // Set the table data source.
+    self.tableView.dataSource = elementDataSource;
+}
+@end
+```
+
+`SSSectionedDataSource` has you covered if your data changes:
+
+```objc
+// Animation for table updates
+elementDataSource.rowAnimation = UITableViewRowAnimationFade;
+
+// Setting the tableView property automatically updates 
+// the table in response to data changes.
+elementDataSource.tableView = self.tableView;
+
+// Add some new sections
+[elementDataSource appendSection:[SSSection sectionWithItems:@[ @"Fire" ]]];
+[elementDataSource appendSection:[SSSection sectionWithItems:@[ @"Wind" ]]];
+[elementDataSource appendSection:[SSSection sectionWithItems:@[ @"Water" ]]];
+[elementDataSource appendSection:[SSSection sectionWithItems:@[ @"Heart", @"GOOOO PLANET!" ]]];
+
+// Are you 4 srs, heart?
+[elementDataSource removeSectionAtIndex:( [elementDataSource numberOfSections] - 1 )];
 ```
 
 ## Core Data
