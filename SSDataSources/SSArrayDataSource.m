@@ -10,12 +10,12 @@
 #import <CoreData/CoreData.h>
 
 @interface SSArrayDataSource ()
+
 @property (nonatomic, strong) NSMutableArray *items;
+
 @end
 
 @implementation SSArrayDataSource
-
-@synthesize items;
 
 - (instancetype)initWithItems:(NSArray *)anItems {
   

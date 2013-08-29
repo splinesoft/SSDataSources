@@ -10,11 +10,6 @@
 
 @implementation SSBaseDataSource
 
-@synthesize cellConfigureBlock, cellClass;
-@synthesize fallbackTableDataSource, tableView, rowAnimation;
-@synthesize cellCreationBlock, collectionView, collectionSupplementaryConfigureBlock;
-@synthesize collectionSupplementaryCreationBlock, collectionViewSupplementaryElementClass;
-
 #pragma mark - init
 
 - (instancetype)init {
