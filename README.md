@@ -76,7 +76,8 @@ Perhaps your data changes:
 wizardDataSource.rowAnimation = UITableViewRowAnimationFade;
 
 // Set the tableView property and the data source will perform
-// insert/reload/delete calls on the table as its data changes.
+// insert/reload/delete calls on the table as its data changes,
+// and set the tableView's dataSource.
 wizardDataSource.tableView = self.tableView;
 	
 // Automatically inserts two new cells at the end of the table.

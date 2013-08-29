@@ -74,8 +74,7 @@
 
 #pragma mark - UITableViewDataSource
 
-- (void)setTableView:(UITableView *)tableView
-{
+- (void)setTableView:(UITableView *)tableView {
     _tableView = tableView;
     tableView.dataSource = self;
 }
@@ -137,8 +136,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark - UICollectionViewDataSource
 
-- (void)setCollectionView:(UICollectionView *)collectionView
-{
+- (void)setCollectionView:(UICollectionView *)collectionView {
     _collectionView = collectionView;
     collectionView.dataSource = self;
 }
