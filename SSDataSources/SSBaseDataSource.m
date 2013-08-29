@@ -10,11 +10,6 @@
 
 @implementation SSBaseDataSource
 
-@synthesize cellConfigureBlock, cellClass;
-@synthesize fallbackTableDataSource, tableView, rowAnimation;
-@synthesize cellCreationBlock, collectionView, collectionSupplementaryConfigureBlock;
-@synthesize collectionSupplementaryCreationBlock, collectionViewSupplementaryElementClass;
-
 #pragma mark - init
 
 - (instancetype)init {
@@ -74,6 +69,11 @@
 
 #pragma mark - UITableViewDataSource
 
+- (void)setTableView:(UITableView *)tableView {
+    _tableView = tableView;
+    tableView.dataSource = self;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
         
@@ -130,6 +130,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark - UICollectionViewDataSource
+
+- (void)setCollectionView:(UICollectionView *)collectionView {
+    _collectionView = collectionView;
+    collectionView.dataSource = self;
+}
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {

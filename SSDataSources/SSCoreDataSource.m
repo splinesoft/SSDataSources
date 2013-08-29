@@ -8,18 +8,20 @@
 
 #import "SSDataSources.h"
 
-@implementation SSCoreDataSource {
-    // For UICollectionView
-    NSMutableArray *sectionUpdates;
-    NSMutableArray *objectUpdates;
-}
+@interface SSCoreDataSource ()
 
-@synthesize controller;
+// For UICollectionView
+@property (nonatomic, strong) NSMutableArray *sectionUpdates;
+@property (nonatomic, strong) NSMutableArray *objectUpdates;
+
+@end
+
+@implementation SSCoreDataSource
 
 - (instancetype)init {
     if( ( self = [super init] ) ) {
-        sectionUpdates = [NSMutableArray new];
-        objectUpdates = [NSMutableArray new];
+        _sectionUpdates = [NSMutableArray new];
+        _objectUpdates = [NSMutableArray new];
     }
     
     return self;
@@ -53,25 +55,25 @@
 
 - (void)dealloc {
     self.controller = nil;
-    [sectionUpdates removeAllObjects];
-    [objectUpdates removeAllObjects];
+    [self.sectionUpdates removeAllObjects];
+    [self.objectUpdates removeAllObjects];
 }
 
 #pragma mark - Base data source
 
 - (NSUInteger)numberOfSections {
-    return (NSInteger)[[controller sections] count];
+    return (NSInteger)[[self.controller sections] count];
 }
 
 - (NSUInteger)numberOfItemsInSection:(NSUInteger)section {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [controller sections][(NSUInteger)section];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.controller sections][(NSUInteger)section];
     return (NSInteger)[sectionInfo numberOfObjects];
 }
 
 - (NSUInteger)numberOfItems {
     NSUInteger count = 0;
   
-    for( id <NSFetchedResultsSectionInfo> section in [controller sections] )
+    for( id <NSFetchedResultsSectionInfo> section in [self.controller sections] )
         count += [section numberOfObjects];
   
     return count;
@@ -80,12 +82,12 @@
 #pragma mark - item access
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
-  return [controller objectAtIndexPath:indexPath];
+  return [self.controller objectAtIndexPath:indexPath];
 }
 
 - (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)objectId {
-  for( NSUInteger section = 0; section < [[controller sections] count]; section++ ) {
-    id <NSFetchedResultsSectionInfo> sec = [controller sections][section];
+  for( NSUInteger section = 0; section < [[self.controller sections] count]; section++ ) {
+    id <NSFetchedResultsSectionInfo> sec = [self.controller sections][section];
         
     NSUInteger index = [[sec objects] indexOfObjectPassingTest:^BOOL( NSManagedObject *object, 
                                                                       NSUInteger idx, 
@@ -105,15 +107,15 @@
 - (NSInteger)tableView:(UITableView *)tableView
 sectionForSectionIndexTitle:(NSString *)title
                atIndex:(NSInteger)index {
-    return [controller sectionForSectionIndexTitle:title atIndex:index];
+    return [self.controller sectionForSectionIndexTitle:title atIndex:index];
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    return [controller sectionIndexTitles];
+    return [self.controller sectionIndexTitles];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [controller sections][(NSUInteger)section];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.controller sections][(NSUInteger)section];
     return [sectionInfo name];
 }
 
@@ -159,7 +161,7 @@ sectionForSectionIndexTitle:(NSString *)title
             break;
     }
     
-    [objectUpdates addObject:change];
+    [self.objectUpdates addObject:change];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller
@@ -183,7 +185,7 @@ sectionForSectionIndexTitle:(NSString *)title
             break;
     }
     
-    [sectionUpdates addObject:change];
+    [self.sectionUpdates addObject:change];
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
@@ -191,9 +193,9 @@ sectionForSectionIndexTitle:(NSString *)title
     
     if( self.collectionView ) {
         
-        if( [sectionUpdates count] > 0 ) {
+        if( [self.sectionUpdates count] > 0 ) {
             [self.collectionView performBatchUpdates:^{
-                for( NSDictionary *change in sectionUpdates ) {
+                for( NSDictionary *change in self.sectionUpdates ) {
                     [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id secnum, BOOL *stop) {
                         NSFetchedResultsChangeType type = (NSFetchedResultsChangeType)[key unsignedIntegerValue];
                         NSIndexSet *section = [NSIndexSet indexSetWithIndex:[secnum unsignedIntegerValue]];
@@ -214,9 +216,9 @@ sectionForSectionIndexTitle:(NSString *)title
             } completion:nil];
         }
         
-        if ([objectUpdates count] > 0 && [sectionUpdates count] == 0) {
+        if ([self.objectUpdates count] > 0 && [self.sectionUpdates count] == 0) {
             [self.collectionView performBatchUpdates:^{
-                for( NSDictionary *change in objectUpdates ) {
+                for( NSDictionary *change in self.objectUpdates ) {
                     [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id indexPath, BOOL *stop) {
                         NSFetchedResultsChangeType type = [key unsignedIntegerValue];
                         
@@ -241,8 +243,8 @@ sectionForSectionIndexTitle:(NSString *)title
         }
     }
     
-    [sectionUpdates removeAllObjects];
-    [objectUpdates removeAllObjects];
+    [self.sectionUpdates removeAllObjects];
+    [self.objectUpdates removeAllObjects];
 }
 
 @end

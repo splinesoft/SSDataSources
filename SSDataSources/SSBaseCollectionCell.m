@@ -16,8 +16,6 @@
 
 @implementation SSBaseCollectionCell
 
-@synthesize didCompleteSetup;
-
 + (NSString *)identifier {
     return NSStringFromClass(self);
 }

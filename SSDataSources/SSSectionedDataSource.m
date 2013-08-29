@@ -16,8 +16,6 @@
 
 @implementation SSSectionedDataSource
 
-@synthesize sections;
-
 - (instancetype)init {
     if( ( self = [super init] ) ) {
         self.sections = [NSMutableArray array];
