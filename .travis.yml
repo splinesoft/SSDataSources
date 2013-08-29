@@ -1,8 +1,8 @@
 language: objective-c
 before_install:
+    - cd Example
     - brew update
     - brew install xctool
-    - brew install cocoapods
     - pod install
 script:
-    - xctool -workspace Example/ExampleSSDataSources.xcworkspace -scheme ExampleSSDataSources -sdk iphonesimulator build test ONLY_ACTIVE_ARCH=NO
+    - xctool -workspace ExampleSSDataSources.xcworkspace -scheme ExampleSSDataSources -sdk iphonesimulator build test ONLY_ACTIVE_ARCH=NO
