@@ -1,0 +1,9 @@
+language: objective-c
+before_install:
+    - cd Example
+    - brew update
+    - brew uninstall xctool
+    - brew install xctool
+    - pod install
+script:
+    - xctool -workspace ExampleSSDataSources.xcworkspace -scheme ExampleSSDataSources -sdk iphonesimulator build test ONLY_ACTIVE_ARCH=NO
