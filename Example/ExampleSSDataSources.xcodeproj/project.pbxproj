@@ -26,6 +26,7 @@
 		4958CB46179B4C75006AB61C /* SSArrayDataSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4958CB45179B4C75006AB61C /* SSArrayDataSourceTests.m */; };
 		498D8720179B30CF00C8C365 /* SSBaseDataSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 498D871F179B30CF00C8C365 /* SSBaseDataSourceTests.m */; };
 		5E144177179B6B7700030595 /* SSRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E144176179B6B7700030595 /* SSRootViewController.m */; };
+		5EDF4B8E17CC1E5700788CB5 /* SSSectionedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDF4B8D17CC1E5700788CB5 /* SSSectionedViewController.m */; };
 		5EDFCA3D17B41DC50018D895 /* SSCollectionViewSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDFCA3C17B41DC50018D895 /* SSCollectionViewSectionHeader.m */; };
 		6E97BC13EA9A4BD9B57E81D6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60DE92F2CD3643D180EFBAC8 /* libPods.a */; };
 		A69E5B74D1A04ADB91B98B23 /* libPods-ExampleSSDataSourcesTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B8DA104C6404BC8ACAC8664 /* libPods-ExampleSSDataSourcesTests.a */; };
@@ -72,6 +73,8 @@
 		51DB34876E1C4A29A4580FA5 /* Pods-ExampleSSDataSourcesTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSSDataSourcesTests.xcconfig"; path = "Pods/Pods-ExampleSSDataSourcesTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 		5E144175179B6B7700030595 /* SSRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRootViewController.h; sourceTree = "<group>"; };
 		5E144176179B6B7700030595 /* SSRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRootViewController.m; sourceTree = "<group>"; };
+		5EDF4B8C17CC1E5700788CB5 /* SSSectionedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSSectionedViewController.h; sourceTree = "<group>"; };
+		5EDF4B8D17CC1E5700788CB5 /* SSSectionedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSectionedViewController.m; sourceTree = "<group>"; };
 		5EDFCA3B17B41DC50018D895 /* SSCollectionViewSectionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSCollectionViewSectionHeader.h; sourceTree = "<group>"; };
 		5EDFCA3C17B41DC50018D895 /* SSCollectionViewSectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCollectionViewSectionHeader.m; sourceTree = "<group>"; };
 		60DE92F2CD3643D180EFBAC8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,6 +156,8 @@
 				5E144176179B6B7700030595 /* SSRootViewController.m */,
 				492A5D46179B2AC800A137CC /* SSTableViewController.h */,
 				492A5D47179B2AC800A137CC /* SSTableViewController.m */,
+				5EDF4B8C17CC1E5700788CB5 /* SSSectionedViewController.h */,
+				5EDF4B8D17CC1E5700788CB5 /* SSSectionedViewController.m */,
 				492A5D12179B29B600A137CC /* Supporting Files */,
 			);
 			path = ExampleSSDataSources;
@@ -373,6 +378,7 @@
 				492A5D4B179B2AC800A137CC /* SSTableViewController.m in Sources */,
 				5E144177179B6B7700030595 /* SSRootViewController.m in Sources */,
 				5EDFCA3D17B41DC50018D895 /* SSCollectionViewSectionHeader.m in Sources */,
+				5EDF4B8E17CC1E5700788CB5 /* SSSectionedViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,6 +1,6 @@
 //
 //  SSArrayDataSource.h
-//  Splinesoft
+//  SSDataSources
 //
 //  Created by Jonathan Hersh on 6/7/13.
 //  Copyright (c) 2013 Splinesoft. All rights reserved.
@@ -12,7 +12,7 @@
 #import <CoreData/CoreData.h>
 
 /**
- * Generic table/collection data source, useful when your data is an array of objects.
+ * Generic data source for single-sectioned table and collection views.
  * If this datasource's `tableView` or `collectionView` property is set to your 
  * tableview or collection view, the data source will
  * perform insert/reload/delete calls when the data changes.

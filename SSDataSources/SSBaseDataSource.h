@@ -1,6 +1,6 @@
 //
 //  SSBaseDataSource.h
-//  Splinesoft
+//  SSDataSources
 //
 //  Created by Jonathan Hersh on 6/8/13.
 //  Copyright (c) 2013 Splinesoft. All rights reserved.
@@ -9,8 +9,8 @@
 /**
  * A generic data source object for table and collection views. Takes care of creating new cells 
  * and exposes a block interface to configure cells with the object they represent.
- * Don't use this class directly except to subclass - instead, see SSArrayDataSource and
- * SSCoreDataSource.
+ * Don't use this class directly except to subclass - instead, see 
+ * SSArrayDataSource, SSSectionedDataSource, and SSCoreDataSource.
  */
 
 #import <Foundation/Foundation.h>
@@ -90,7 +90,8 @@ typedef void (^SSCollectionSupplementaryViewConfigureBlock) (id view,           
  * tableView:canEditRowAtIndexPath:
  * tableView:canMoveRowAtIndexPath:
  * tableView:commitEditingStyle:forRowAtIndexPath:
- * but not tableView:moveRowAtIndexPath:toIndexPath: - SSArrayDataSource does this for you.
+ * but not tableView:moveRowAtIndexPath:toIndexPath: 
+ * as both SSArrayDataSource and SSSectionedDataSource do this for you.
  *
  * See 'ExampleTable' for an example of editing, deleting, and drag-to-reorder rows.
  */

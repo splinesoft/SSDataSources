@@ -10,9 +10,11 @@
 #import "SSRootViewController.h"
 #import "SSCollectionViewController.h"
 #import "SSTableViewController.h"
+#import "SSSectionedViewController.h"
 
 typedef NS_ENUM( NSUInteger, SSDataSourcesExample ) {
     SSDataSourcesExampleTable,
+    SSDataSourcesExampleSectionedTable,
     SSDataSourcesExampleCollectionView,
 };
 
@@ -27,6 +29,7 @@ typedef NS_ENUM( NSUInteger, SSDataSourcesExample ) {
     
     dataSource = [[SSArrayDataSource alloc] initWithItems:@[
                     @(SSDataSourcesExampleTable),
+                    @(SSDataSourcesExampleSectionedTable),
                     @(SSDataSourcesExampleCollectionView)
                  ]];
     
@@ -38,10 +41,13 @@ typedef NS_ENUM( NSUInteger, SSDataSourcesExample ) {
         
         switch( [exampleType unsignedIntegerValue] ) {
             case SSDataSourcesExampleTable:
-                title =  NSLocalizedString(@"Table View Example", nil);
+                title =  NSLocalizedString(@"Table View", nil);
                 break;
             case SSDataSourcesExampleCollectionView:
-                title = NSLocalizedString(@"Collection View Example", nil);
+                title = NSLocalizedString(@"Collection View", nil);
+                break;
+            case SSDataSourcesExampleSectionedTable:
+                title = NSLocalizedString(@"Sectioned Table", nil);
                 break;
             default:
                 break;
@@ -64,6 +70,9 @@ typedef NS_ENUM( NSUInteger, SSDataSourcesExample ) {
             break;
         case SSDataSourcesExampleCollectionView:
             viewController = [SSCollectionViewController new];
+            break;
+        case SSDataSourcesExampleSectionedTable:
+            viewController = [SSSectionedViewController new];
             break;
         default:
             break;

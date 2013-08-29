@@ -1,6 +1,6 @@
 //
 //  SSBaseCollectionCell.m
-//  Splinesoft
+//  SSDataSources
 //
 //  Created by Jonathan Hersh on 6/24/13.
 //
