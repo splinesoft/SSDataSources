@@ -48,8 +48,6 @@
                                       NSIndexPath *ip ) {
         cell.textLabel.text = [number stringValue];
     };
-    
-    self.tableView.dataSource = dataSource;
 }
 
 #pragma mark - actions

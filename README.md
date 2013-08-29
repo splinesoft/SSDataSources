@@ -61,8 +61,10 @@ Check out the example project for sample table and collection views that use the
         cell.textLabel.text = wizard;
     };
     
-    // Set the table data source.
-    self.tableView.dataSource = wizardDataSource;
+    // Set the tableView property and the data source will perform
+    // insert/reload/delete calls on the table as its data changes.
+    // This also assigns the table's `dataSource` property.
+    wizardDataSource.tableView = self.tableView;
 }
 @end
 ```
@@ -74,10 +76,6 @@ Perhaps your data changes:
 ```objc
 // Optional - row animation for table updates.
 wizardDataSource.rowAnimation = UITableViewRowAnimationFade;
-
-// Set the tableView property and the data source will perform
-// insert/reload/delete calls on the table as its data changes.
-wizardDataSource.tableView = self.tableView;
 	
 // Automatically inserts two new cells at the end of the table.
 [wizardDataSource appendItems:@[ @"Saruman", @"Alatar" ]];
@@ -143,8 +141,10 @@ Check out the example project for a sample table that uses the sectioned data so
         cell.textLabel.text = element;
     };
     
-    // Set the table data source.
-    self.tableView.dataSource = elementDataSource;
+    // Setting the tableView property automatically updates 
+    // the table in response to data changes.
+    // This also sets the table's `dataSource` property.
+    elementDataSource.tableView = self.tableView;
 }
 @end
 ```
@@ -154,10 +154,6 @@ Check out the example project for a sample table that uses the sectioned data so
 ```objc
 // Animation for table updates
 elementDataSource.rowAnimation = UITableViewRowAnimationFade;
-
-// Setting the tableView property automatically updates 
-// the table in response to data changes.
-elementDataSource.tableView = self.tableView;
 
 // Add some new sections
 [elementDataSource appendSection:[SSSection sectionWithItems:@[ @"Fire" ]]];
@@ -202,6 +198,7 @@ You're a modern wo/man-about-Internet and sometimes you want to present a `UITab
     // SSCoreDataSource conforms to NSFetchedResultsControllerDelegate.
     // Set the `tableView` property to automatically update the table 
     // after changes in the data source's managed object context.
+    // This also sets the tableview's `dataSource`.
     dataSource.tableView = self.tableView;
     
     // Optional - row animation to use for update events.
@@ -213,9 +210,6 @@ You're a modern wo/man-about-Internet and sometimes you want to present a `UITab
     // tableView:commitEditingStyle:forRowAtIndexPath 
     // on your fallback delegate if you need to implement editing and moving
     dataSource.fallbackTableDataSource = self;
-    
-    // Set the table data source.
-    self.tableView.dataSource = dataSource;
 }
 @end
 ```

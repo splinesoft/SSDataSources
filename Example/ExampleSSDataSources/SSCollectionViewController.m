@@ -85,8 +85,6 @@
     };
     
     dataSource.collectionView = self.collectionView;
-    
-    self.collectionView.dataSource = dataSource;
 }
 
 - (void)addItem {

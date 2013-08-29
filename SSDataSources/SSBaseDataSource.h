@@ -75,6 +75,8 @@ typedef void (^SSCollectionSupplementaryViewConfigureBlock) (id view,           
 /**
  * Optional: If the tableview property is assigned, the data source will perform
  * insert/reload/delete calls on it as data changes.
+ * 
+ * Assigning this property will set the reciever as the tableView's `dataSource`
  */
 @property (nonatomic, weak) UITableView *tableView;
 
@@ -102,6 +104,8 @@ typedef void (^SSCollectionSupplementaryViewConfigureBlock) (id view,           
 /**
  * Optional: If the collectionview property is assigned, the data source will perform
  * insert/reload/delete calls on it as data changes.
+ * 
+ * Assigning this property will set the reciever as the collectionView's `dataSource`
  */
 @property (nonatomic, weak) UICollectionView *collectionView;
 
