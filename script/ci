@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e
+
+cd Example
+pod install
+xctool -workspace ExampleSSDataSources.xcworkspace -scheme ExampleSSDataSources -sdk iphonesimulator build test ONLY_ACTIVE_ARCH=NO
