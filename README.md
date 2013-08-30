@@ -150,7 +150,7 @@ Check out the example project for a sample table that uses the sectioned data so
 ```
 
 `SSSectionedDataSource` has you covered if your data changes:
-
+ 
 ```objc
 // Animation for table updates
 elementDataSource.rowAnimation = UITableViewRowAnimationFade;
