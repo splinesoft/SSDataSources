@@ -28,6 +28,13 @@
 
 + (instancetype) sectionWithItems:(NSArray *)items;
 
+/**
+ * Sometimes I just need a section with a given number of cells,
+ * and all the cell creation and configuration is handled with values stored elsewhere.
+ * This method creates a section with the specified number of placeholder objects.
+ */
++ (instancetype) sectionWithNumberOfItems:(NSUInteger)numberOfItems;
+
 - (NSUInteger) numberOfItems;
 
 - (id) itemAtIndex:(NSUInteger)index;

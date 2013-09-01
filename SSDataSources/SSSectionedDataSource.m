@@ -292,6 +292,15 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     return section;
 }
 
++ (instancetype)sectionWithNumberOfItems:(NSUInteger)numberOfItems {
+    NSMutableArray *array = [NSMutableArray new];
+    
+    for( NSUInteger i = 0; i < numberOfItems; i++ )
+        [array addObject:@(i)];
+    
+    return [self sectionWithItems:array];
+}
+
 - (NSUInteger)numberOfItems {
     return [self.items count];
 }
