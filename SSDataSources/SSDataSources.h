@@ -12,6 +12,9 @@
 #import "SSBaseTableCell.h"
 #import "SSBaseCollectionCell.h"
 #import "SSBaseCollectionReusableView.h"
+#import "SSBaseHeaderFooterView.h"
+#import "SSSection.h"
+
 #import "SSBaseDataSource.h"
 #import "SSSectionedDataSource.h"
 #import "SSArrayDataSource.h"
