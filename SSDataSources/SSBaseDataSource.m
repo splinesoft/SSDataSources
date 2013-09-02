@@ -16,7 +16,7 @@
     if( ( self = [super init] ) ) {
         self.cellClass = [SSBaseTableCell class];
         self.collectionViewSupplementaryElementClass = [SSBaseCollectionReusableView class];
-        self.rowAnimation = UITableViewRowAnimationNone;
+        self.rowAnimation = UITableViewRowAnimationAutomatic;
     }
     
     return self;

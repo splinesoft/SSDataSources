@@ -116,7 +116,7 @@ Your view controller should continue to implement `UITableViewDelegate`. `SSData
 
 ## Sectioned Data Source
 
-`SSSectionedDataSource` powers a table or collection view with multiple sections. Each section is modeled with an `SSSection` object, which stores the section's items and a few other configurable bits. See `SSSectionedDataSource.h` for more details.
+`SSSectionedDataSource` powers a table or collection view with multiple sections. Each section is modeled with an `SSSection` object, which stores the section's items and a few other configurable bits. See `SSSectionedDataSource.h` and `SSSection.h` for more details.
 
 Check out the example project for a sample table that uses the sectioned data source.
 

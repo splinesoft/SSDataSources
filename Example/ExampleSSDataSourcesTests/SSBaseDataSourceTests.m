@@ -52,7 +52,7 @@
 
 - (void)testDefaultRowAnimation
 {
-    expect(ds.rowAnimation).to.equal(UITableViewRowAnimationNone);
+    expect(ds.rowAnimation).to.equal(UITableViewRowAnimationAutomatic);
 }
 
 #pragma mark UITableViewDataSource defaults

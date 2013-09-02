@@ -82,7 +82,7 @@ typedef void (^SSCollectionSupplementaryViewConfigureBlock) (id view,           
 
 /**
  * Optional animation to use when updating the table.
- * Defaults to UITableViewRowAnimationNone.
+ * Defaults to UITableViewRowAnimationAutomatic.
  */
 @property (nonatomic, assign) UITableViewRowAnimation rowAnimation;
 

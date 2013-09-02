@@ -9,11 +9,16 @@
 #import "SSSectionedViewController.h"
 #import <SSDataSources.h>
 
+CGFloat const kHeaderHeight = 30.0f;
+CGFloat const kFooterHeight = 30.0f;
+
 @interface SSSectionedViewController ()
 - (void) addRow;
 - (void) toggleEditing;
 
 - (void) updateBarButtonItems;
+
++ (SSSection *) sectionWithRandomNumber;
 @end
 
 @implementation SSSectionedViewController {
@@ -33,11 +38,12 @@
     
     [self updateBarButtonItems];
 
+    [self.tableView registerClass:[SSBaseHeaderFooterView class]
+forHeaderFooterViewReuseIdentifier:[SSBaseHeaderFooterView identifier]];
     
     dataSource = [[SSSectionedDataSource alloc] initWithSection:
-                  [SSSection sectionWithItems:@[ @(arc4random_uniform(10000)) ]]];
-    dataSource.tableView = self.tableView;
-    dataSource.rowAnimation = UITableViewRowAnimationRight;
+                  [[self class] sectionWithRandomNumber]];
+    dataSource.rowAnimation = UITableViewRowAnimationFade;
     dataSource.fallbackTableDataSource = self;
     dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell,
                                       NSNumber *number,
@@ -45,6 +51,17 @@
                                       NSIndexPath *ip ) {
         cell.textLabel.text = [number stringValue];
     };
+    dataSource.tableView = self.tableView;
+}
+
++ (SSSection *)sectionWithRandomNumber {
+    SSSection *section = [SSSection sectionWithItems:@[ @(arc4random_uniform(10000)) ]];
+    section.headerHeight = kHeaderHeight;
+    section.footerHeight = kFooterHeight;
+    section.header = @"Section Header";
+    section.footer = @"Section Footer";
+    
+    return section;
 }
 
 #pragma mark - actions
@@ -52,9 +69,9 @@
 - (void)addRow {
     NSNumber *newItem = @( arc4random_uniform( 10000 ) );
     
-    if( arc4random_uniform(3) == 0 ) {
+    if( arc4random_uniform(2) == 0 ) {
         // new section
-        [dataSource appendSection:[SSSection sectionWithItems:@[ newItem ]]];
+        [dataSource appendSection:[[self class] sectionWithRandomNumber]];
     } else {
         // new row
         NSUInteger section = arc4random_uniform([dataSource numberOfSections]);
@@ -107,6 +124,30 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return [dataSource heightForHeaderInSection:section];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    SSBaseHeaderFooterView *header = [dataSource viewForHeaderInSection:section];
+    
+    header.textLabel.text = [dataSource sectionAtIndex:section].header;
+        
+    return header;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return [dataSource heightForFooterInSection:section];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    SSBaseHeaderFooterView *footer = [dataSource viewForFooterInSection:section];
+    
+    footer.textLabel.text = [dataSource sectionAtIndex:section].footer;
+    
+    return footer;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSNumber *item = [dataSource itemAtIndexPath:indexPath];

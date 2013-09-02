@@ -39,7 +39,6 @@
         [items addObject:@( arc4random_uniform( 10000 ) )];
     
     dataSource = [[SSArrayDataSource alloc] initWithItems:items];
-    dataSource.tableView = self.tableView;
     dataSource.rowAnimation = UITableViewRowAnimationRight;
     dataSource.fallbackTableDataSource = self;
     dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
@@ -48,6 +47,7 @@
                                       NSIndexPath *ip ) {
         cell.textLabel.text = [number stringValue];
     };
+    dataSource.tableView = self.tableView;
 }
 
 #pragma mark - actions

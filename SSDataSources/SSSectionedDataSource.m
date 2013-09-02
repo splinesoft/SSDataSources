@@ -6,11 +6,12 @@
 //  Copyright (c) 2013 Splinesoft. All rights reserved.
 //
 
-#import "SSSectionedDataSource.h"
+#import "SSDataSources.h"
 
 @interface SSSectionedDataSource ()
 
-@property (nonatomic, strong) NSMutableArray *sections;
+// Header/footer view helper
+- (SSBaseHeaderFooterView *) headerFooterViewWithClass:(Class)class;
 
 @end
 
@@ -103,6 +104,21 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     [[self sectionAtIndex:destinationIndexPath.section].items insertObject:item
                                                                    atIndex:destinationIndexPath.row];
   
+}
+
+#pragma mark - Moving
+
+- (void)moveSectionAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex {
+    SSSection *section = [self sectionAtIndex:fromIndex];
+    
+    [self.sections removeObjectAtIndex:fromIndex];
+    [self.sections insertObject:section
+                        atIndex:toIndex];
+    
+    [self.tableView moveSection:fromIndex
+                      toSection:toIndex];
+    [self.collectionView moveSection:fromIndex
+                           toSection:toIndex];
 }
 
 #pragma mark - Adding
@@ -252,6 +268,34 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     [self.collectionView deleteItemsAtIndexPaths:indexPaths];
 }
 
+#pragma mark - UITableViewDelegate helpers
+
+- (SSBaseHeaderFooterView *)headerFooterViewWithClass:(Class)class {
+    SSBaseHeaderFooterView *headerFooterView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:
+                                                [class identifier]];
+    
+    if( !headerFooterView )
+        headerFooterView = [class new];
+    
+    return headerFooterView;
+}
+
+- (SSBaseHeaderFooterView *)viewForHeaderInSection:(NSUInteger)section {
+    return [self headerFooterViewWithClass:[self sectionAtIndex:section].headerClass];
+}
+
+- (SSBaseHeaderFooterView *)viewForFooterInSection:(NSUInteger)section {
+    return [self headerFooterViewWithClass:[self sectionAtIndex:section].footerClass];
+}
+
+- (CGFloat)heightForHeaderInSection:(NSUInteger)section {
+    return [self sectionAtIndex:section].headerHeight;
+}
+
+- (CGFloat)heightForFooterInSection:(NSUInteger)section {
+    return [self sectionAtIndex:section].footerHeight;
+}
+
 #pragma mark - NSIndexPath helpers
 
 + (NSArray *)indexPathArrayWithIndexSet:(NSIndexSet *)indexes
@@ -275,48 +319,6 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
         [ret addObject:[NSIndexPath indexPathForRow:i inSection:section]];
     
     return ret;
-}
-
-@end
-
-#pragma mark - SSSection
-
-@implementation SSSection
-
-@synthesize items, header, footer;
-
-+ (instancetype)sectionWithItems:(NSArray *)items {
-    SSSection *section = [SSSection new];
-    section.items = [NSMutableArray arrayWithArray:items];
-    
-    return section;
-}
-
-+ (instancetype)sectionWithNumberOfItems:(NSUInteger)numberOfItems {
-    NSMutableArray *array = [NSMutableArray new];
-    
-    for( NSUInteger i = 0; i < numberOfItems; i++ )
-        [array addObject:@(i)];
-    
-    return [self sectionWithItems:array];
-}
-
-- (NSUInteger)numberOfItems {
-    return [self.items count];
-}
-
-- (id)itemAtIndex:(NSUInteger)index {
-    return self.items[index];
-}
-
-#pragma mark - NSCopying
-
-- (id)copyWithZone:(NSZone *)zone {
-    SSSection *newSection = [SSSection sectionWithItems:self.items];
-    newSection.header = self.header;
-    newSection.footer = self.footer;
-  
-    return newSection;
 }
 
 @end

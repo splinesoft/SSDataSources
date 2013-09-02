@@ -7,43 +7,22 @@
 //
 
 #import "SSBaseDataSource.h"
+#import "SSSection.h"
 
 /**
  * SSSectionedDataSource is a data source for multi-sectioned table and collection views.
- * Each section is modeled using the `SSSection` object.
+ * Each section is modeled using an `SSSection` object.
  */
-
-#pragma mark - SSSection
-
-/**
- * SSSection models a single section in a multi-sectioned table or collection view.
- * It maintains an array of items appearing within its section,
- * plus a header and footer string.
- */
-@interface SSSection : NSObject <NSCopying>
-
-@property (nonatomic, strong) NSMutableArray *items;
-@property (nonatomic, copy) NSString *header;
-@property (nonatomic, copy) NSString *footer;
-
-+ (instancetype) sectionWithItems:(NSArray *)items;
-
-/**
- * Sometimes I just need a section with a given number of cells,
- * and all the cell creation and configuration is handled with values stored elsewhere.
- * This method creates a section with the specified number of placeholder objects.
- */
-+ (instancetype) sectionWithNumberOfItems:(NSUInteger)numberOfItems;
-
-- (NSUInteger) numberOfItems;
-
-- (id) itemAtIndex:(NSUInteger)index;
-
-@end
 
 #pragma mark - SSSectionedDataSource
 
 @interface SSSectionedDataSource : SSBaseDataSource
+
+/**
+ * Sections appearing in the datasource.
+ * You should not mutate this directly - rather, use the insert/move/remove accessors below.
+ */
+@property (nonatomic, strong) NSMutableArray *sections;
 
 /**
  * Create a sectioned data source with a single section.
@@ -69,6 +48,10 @@
  * Use `itemAtIndexPath:` for items.
  */
 - (SSSection *) sectionAtIndex:(NSUInteger)index;
+
+#pragma mark - Moving sections
+
+- (void) moveSectionAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
 
 #pragma mark - Inserting sections
 
@@ -143,6 +126,30 @@
  * Remove multiple items in a range within a single section.
  */
 - (void) removeItemsInRange:(NSRange)range inSection:(NSUInteger)section;
+
+#pragma mark - UITableViewDelegate helpers
+
+/**
+ * Given that it is UITableViewDelegate, not UITableViewDataSource,
+ * that provides header and footer views, SSDataSources provides
+ * these helpers for constructing table header and footer views.
+ * Assumes your header/footer view is a subclass of SSBaseHeaderFooterView.
+ * See the Example project for sample usage.
+ * 
+ * You'll still need to read the section at this index to get its header/footer string,
+ * if you plan on using them. We don't want to assume you are using the textView/detailTextView
+ * properties.
+ */
+- (SSBaseHeaderFooterView *) viewForHeaderInSection:(NSUInteger)section;
+- (SSBaseHeaderFooterView *) viewForFooterInSection:(NSUInteger)section;
+
+/**
+ * As above, but for section header/footer heights.
+ * This is simply a shortcut for
+ * [myDataSource sectionAtIndex:section].headerHeight;
+ */
+- (CGFloat) heightForHeaderInSection:(NSUInteger)section;
+- (CGFloat) heightForFooterInSection:(NSUInteger)section;
 
 #pragma mark - NSIndexPath helpers
 
