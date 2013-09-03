@@ -123,38 +123,4 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [dataSource removeItemAtIndexPath:indexPath];
 }
 
-#pragma mark - UITableViewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return [dataSource heightForHeaderInSection:section];
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    SSBaseHeaderFooterView *header = [dataSource viewForHeaderInSection:section];
-    
-    header.textLabel.text = [dataSource sectionAtIndex:section].header;
-        
-    return header;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return [dataSource heightForFooterInSection:section];
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    SSBaseHeaderFooterView *footer = [dataSource viewForFooterInSection:section];
-    
-    footer.textLabel.text = [dataSource sectionAtIndex:section].footer;
-    
-    return footer;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSNumber *item = [dataSource itemAtIndexPath:indexPath];
-    
-    NSLog(@"selected item %@", item);
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
 @end

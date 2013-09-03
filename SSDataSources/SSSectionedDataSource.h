@@ -151,6 +151,14 @@
 - (CGFloat) heightForHeaderInSection:(NSUInteger)section;
 - (CGFloat) heightForFooterInSection:(NSUInteger)section;
 
+/**
+ * As above, for section header/footer titles.
+ * This is simply a shortcut for
+ * [myDataSource sectionAtIndex:section].header/footer
+ */
+- (NSString *) titleForHeaderInSection:(NSUInteger)section;
+- (NSString *) titleForFooterInSection:(NSUInteger)section;
+
 #pragma mark - NSIndexPath helpers
 
 + (NSArray *) indexPathArrayWithIndexSet:(NSIndexSet *)indexes 

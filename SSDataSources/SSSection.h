@@ -53,6 +53,9 @@
  * Create a section with an array of items.
  */
 + (instancetype) sectionWithItems:(NSArray *)items;
++ (instancetype) sectionWithItems:(NSArray *)items
+                           header:(NSString *)header
+                           footer:(NSString *)footer;
 
 /**
  * Sometimes I just need a section with a given number of cells,
@@ -60,6 +63,9 @@
  * This method creates a section with the specified number of placeholder objects.
  */
 + (instancetype) sectionWithNumberOfItems:(NSUInteger)numberOfItems;
++ (instancetype) sectionWithNumberOfItems:(NSUInteger)numberOfItems
+                                   header:(NSString *)header
+                                   footer:(NSString *)footer;
 
 /**
  * Return the number of items in this section.

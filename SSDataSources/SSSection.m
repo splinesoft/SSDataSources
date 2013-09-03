@@ -10,22 +10,55 @@
 
 @implementation SSSection
 
+- (id)init {
+    if( ( self = [super init] ) ) {
+        self.items = [NSMutableArray new];
+        self.headerClass = [SSBaseHeaderFooterView class];
+        self.footerClass = [SSBaseHeaderFooterView class];
+    }
+    
+    return self;
+}
+
 + (instancetype)sectionWithItems:(NSArray *)items {
+    return [self sectionWithItems:items
+                           header:nil
+                           footer:nil];
+}
+
++ (instancetype)sectionWithItems:(NSArray *)items
+                          header:(NSString *)header
+                          footer:(NSString *)footer {
+    
     SSSection *section = [SSSection new];
-    section.items = [NSMutableArray arrayWithArray:items];
-    section.headerClass = [SSBaseHeaderFooterView class];
-    section.footerClass = [SSBaseHeaderFooterView class];
+    
+    if( items )
+        [section.items addObjectsFromArray:items];
+    
+    section.header = header;
+    section.footer = footer;
   
     return section;
 }
 
 + (instancetype)sectionWithNumberOfItems:(NSUInteger)numberOfItems {
+    return [self sectionWithNumberOfItems:numberOfItems
+                                   header:nil
+                                   footer:nil];
+}
+
++ (instancetype)sectionWithNumberOfItems:(NSUInteger)numberOfItems
+                                  header:(NSString *)header
+                                  footer:(NSString *)footer {
+    
     NSMutableArray *array = [NSMutableArray new];
     
     for( NSUInteger i = 0; i < numberOfItems; i++ )
         [array addObject:@(i)];
     
-    return [self sectionWithItems:array];
+    return [self sectionWithItems:array
+                           header:header
+                           footer:footer];
 }
 
 - (NSUInteger)numberOfItems {

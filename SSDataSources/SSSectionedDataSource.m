@@ -88,11 +88,11 @@
 #pragma mark - UITableViewDataSource
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [[self sectionAtIndex:section] header];
+    return [self titleForHeaderInSection:section];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    return [[self sectionAtIndex:section] footer];
+    return [self titleForFooterInSection:section];
 }
 
 - (void)tableView:(UITableView *)tableView 
@@ -294,6 +294,14 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 
 - (CGFloat)heightForFooterInSection:(NSUInteger)section {
     return [self sectionAtIndex:section].footerHeight;
+}
+
+- (NSString *)titleForHeaderInSection:(NSUInteger)section {
+    return [self sectionAtIndex:section].header;
+}
+
+- (NSString *)titleForFooterInSection:(NSUInteger)section {
+    return [self sectionAtIndex:section].footer;
 }
 
 #pragma mark - NSIndexPath helpers
