@@ -99,6 +99,7 @@
  * Destroy all sections.
  */
 - (void) clearSections;
+- (void) removeAllSections;
 
 /**
  * Remove the section at a given index.

@@ -206,6 +206,10 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     [self.collectionView reloadData];
 }
 
+- (void)removeAllSections {
+    [self clearSections];
+}
+
 - (void)removeSectionAtIndex:(NSUInteger)index {
     [self.sections removeObjectAtIndex:index];
     
