@@ -96,6 +96,11 @@
 #pragma mark - Removing sections
 
 /**
+ * Destroy all sections.
+ */
+- (void) clearSections;
+
+/**
  * Remove the section at a given index.
  */
 - (void) removeSectionAtIndex:(NSUInteger)index;

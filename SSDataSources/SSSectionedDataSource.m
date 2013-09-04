@@ -199,6 +199,13 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 
 #pragma mark - Removing
 
+- (void)clearSections {
+    [self.sections removeAllObjects];
+  
+    [self.tableView reloadData];
+    [self.collectionView reloadData];
+}
+
 - (void)removeSectionAtIndex:(NSUInteger)index {
     [self.sections removeObjectAtIndex:index];
     
