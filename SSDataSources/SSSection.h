@@ -20,6 +20,14 @@
 @property (nonatomic, strong) NSMutableArray *items;
 
 /**
+ * I find it helpful to assign an identifier to each section
+ * particularly when constructing tables that have dynamic numbers and types of sections.
+ * This identifier is used in the `SSSectionedDataSource` helper method
+ * indexOfSectionWithIdentifier:.
+ */
+@property (nonatomic, copy) id <NSCopying> sectionIdentifier;
+
+/**
  * Simple strings to use for headers and footers.
  * Alternatively, you can use an `SSBaseHeaderFooterView`.
  * See the headerClass and footerClass properties.
@@ -55,7 +63,8 @@
 + (instancetype) sectionWithItems:(NSArray *)items;
 + (instancetype) sectionWithItems:(NSArray *)items
                            header:(NSString *)header
-                           footer:(NSString *)footer;
+                           footer:(NSString *)footer
+                       identifier:(id)identifier;
 
 /**
  * Sometimes I just need a section with a given number of cells,
@@ -65,7 +74,8 @@
 + (instancetype) sectionWithNumberOfItems:(NSUInteger)numberOfItems;
 + (instancetype) sectionWithNumberOfItems:(NSUInteger)numberOfItems
                                    header:(NSString *)header
-                                   footer:(NSString *)footer;
+                                   footer:(NSString *)footer
+                               identifier:(id)identifier;
 
 /**
  * Return the number of items in this section.

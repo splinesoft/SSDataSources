@@ -23,12 +23,14 @@
 + (instancetype)sectionWithItems:(NSArray *)items {
     return [self sectionWithItems:items
                            header:nil
-                           footer:nil];
+                           footer:nil
+                       identifier:nil];
 }
 
 + (instancetype)sectionWithItems:(NSArray *)items
                           header:(NSString *)header
-                          footer:(NSString *)footer {
+                          footer:(NSString *)footer
+                      identifier:(id)identifier {
     
     SSSection *section = [SSSection new];
     
@@ -37,6 +39,7 @@
     
     section.header = header;
     section.footer = footer;
+    section.sectionIdentifier = identifier;
   
     return section;
 }
@@ -44,12 +47,14 @@
 + (instancetype)sectionWithNumberOfItems:(NSUInteger)numberOfItems {
     return [self sectionWithNumberOfItems:numberOfItems
                                    header:nil
-                                   footer:nil];
+                                   footer:nil
+                               identifier:nil];
 }
 
 + (instancetype)sectionWithNumberOfItems:(NSUInteger)numberOfItems
                                   header:(NSString *)header
-                                  footer:(NSString *)footer {
+                                  footer:(NSString *)footer
+                              identifier:(id)identifier {
     
     NSMutableArray *array = [NSMutableArray new];
     
@@ -58,7 +63,8 @@
     
     return [self sectionWithItems:array
                            header:header
-                           footer:footer];
+                           footer:footer
+                       identifier:identifier];
 }
 
 - (NSUInteger)numberOfItems {
@@ -79,6 +85,7 @@
     newSection.footerClass = self.footerClass;
     newSection.headerHeight = self.headerHeight;
     newSection.footerHeight = self.footerHeight;
+    newSection.sectionIdentifier = self.sectionIdentifier;
   
     return newSection;
 }

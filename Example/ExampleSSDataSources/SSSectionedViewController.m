@@ -69,7 +69,7 @@ forHeaderFooterViewReuseIdentifier:[SSBaseHeaderFooterView identifier]];
 - (void)addRow {
     NSNumber *newItem = @( arc4random_uniform( 10000 ) );
     
-    if( arc4random_uniform(2) == 0 ) {
+    if( [dataSource numberOfSections] == 0 || arc4random_uniform(2) == 0 ) {
         // new section
         [dataSource appendSection:[[self class] sectionWithRandomNumber]];
     } else {

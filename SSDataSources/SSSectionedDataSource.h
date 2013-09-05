@@ -49,6 +49,17 @@
  */
 - (SSSection *) sectionAtIndex:(NSUInteger)index;
 
+/**
+ * Return the first section with a given identifier, or nil if not found.
+ */
+- (NSUInteger) sectionWithIdentifier:(id)identifier;
+
+/**
+ * Return the index of the first section with a given identifier, or NSNotFound.
+ * See `sectionIdentifier` in SSSection.
+ */
+- (NSUInteger) indexOfSectionWithIdentifier:(id)identifier;
+
 #pragma mark - Moving sections
 
 - (void) moveSectionAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;

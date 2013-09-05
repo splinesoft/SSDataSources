@@ -85,6 +85,23 @@
     return (SSSection *)[self.sections objectAtIndex:index];
 }
 
+- (NSUInteger)sectionWithIdentifier:(id)identifier {
+    NSUInteger index = [self indexOfSectionWithIdentifier:identifier];
+    
+    if( index == NSNotFound )
+        return nil;
+    
+    return [self sectionAtIndex:index];
+}
+
+- (NSUInteger)indexOfSectionWithIdentifier:(id)identifier {
+    return [self.sections indexOfObjectPassingTest:^BOOL(SSSection *section,
+                                                         NSUInteger index,
+                                                         BOOL *stop) {
+        return [(id)section.sectionIdentifier isEqual:identifier];
+    }];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
