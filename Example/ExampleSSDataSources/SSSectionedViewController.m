@@ -77,7 +77,8 @@ forHeaderFooterViewReuseIdentifier:[SSBaseHeaderFooterView identifier]];
         NSUInteger section = arc4random_uniform([dataSource numberOfSections]);
         NSUInteger row = arc4random_uniform([dataSource numberOfItemsInSection:section]);
         [dataSource insertItem:newItem
-                   atIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
+                   atIndexPath:[NSIndexPath indexPathForRow:(NSInteger)row
+                                                  inSection:(NSInteger)section]];
     }
 }
 

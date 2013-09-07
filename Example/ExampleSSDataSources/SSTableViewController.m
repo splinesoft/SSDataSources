@@ -95,7 +95,7 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if( editingStyle == UITableViewCellEditingStyleDelete )
-        [dataSource removeItemAtIndex:indexPath.row];
+        [dataSource removeItemAtIndex:(NSUInteger)indexPath.row];
 }
 
 #pragma mark - UITableViewDelegate

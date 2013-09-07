@@ -62,12 +62,12 @@
 #pragma mark - Base data source
 
 - (NSUInteger)numberOfSections {
-    return (NSInteger)[[self.controller sections] count];
+    return (NSUInteger)[[self.controller sections] count];
 }
 
 - (NSUInteger)numberOfItemsInSection:(NSUInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.controller sections][(NSUInteger)section];
-    return (NSInteger)[sectionInfo numberOfObjects];
+    return (NSUInteger)[sectionInfo numberOfObjects];
 }
 
 - (NSUInteger)numberOfItems {
