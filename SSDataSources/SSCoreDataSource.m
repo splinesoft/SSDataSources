@@ -121,6 +121,10 @@ sectionForSectionIndexTitle:(NSString *)title
 
 #pragma mark - NSFetchedResultsControllerDelegate
 
+- (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName {
+    return sectionName;
+}
+
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView beginUpdates];
 }
