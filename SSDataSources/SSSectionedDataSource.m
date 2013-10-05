@@ -85,7 +85,7 @@
     return (SSSection *)[self.sections objectAtIndex:index];
 }
 
-- (NSUInteger)sectionWithIdentifier:(id)identifier {
+- (SSSection *)sectionWithIdentifier:(id)identifier {
     NSUInteger index = [self indexOfSectionWithIdentifier:identifier];
     
     if( index == NSNotFound )

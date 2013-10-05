@@ -52,7 +52,7 @@
 /**
  * Return the first section with a given identifier, or nil if not found.
  */
-- (NSUInteger) sectionWithIdentifier:(id)identifier;
+- (SSSection *) sectionWithIdentifier:(id)identifier;
 
 /**
  * Return the index of the first section with a given identifier, or NSNotFound.
@@ -147,15 +147,11 @@
 #pragma mark - UITableViewDelegate helpers
 
 /**
- * Given that it is UITableViewDelegate, not UITableViewDataSource,
- * that provides header and footer views, SSDataSources provides
- * these helpers for constructing table header and footer views.
+ * It is UITableViewDelegate, not UITableViewDataSource,
+ * that provides header and footer views.
+ * SSDataSources provides these helpers for constructing table header and footer views.
  * Assumes your header/footer view is a subclass of SSBaseHeaderFooterView.
  * See the Example project for sample usage.
- * 
- * You'll still need to read the section at this index to get its header/footer string,
- * if you plan on using them. We don't want to assume you are using the textView/detailTextView
- * properties.
  */
 - (SSBaseHeaderFooterView *) viewForHeaderInSection:(NSUInteger)section;
 - (SSBaseHeaderFooterView *) viewForFooterInSection:(NSUInteger)section;
