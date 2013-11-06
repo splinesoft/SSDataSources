@@ -70,10 +70,10 @@
     expect([ds tableView:tableView canMoveRowAtIndexPath:ip]).to.equal(NO);
 }
 
-- (void)testCanNotEditRowByDefault
+- (void)testCanEditRowByDefault
 {
     id ip = [NSIndexPath indexPathForRow:0 inSection:0];
-    expect([ds tableView:tableView canEditRowAtIndexPath:ip]).to.equal(NO);
+    expect([ds tableView:tableView canEditRowAtIndexPath:ip]).to.equal(YES);
 }
 
 #pragma mark fallbackTableDataSource
