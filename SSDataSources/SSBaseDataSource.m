@@ -114,7 +114,7 @@
         return [self.fallbackTableDataSource tableView:tv
                                  canEditRowAtIndexPath:indexPath];
     
-    return NO;
+    return YES;
 }
 
 - (void)tableView:(UITableView *)tv
