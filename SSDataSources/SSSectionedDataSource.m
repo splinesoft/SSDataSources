@@ -254,12 +254,12 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 }
 
 - (void)removeItemAtIndexPath:(NSIndexPath *)indexPath {
-    if( [self numberOfItemsInSection:indexPath.section] == 1 ) {
+    [[self sectionAtIndex:indexPath.section].items removeObjectAtIndex:indexPath.row];
+
+    if( [self numberOfItemsInSection:indexPath.section] == 0 ) {
         [self removeSectionAtIndex:indexPath.section];
         return;
     }
-    
-    [[self sectionAtIndex:indexPath.section].items removeObjectAtIndex:indexPath.row];
     
     [self.tableView deleteRowsAtIndexPaths:@[ indexPath ]
                           withRowAnimation:self.rowAnimation];
@@ -267,33 +267,23 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 }
 
 - (void)removeItemsAtIndexes:(NSIndexSet *)indexes inSection:(NSUInteger)section {
-    if( [self numberOfItemsInSection:section] == [indexes count] ) {
+    NSArray *indexPaths = [[self class] indexPathArrayWithIndexSet:indexes
+                                                         inSection:section];
+
+    [[self sectionAtIndex:section].items removeObjectsAtIndexes:indexes];
+    
+    if( [self numberOfItemsInSection:section] == 0 ) {
         [self removeSectionAtIndex:section];
         return;
     }
-    
-    NSArray *indexPaths = [[self class] indexPathArrayWithIndexSet:indexes
-                                                         inSection:section];
-    
-    [[self sectionAtIndex:section].items removeObjectsAtIndexes:indexes];
-    
+
     [self.tableView deleteRowsAtIndexPaths:indexPaths
                           withRowAnimation:self.rowAnimation];
     [self.collectionView deleteItemsAtIndexPaths:indexPaths];
 }
 
 - (void)removeItemsInRange:(NSRange)range inSection:(NSUInteger)section {
-    if( [self numberOfItemsInSection:section] == range.length ) {
-        [self removeSectionAtIndex:section];
-        return;
-    }
-    
-    NSArray *indexPaths = [[self class] indexPathArrayWithRange:range
-                                                      inSection:section];
-    
-    [self.tableView deleteRowsAtIndexPaths:indexPaths
-                          withRowAnimation:self.rowAnimation];
-    [self.collectionView deleteItemsAtIndexPaths:indexPaths];
+    [self removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range] inSection:section];
 }
 
 #pragma mark - UITableViewDelegate helpers
