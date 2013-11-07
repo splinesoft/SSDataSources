@@ -27,4 +27,27 @@
     expect(ds.numberOfSections).to.equal(0);
 }
 
+- (void)test_removing_all_items_in_section
+{
+    SSSection *section;
+
+    ds = [[SSSectionedDataSource alloc] initWithItems:@[ @"foo" ]];
+    section = [ds sectionAtIndex:0];
+    expect(section.items).to.haveCountOf(1);
+    [ds removeItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+    expect(section.items).to.haveCountOf(0);
+
+    ds = [[SSSectionedDataSource alloc] initWithItems:@[ @"foo", @"bar" ]];
+    section = [ds sectionAtIndex:0];
+    expect(section.items).to.haveCountOf(2);
+    [ds removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] inSection:0];
+    expect(section.items).to.haveCountOf(0);
+
+    ds = [[SSSectionedDataSource alloc] initWithItems:@[ @"foo", @"bar", @"baz" ]];
+    section = [ds sectionAtIndex:0];
+    expect(section.items).to.haveCountOf(3);
+    [ds removeItemsInRange:NSMakeRange(0, 3) inSection:0];
+    expect(section.items).to.haveCountOf(0);
+}
+
 @end
