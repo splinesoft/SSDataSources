@@ -283,19 +283,7 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 }
 
 - (void)removeItemsInRange:(NSRange)range inSection:(NSUInteger)section {
-    [[self sectionAtIndex:section].items removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range]];
-
-    if( [self numberOfItemsInSection:section] == 0 ) {
-        [self removeSectionAtIndex:section];
-        return;
-    }
-    
-    NSArray *indexPaths = [[self class] indexPathArrayWithRange:range
-                                                      inSection:section];
-    
-    [self.tableView deleteRowsAtIndexPaths:indexPaths
-                          withRowAnimation:self.rowAnimation];
-    [self.collectionView deleteItemsAtIndexPaths:indexPaths];
+    [self removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range] inSection:section];
 }
 
 #pragma mark - UITableViewDelegate helpers
