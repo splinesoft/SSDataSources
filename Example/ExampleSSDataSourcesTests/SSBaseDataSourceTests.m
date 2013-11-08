@@ -139,17 +139,18 @@
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.headerReferenceSize = CGSizeMake(20, 20);
     
-    collectionView = [[UICollectionView alloc] initWithFrame:(CGRect){}
+    collectionView = [[UICollectionView alloc] initWithFrame:(CGRect){0, 0, 100, 100}
                                         collectionViewLayout:layout];
     
     [collectionView registerClass:[SSBaseCollectionReusableView class]
        forSupplementaryViewOfKind:kind
               withReuseIdentifier:[SSBaseCollectionReusableView identifier]];
+    [collectionView registerClass:[SSBaseCollectionCell class]
+       forCellWithReuseIdentifier:[SSBaseCollectionCell identifier]];
     
     ds = [[SSArrayDataSource alloc] initWithItems:@[ @"item" ]];
+    ds.cellClass = [SSBaseCollectionCell class];
     ds.collectionView = collectionView;
-    
-    collectionView.dataSource = ds;
     
     // Force a simulation of a view that's preparing for presentation.
     // Production code should never send the -layoutSubviews message explicitly,
