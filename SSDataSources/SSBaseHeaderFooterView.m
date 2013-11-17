@@ -15,7 +15,7 @@
 }
 
 - (instancetype)init {
-    if( ( self = [self initWithReuseIdentifier:[[self class] identifier]] ) ) {
+    if ((self = [self initWithReuseIdentifier:[[self class] identifier]])) {
     
     }
   

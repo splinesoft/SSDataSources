@@ -18,7 +18,7 @@
 @implementation SSSectionedDataSource
 
 - (instancetype)init {
-    if( ( self = [super init] ) ) {
+    if ((self = [super init])) {
         self.sections = [NSMutableArray array];
     }
     
@@ -26,7 +26,7 @@
 }
 
 - (instancetype)initWithItems:(NSArray *)items {
-    if( ( self = [self init] ) ) {
+    if ((self = [self init])) {
         if( [items count] > 0 )
             [self appendSection:[SSSection sectionWithItems:items]];
     }
@@ -35,7 +35,7 @@
 }
 
 - (instancetype)initWithSection:(SSSection *)section {
-    if( ( self = [self init] ) ) {
+    if ((self = [self init])) {
         if( section )
             [self appendSection:section];
     }
@@ -44,7 +44,7 @@
 }
 
 - (instancetype)initWithSections:(NSArray *)newSections {
-    if( ( self = [self init] ) ) {
+    if ((self = [self init])) {
         if( [newSections count] > 0 )
             [self insertSections:newSections
                        atIndexes:[NSIndexSet indexSetWithIndexesInRange:
@@ -73,7 +73,7 @@
 - (NSUInteger)numberOfItems {
   NSUInteger count = 0;
   
-  for( SSSection *section in self.sections )
+  for (SSSection *section in self.sections)
     count += [section numberOfItems];
   
   return count;
@@ -88,7 +88,7 @@
 - (SSSection *)sectionWithIdentifier:(id)identifier {
     NSUInteger index = [self indexOfSectionWithIdentifier:identifier];
     
-    if( index == NSNotFound )
+    if (index == NSNotFound)
         return nil;
     
     return [self sectionAtIndex:index];
@@ -160,9 +160,9 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     [newSections enumerateObjectsUsingBlock:^(id sectionObject,
                                               NSUInteger sectionIndex,
                                               BOOL *stop) {
-        if( [sectionObject isKindOfClass:[SSSection class]] )
+        if ([sectionObject isKindOfClass:[SSSection class]])
             [mutableSections addObject:sectionObject];
-        else if( [sectionObject isKindOfClass:[NSArray class]] )
+        else if ([sectionObject isKindOfClass:[NSArray class]])
             [mutableSections addObject:[SSSection sectionWithItems:sectionObject]];
         else
             NSLog(@"Invalid SSSectionedDataSource section object: %@", sectionObject);
@@ -256,7 +256,7 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 - (void)removeItemAtIndexPath:(NSIndexPath *)indexPath {
     [[self sectionAtIndex:indexPath.section].items removeObjectAtIndex:indexPath.row];
 
-    if( [self numberOfItemsInSection:indexPath.section] == 0 ) {
+    if ([self numberOfItemsInSection:indexPath.section] == 0) {
         [self removeSectionAtIndex:indexPath.section];
         return;
     }
@@ -272,7 +272,7 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 
     [[self sectionAtIndex:section].items removeObjectsAtIndexes:indexes];
     
-    if( [self numberOfItemsInSection:section] == 0 ) {
+    if ([self numberOfItemsInSection:section] == 0) {
         [self removeSectionAtIndex:section];
         return;
     }
@@ -292,7 +292,7 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     SSBaseHeaderFooterView *headerFooterView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:
                                                 [class identifier]];
     
-    if( !headerFooterView )
+    if (!headerFooterView)
         headerFooterView = [class new];
     
     return headerFooterView;
@@ -320,31 +320,6 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 
 - (NSString *)titleForFooterInSection:(NSUInteger)section {
     return [self sectionAtIndex:section].footer;
-}
-
-#pragma mark - NSIndexPath helpers
-
-+ (NSArray *)indexPathArrayWithIndexSet:(NSIndexSet *)indexes
-                              inSection:(NSUInteger)section {
-    
-    NSMutableArray *ret = [NSMutableArray array];
-    
-    [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-        [ret addObject:[NSIndexPath indexPathForRow:index inSection:section]];
-    }];
-    
-    return ret;
-}
-
-+ (NSArray *)indexPathArrayWithRange:(NSRange)range
-                           inSection:(NSUInteger)section {
-    
-    NSMutableArray *ret = [NSMutableArray array];
-    
-    for( NSUInteger i = range.location; i < NSMaxRange(range); i++ )
-        [ret addObject:[NSIndexPath indexPathForRow:i inSection:section]];
-    
-    return ret;
 }
 
 @end

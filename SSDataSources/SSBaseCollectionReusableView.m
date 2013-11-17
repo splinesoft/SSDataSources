@@ -14,9 +14,10 @@
     return NSStringFromClass(self);
 }
 
-+ (id)supplementaryViewForCollectionView:(UICollectionView *)cv
-                                    kind:(NSString *)kind
-                               indexPath:(NSIndexPath *)indexPath {
++ (instancetype)supplementaryViewForCollectionView:(UICollectionView *)cv
+                                              kind:(NSString *)kind
+                                         indexPath:(NSIndexPath *)indexPath {
+    
     return [cv dequeueReusableSupplementaryViewOfKind:kind
                                   withReuseIdentifier:[self identifier]
                                          forIndexPath:indexPath];

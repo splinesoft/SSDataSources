@@ -172,12 +172,4 @@
 - (NSString *) titleForHeaderInSection:(NSUInteger)section;
 - (NSString *) titleForFooterInSection:(NSUInteger)section;
 
-#pragma mark - NSIndexPath helpers
-
-+ (NSArray *) indexPathArrayWithIndexSet:(NSIndexSet *)indexes 
-                               inSection:(NSUInteger)section;
-
-+ (NSArray *) indexPathArrayWithRange:(NSRange)range 
-                            inSection:(NSUInteger)section;
-
 @end

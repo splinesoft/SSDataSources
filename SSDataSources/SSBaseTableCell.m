@@ -18,10 +18,10 @@
     return UITableViewCellStyleDefault;
 }
 
-+ (id)cellForTableView:(UITableView *)tableView {
++ (instancetype)cellForTableView:(UITableView *)tableView {
     SSBaseTableCell *cell = (SSBaseTableCell *)[tableView dequeueReusableCellWithIdentifier:[self identifier]];
     
-    if( !cell ) {
+    if (!cell) {
         cell = [[self alloc] initWithStyle:[self cellStyle]
                            reuseIdentifier:[self identifier]];
         

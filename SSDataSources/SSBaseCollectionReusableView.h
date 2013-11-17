@@ -14,10 +14,14 @@
 
 @interface SSBaseCollectionReusableView : UICollectionReusableView
 
-+ (NSString *) identifier;
+/**
+ * Dequeues a supplementary view from collectionView, or if there are no cells of the
+ * receiver's type in the queue, creates a new view.
+ */
++ (instancetype) supplementaryViewForCollectionView:(UICollectionView *)cv
+                                               kind:(NSString *)kind
+                                          indexPath:(NSIndexPath *)indexPath;
 
-+ (id) supplementaryViewForCollectionView:(UICollectionView *)cv
-                                     kind:(NSString *)kind
-                                indexPath:(NSIndexPath *)indexPath;
++ (NSString *) identifier;
 
 @end

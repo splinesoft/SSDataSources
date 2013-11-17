@@ -9,7 +9,7 @@ No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numbe
 
 `SSDataSources` is a collection of objects that conform to `UITableViewDataSource` and `UICollectionViewDataSource`. This is my own implementation of ideas featured in [objc.io's wonderful first issue](http://www.objc.io/issue-1/table-views.html).
 
-`SSDataSources` powers various tables in my app [MUDRammer - a modern MUD client for iPhone and iPad](https://itunes.apple.com/us/app/mudrammer-a-modern-mud-client/id597157072?mt=8). Let me know if you use it in your app!
+`SSDataSources` powers single-section, multi-section, and Core Data-backed tables in my app [MUDRammer - a modern MUD client for iPhone and iPad](https://itunes.apple.com/us/app/mudrammer-a-modern-mud-client/id597157072?mt=8). Let me know if you use it in your app!
 
 ## Install
 
@@ -21,12 +21,7 @@ pod 'SSDataSources', :head # YOLO
 
 ## Samples
 
-```
-git clone https://github.com/splinesoft/SSDataSources.git
-cd SSDataSources/Example
-pod install
-open ExampleSSDataSources.xcworkspace
-```
+All the tables and collection views in the `Example` project are built with `SSDataSources`.
 
 ## Array Data Source
 

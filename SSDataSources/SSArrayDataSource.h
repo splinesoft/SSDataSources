@@ -12,10 +12,7 @@
 #import <CoreData/CoreData.h>
 
 /**
- * Generic data source for single-sectioned table and collection views.
- * If this datasource's `tableView` or `collectionView` property is set to your 
- * tableview or collection view, the data source will
- * perform insert/reload/delete calls when the data changes.
+ * Data source for single-sectioned table and collection views.
  */
 
 @interface SSArrayDataSource : SSBaseDataSource

@@ -11,18 +11,23 @@
 /**
  * A simple base table cell. Subclass me and override configureCell
  * to add custom one-time logic (e.g. creating subviews).
- * You probably don't need to override cellStyle and identifier.
+ * Override cellStyle to use a different style.
+ * You probably don't need to override identifier.
  */
 
 @interface SSBaseTableCell : UITableViewCell
+
+/**
+ * Dequeues a table cell from tableView, or if there are no cells of the
+ * receiver's type in the queue, creates a new cell and calls -configureCell.
+ */
++ (instancetype) cellForTableView:(UITableView *)tableView;
 
 + (NSString *) identifier;
 
 + (UITableViewCellStyle) cellStyle;
 
-+ (id) cellForTableView:(UITableView *)tableView;
-
-// Called once for each cell after initial init.
+// Called once for each cell after initial creation. Subclass me!
 - (void) configureCell;
 
 @end

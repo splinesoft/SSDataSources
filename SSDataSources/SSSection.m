@@ -11,7 +11,7 @@
 @implementation SSSection
 
 - (id)init {
-    if( ( self = [super init] ) ) {
+    if ((self = [super init])) {
         self.items = [NSMutableArray new];
         self.headerClass = [SSBaseHeaderFooterView class];
         self.footerClass = [SSBaseHeaderFooterView class];
@@ -34,7 +34,7 @@
     
     SSSection *section = [SSSection new];
     
-    if( items )
+    if (items)
         [section.items addObjectsFromArray:items];
     
     section.header = header;
@@ -58,7 +58,7 @@
     
     NSMutableArray *array = [NSMutableArray new];
     
-    for( NSUInteger i = 0; i < numberOfItems; i++ )
+    for (NSUInteger i = 0; i < numberOfItems; i++)
         [array addObject:@(i)];
     
     return [self sectionWithItems:array

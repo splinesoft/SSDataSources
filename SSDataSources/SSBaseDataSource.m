@@ -13,7 +13,7 @@
 #pragma mark - init
 
 - (instancetype)init {
-    if( ( self = [super init] ) ) {
+    if ((self = [super init])) {
         self.cellClass = [SSBaseTableCell class];
         self.collectionViewSupplementaryElementClass = [SSBaseCollectionReusableView class];
         self.rowAnimation = UITableViewRowAnimationAutomatic;
@@ -71,7 +71,9 @@
 
 - (void)setTableView:(UITableView *)tableView {
     _tableView = tableView;
-    tableView.dataSource = self;
+    
+    if (tableView)
+        tableView.dataSource = self;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv
@@ -80,12 +82,12 @@
     id item = [self itemAtIndexPath:indexPath];
     id cell;
     
-    if( self.cellCreationBlock )
+    if (self.cellCreationBlock)
         cell = self.cellCreationBlock( item, tv, indexPath );
     else
         cell = [self.cellClass cellForTableView:tv];
 
-    if( self.cellConfigureBlock )
+    if (self.cellConfigureBlock)
         self.cellConfigureBlock( cell, item, tv, indexPath );
     
     return cell;    
@@ -100,8 +102,8 @@
 }
 
 - (BOOL)tableView:(UITableView *)tv canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    if( [self.fallbackTableDataSource respondsToSelector:
-         @selector(tableView:canMoveRowAtIndexPath:)] )
+    if ([self.fallbackTableDataSource respondsToSelector:
+         @selector(tableView:canMoveRowAtIndexPath:)])
         return [self.fallbackTableDataSource tableView:tv
                                  canMoveRowAtIndexPath:indexPath];
     
@@ -109,8 +111,8 @@
 }
 
 - (BOOL)tableView:(UITableView *)tv canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if( [self.fallbackTableDataSource respondsToSelector:
-         @selector(tableView:canEditRowAtIndexPath:)] )
+    if ([self.fallbackTableDataSource respondsToSelector:
+         @selector(tableView:canEditRowAtIndexPath:)])
         return [self.fallbackTableDataSource tableView:tv
                                  canEditRowAtIndexPath:indexPath];
     
@@ -121,8 +123,8 @@
 commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if( [self.fallbackTableDataSource respondsToSelector:
-         @selector(tableView:commitEditingStyle:forRowAtIndexPath:)] )
+    if ([self.fallbackTableDataSource respondsToSelector:
+         @selector(tableView:commitEditingStyle:forRowAtIndexPath:)])
         [self.fallbackTableDataSource tableView:tv
                              commitEditingStyle:editingStyle
                               forRowAtIndexPath:indexPath];
@@ -133,7 +135,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)setCollectionView:(UICollectionView *)collectionView {
     _collectionView = collectionView;
-    collectionView.dataSource = self;
+    
+    if (collectionView)
+        collectionView.dataSource = self;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv
@@ -142,13 +146,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     id item = [self itemAtIndexPath:indexPath];
     id cell;
     
-    if( self.cellCreationBlock )
+    if (self.cellCreationBlock)
         cell = self.cellCreationBlock( item, cv, indexPath );
     else
         cell = [self.cellClass cellForCollectionView:cv
                                            indexPath:indexPath];
     
-    if( self.cellConfigureBlock )
+    if (self.cellConfigureBlock)
         self.cellConfigureBlock( cell, item, cv, indexPath );
     
     return cell;
@@ -170,7 +174,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UICollectionReusableView *supplementaryView;
     
-    if( self.collectionSupplementaryCreationBlock )
+    if (self.collectionSupplementaryCreationBlock)
         supplementaryView = self.collectionSupplementaryCreationBlock( cv, kind, indexPath );
     else
         supplementaryView = [self.collectionViewSupplementaryElementClass
@@ -178,29 +182,33 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                              kind:kind
                              indexPath:indexPath];
             
-    if( self.collectionSupplementaryConfigureBlock )
+    if (self.collectionSupplementaryConfigureBlock)
         self.collectionSupplementaryConfigureBlock( supplementaryView, cv, kind, indexPath );
 
     return supplementaryView;
 }
 
-#pragma mark - indexpath helpers
+#pragma mark - NSIndexPath helpers
 
-+ (NSArray *)indexPathArrayWithRange:(NSRange)range {
++ (NSArray *)indexPathArrayWithIndexSet:(NSIndexSet *)indexes
+                              inSection:(NSUInteger)section {
+    
     NSMutableArray *ret = [NSMutableArray array];
     
-    for( NSUInteger i = range.location; i < NSMaxRange(range); i++ )
-        [ret addObject:[NSIndexPath indexPathForRow:(NSInteger)i inSection:0]];
+    [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+        [ret addObject:[NSIndexPath indexPathForRow:index inSection:section]];
+    }];
     
     return ret;
 }
 
-+ (NSArray *)indexPathArrayWithIndexSet:(NSIndexSet *)indexes {
++ (NSArray *)indexPathArrayWithRange:(NSRange)range
+                           inSection:(NSUInteger)section {
+    
     NSMutableArray *ret = [NSMutableArray array];
     
-    [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-        [ret addObject:[NSIndexPath indexPathForRow:(NSInteger)index inSection:0]];
-    }];
+    for (NSUInteger i = range.location; i < NSMaxRange(range); i++)
+        [ret addObject:[NSIndexPath indexPathForRow:i inSection:section]];
     
     return ret;
 }

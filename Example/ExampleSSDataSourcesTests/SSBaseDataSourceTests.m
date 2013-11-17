@@ -166,10 +166,10 @@
 
 - (void)testBuildingArrayOfIndexPathsWithRange
 {
-    id indexPaths = [ds.class indexPathArrayWithRange:NSMakeRange(0, 0)];
+    id indexPaths = [ds.class indexPathArrayWithRange:NSMakeRange(0, 0) inSection:0];
     expect(indexPaths).to.beEmpty();
 
-    indexPaths = [ds.class indexPathArrayWithRange:NSMakeRange(1, 3)];
+    indexPaths = [ds.class indexPathArrayWithRange:NSMakeRange(1, 3) inSection:0];
     expect(indexPaths).to.equal((@[
         [NSIndexPath indexPathForRow:1 inSection:0],
         [NSIndexPath indexPathForRow:2 inSection:0],
@@ -179,10 +179,12 @@
 
 - (void)testBuildingArrayOfIndexPathsWithIndexSet
 {
-    id indexPaths = [ds.class indexPathArrayWithIndexSet:[NSIndexSet indexSet]];
+    id indexPaths = [ds.class indexPathArrayWithIndexSet:[NSIndexSet indexSet]
+                                               inSection:0];
     expect(indexPaths).to.beEmpty();
 
-    indexPaths = [ds.class indexPathArrayWithIndexSet:[NSIndexSet indexSetWithIndex:1]];
+    indexPaths = [ds.class indexPathArrayWithIndexSet:[NSIndexSet indexSetWithIndex:1]
+                                            inSection:0];
     expect(indexPaths).to.equal(@[[NSIndexPath indexPathForRow:1 inSection:0]]);
 }
 

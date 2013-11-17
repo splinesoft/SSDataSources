@@ -16,10 +16,14 @@
 
 @interface SSBaseCollectionCell : UICollectionViewCell
 
-+ (NSString *) identifier;
+/**
+ * Dequeues a collection cell from collectionView, or if there are no cells of the
+ * receiver's type in the queue, creates a new cell and calls -configureCell.
+ */
++ (instancetype) cellForCollectionView:(UICollectionView *)collectionView
+                             indexPath:(NSIndexPath *)indexPath;
 
-+ (id) cellForCollectionView:(UICollectionView *)collectionView
-                   indexPath:(NSIndexPath *)indexPath;
++ (NSString *) identifier;
 
 // Override me!
 - (void) configureCell;

@@ -19,7 +19,7 @@
 @implementation SSCoreDataSource
 
 - (instancetype)init {
-    if( ( self = [super init] ) ) {
+    if ((self = [super init])) {
         _sectionUpdates = [NSMutableArray new];
         _objectUpdates = [NSMutableArray new];
     }
@@ -28,7 +28,7 @@
 }
 
 - (instancetype) initWithFetchedResultsController:(NSFetchedResultsController *)aController {
-    if( ( self = [self init] ) ) {
+    if ((self = [self init])) {
         _controller = aController;
     }
     
@@ -39,7 +39,7 @@
                            inContext:(NSManagedObjectContext *)context
                   sectionNameKeyPath:(NSString *)sectionNameKeyPath {
     
-    if( ( self = [self init] ) ) {
+    if ((self = [self init])) {
         _controller = [[NSFetchedResultsController alloc] initWithFetchRequest:request
                                                               managedObjectContext:context
                                                                 sectionNameKeyPath:sectionNameKeyPath
@@ -74,7 +74,7 @@
 - (NSUInteger)numberOfItems {
     NSUInteger count = 0;
   
-    for( id <NSFetchedResultsSectionInfo> section in [_controller sections] )
+    for (id <NSFetchedResultsSectionInfo> section in [_controller sections])
         count += [section numberOfObjects];
   
     return count;
@@ -87,7 +87,7 @@
 }
 
 - (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)objectId {
-    for( NSUInteger section = 0; section < [[_controller sections] count]; section++ ) {
+    for (NSUInteger section = 0; section < [self numberOfSections]; section++) {
         id <NSFetchedResultsSectionInfo> sec = [_controller sections][section];
         
         NSUInteger index = [[sec objects] indexOfObjectPassingTest:^BOOL(NSManagedObject *object,
@@ -96,7 +96,7 @@
             return [[object objectID] isEqual:objectId];
         }];
     
-        if( index != NSNotFound )
+        if (index != NSNotFound)
             return [NSIndexPath indexPathForRow:(NSInteger)index inSection:(NSInteger)section];
     }
   
@@ -138,7 +138,7 @@ sectionForSectionIndexTitle:(NSString *)title
     
     NSMutableDictionary *change = [NSMutableDictionary new];
     
-    switch(type) {
+    switch (type) {
         case NSFetchedResultsChangeInsert:
             change[@(type)] = newIndexPath;
             [self.tableView insertRowsAtIndexPaths:@[ newIndexPath ]
@@ -176,7 +176,7 @@ sectionForSectionIndexTitle:(NSString *)title
     
     NSMutableDictionary *change = [NSMutableDictionary new];
     
-    switch(type) {
+    switch (type) {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
                           withRowAnimation:self.rowAnimation];
@@ -196,11 +196,11 @@ sectionForSectionIndexTitle:(NSString *)title
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
     [self.tableView endUpdates];
     
-    if( self.collectionView ) {
+    if (self.collectionView) {
         
-        if( [self.sectionUpdates count] > 0 ) {
+        if ([self.sectionUpdates count] > 0) {
             [self.collectionView performBatchUpdates:^{
-                for( NSDictionary *change in self.sectionUpdates ) {
+                for (NSDictionary *change in self.sectionUpdates) {
                     [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id secnum, BOOL *stop) {
                         NSFetchedResultsChangeType type = (NSFetchedResultsChangeType)[key unsignedIntegerValue];
                         NSIndexSet *section = [NSIndexSet indexSetWithIndex:[secnum unsignedIntegerValue]];
@@ -223,7 +223,7 @@ sectionForSectionIndexTitle:(NSString *)title
         
         if ([self.objectUpdates count] > 0 && [self.sectionUpdates count] == 0) {
             [self.collectionView performBatchUpdates:^{
-                for( NSDictionary *change in self.objectUpdates ) {
+                for (NSDictionary *change in self.objectUpdates) {
                     [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id indexPath, BOOL *stop) {
                         NSFetchedResultsChangeType type = [key unsignedIntegerValue];
                         

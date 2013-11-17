@@ -20,11 +20,13 @@
     return NSStringFromClass(self);
 }
 
-+ (id)cellForCollectionView:(UICollectionView *)collectionView indexPath:(NSIndexPath *)indexPath {
++ (instancetype)cellForCollectionView:(UICollectionView *)collectionView
+                            indexPath:(NSIndexPath *)indexPath {
+    
     SSBaseCollectionCell *cell = (SSBaseCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:[self identifier]
                                                                                                    forIndexPath:indexPath];
   
-    if( !cell.didCompleteSetup ) {
+    if (!cell.didCompleteSetup) {
         [cell configureCell];
       
         cell.didCompleteSetup = YES;

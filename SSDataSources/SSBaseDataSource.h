@@ -155,7 +155,7 @@ typedef void (^SSCollectionSupplementaryViewConfigureBlock) (id view,           
 /**
  * Helper functions to generate arrays of NSIndexPaths.
  */
-+ (NSArray *) indexPathArrayWithRange:(NSRange)range;
-+ (NSArray *) indexPathArrayWithIndexSet:(NSIndexSet *)indexes;
++ (NSArray *) indexPathArrayWithRange:(NSRange)range inSection:(NSUInteger)section;
++ (NSArray *) indexPathArrayWithIndexSet:(NSIndexSet *)indexes inSection:(NSUInteger)section;
 
 @end
