@@ -76,46 +76,35 @@
     expect([ds tableView:tableView canEditRowAtIndexPath:ip]).to.equal(YES);
 }
 
-#pragma mark fallbackTableDataSource
+#pragma mark - Edit/Move enablement
 
-- (void)testForwardMovingRowToFallbackTableDataSource
+- (void)testForwardMovingRowToActionBlock
 {
     id ip = [NSIndexPath indexPathForRow:0 inSection:0];
 
-    id mockFallback = [OCMockObject niceMockForProtocol:@protocol(UITableViewDataSource)];
-    [[mockFallback expect] tableView:tableView canMoveRowAtIndexPath:ip];
-
-    ds.fallbackTableDataSource = mockFallback;
-    [ds tableView:tableView canMoveRowAtIndexPath:ip];
-
-    [mockFallback verify];
+    ds.tableActionBlock = ^BOOL(UITableView *tableView,
+                                NSIndexPath *indexPath,
+                                SSCellActionType action) {
+        
+        return action == SSCellActionTypeMove;
+    };
+    
+    expect([ds tableView:tableView canMoveRowAtIndexPath:ip]).to.beTruthy;
 }
 
-- (void)testForwardEditingRowToFallbackTableDataSource
+- (void)testForwardEditingRowToActionBlock
 {
     id ip = [NSIndexPath indexPathForRow:0 inSection:0];
 
-    id mockFallback = [OCMockObject niceMockForProtocol:@protocol(UITableViewDataSource)];
-    [[mockFallback expect] tableView:tableView canEditRowAtIndexPath:ip];
-
-    ds.fallbackTableDataSource = mockFallback;
-    [ds tableView:tableView canEditRowAtIndexPath:ip];
-
-    [mockFallback verify];
-}
-
-- (void)testForwardCommitEditingStyleToFallbackTableDataSource
-{
-    UITableViewCellEditingStyle es = UITableViewCellEditingStyleDelete;
-    id ip = [NSIndexPath indexPathForRow:0 inSection:0];
-
-    id mockFallback = [OCMockObject niceMockForProtocol:@protocol(UITableViewDataSource)];
-    [[mockFallback expect] tableView:tableView commitEditingStyle:es forRowAtIndexPath:ip];
-
-    ds.fallbackTableDataSource = mockFallback;
-    [ds tableView:tableView commitEditingStyle:es forRowAtIndexPath:ip];
-
-    [mockFallback verify];
+    ds.tableActionBlock = ^BOOL(UITableView *tableView,
+                                NSIndexPath *indexPath,
+                                SSCellActionType action) {
+        
+        
+        return action == SSCellActionTypeEdit;
+    };
+    
+    expect([ds tableView:tableView canEditRowAtIndexPath:ip]).to.beTruthy;
 }
 
 #pragma mark UICollectionViewDataSource

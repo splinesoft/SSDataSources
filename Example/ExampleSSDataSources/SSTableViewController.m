@@ -22,7 +22,7 @@
 
 - (instancetype)init {
     if( ( self = [self initWithStyle:UITableViewStylePlain] ) ) {
-        
+        self.title = @"Simple Table";
     }
     
     return self;
@@ -40,7 +40,23 @@
     
     dataSource = [[SSArrayDataSource alloc] initWithItems:items];
     dataSource.rowAnimation = UITableViewRowAnimationRight;
-    dataSource.fallbackTableDataSource = self;
+    dataSource.tableActionBlock = ^BOOL(UITableView *tableView,
+                                        NSIndexPath *indexPath,
+                                        SSCellActionType action) {
+        
+        // we allow both moving and deleting.
+        // You could instead do something like
+        // return (action == SSCellActionTypeMove);
+        // to only allow moving and disallow deleting.
+        
+        return YES;
+    };
+    dataSource.tableDeletionBlock = ^(UITableView *tableView,
+                                      NSIndexPath *indexPath,
+                                      SSArrayDataSource *aDataSource) {
+        
+        [aDataSource removeItemAtIndex:(NSUInteger)indexPath.row];
+    };
     dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
                                       NSNumber *number, 
                                       UITableView *tableView,
@@ -76,26 +92,6 @@
          target:self
          action:@selector(toggleEditing)]
     ];
-}
-
-#pragma mark - fallback UITableViewDataSource (for edit/move)
-
-// We don't have to implement tableView:moveRowAtIndexPath:toIndexPath: - SSArrayDataSource
-// does the actual move for us
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView
-commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
-forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if( editingStyle == UITableViewCellEditingStyleDelete )
-        [dataSource removeItemAtIndex:(NSUInteger)indexPath.row];
 }
 
 #pragma mark - UITableViewDelegate

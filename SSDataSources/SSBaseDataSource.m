@@ -27,6 +27,8 @@
     self.cellCreationBlock = nil;
     self.collectionSupplementaryConfigureBlock = nil;
     self.collectionSupplementaryCreationBlock = nil;
+    self.tableActionBlock = nil;
+    self.tableDeletionBlock = nil;
 }
 
 #pragma mark - item access
@@ -102,19 +104,23 @@
 }
 
 - (BOOL)tableView:(UITableView *)tv canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self.fallbackTableDataSource respondsToSelector:
-         @selector(tableView:canMoveRowAtIndexPath:)])
-        return [self.fallbackTableDataSource tableView:tv
-                                 canMoveRowAtIndexPath:indexPath];
+    
+    if (self.tableActionBlock) {
+        return self.tableActionBlock(tv,
+                                     indexPath,
+                                     SSCellActionTypeMove);
+    }
     
     return NO;
 }
 
 - (BOOL)tableView:(UITableView *)tv canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self.fallbackTableDataSource respondsToSelector:
-         @selector(tableView:canEditRowAtIndexPath:)])
-        return [self.fallbackTableDataSource tableView:tv
-                                 canEditRowAtIndexPath:indexPath];
+    
+    if (self.tableActionBlock) {
+        return self.tableActionBlock(tv,
+                                     indexPath,
+                                     SSCellActionTypeEdit);
+    }
     
     return YES;
 }
@@ -123,12 +129,11 @@
 commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ([self.fallbackTableDataSource respondsToSelector:
-         @selector(tableView:commitEditingStyle:forRowAtIndexPath:)])
-        [self.fallbackTableDataSource tableView:tv
-                             commitEditingStyle:editingStyle
-                              forRowAtIndexPath:indexPath];
-    
+    if (self.tableDeletionBlock) {
+        self.tableDeletionBlock(tv,
+                                indexPath,
+                                self);
+    }
 }
 
 #pragma mark - UICollectionViewDataSource

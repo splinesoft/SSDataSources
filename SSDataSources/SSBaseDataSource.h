@@ -16,6 +16,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@interface SSBaseDataSource : NSObject <UITableViewDataSource, UICollectionViewDataSource>
+
 #pragma mark - SSDataSources block signatures
 
 // Block called to configure each table and collection cell.
@@ -41,11 +43,20 @@ typedef void (^SSCollectionSupplementaryViewConfigureBlock) (id view,           
                                                              NSString *kind,          // the kind of reusable view
                                                              NSIndexPath *indexPath); // index path where this view appears
 
-#pragma mark - SSBaseDataSource
+// Optional block used to configure table move/edit behavior.
+typedef NS_ENUM(NSUInteger, SSCellActionType) {
+    SSCellActionTypeEdit,
+    SSCellActionTypeMove
+};
 
-@interface SSBaseDataSource : NSObject <UITableViewDataSource, UICollectionViewDataSource>
+typedef BOOL (^SSTableCellActionBlock) (UITableView *parentView,      // the parent table view
+                                        NSIndexPath *indexPath,       // the indexPath being edited or moved
+                                        SSCellActionType actionType); // The action type requested for this cell (edit or move)
 
-- (instancetype) init;
+// Optional block used to handle deletion behavior.
+typedef void (^SSTableCellDeletionBlock) (UITableView *parentView, // the parent table view
+                                          NSIndexPath *indexPath,  // the indexPath being deleted
+                                          id dataSource);          // the datasource performing the deletion
 
 #pragma mark - base data source setup
 
@@ -87,17 +98,21 @@ typedef void (^SSCollectionSupplementaryViewConfigureBlock) (id view,           
 @property (nonatomic, assign) UITableViewRowAnimation rowAnimation;
 
 /**
- * Optional data source fallback.
- * If this is set, it will receive data source delegate calls for:
- * tableView:canEditRowAtIndexPath:
+ * In lieu of implementing
+ * tableView:canEditRowAtIndexPath: and
  * tableView:canMoveRowAtIndexPath:
- * tableView:commitEditingStyle:forRowAtIndexPath:
- * but not tableView:moveRowAtIndexPath:toIndexPath: 
- * as both SSArrayDataSource and SSSectionedDataSource do this for you.
- *
- * See 'ExampleTable' for an example of editing, deleting, and drag-to-reorder rows.
+ * you may instead specify this block, which will be called to determine whether editing
+ * and moving is allowed for a given indexPath.
  */
-@property (nonatomic, weak) id <UITableViewDataSource> fallbackTableDataSource;
+@property (nonatomic, copy) SSTableCellActionBlock tableActionBlock;
+
+/**
+ * To implement cell deletion, first specify a `cellActionBlock` that returns
+ * YES when called with SSCellActionTypeEdit. Then specify this deletion block,
+ * which can be as simple as removing the item in question.
+ * See the Example project for a full implementation.
+ */
+@property (nonatomic, copy) SSTableCellDeletionBlock tableDeletionBlock;
 
 #pragma mark - UICollectionView
 

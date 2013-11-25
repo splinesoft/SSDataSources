@@ -401,4 +401,22 @@
     [mockCollectionView verify];
 }
 
+- (void)testForwardCommitEditingStyleToDeletionBlock
+{
+    SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[ @1, @2, @3 ]];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+
+    expect(ds.numberOfItems).to.equal(@3);
+    
+    ds.tableDeletionBlock = ^(UITableView *tableView,
+                              NSIndexPath *indexPath,
+                              SSArrayDataSource *dataSource) {
+        
+        [dataSource removeItemAtIndex:(NSUInteger)indexPath.row];
+    };
+    
+    [ds tableView:tableView commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:indexPath];
+    expect(ds.numberOfItems).to.equal(@2);
+}
+
 @end
