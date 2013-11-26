@@ -199,12 +199,27 @@ You're a modern wo/man-about-Internet and sometimes you want to present a `UITab
     // Optional - row animation to use for update events.
     dataSource.rowAnimation = UITableViewRowAnimationFade;
     
-    // Optional - setting the fallbackTableDataSource will call 
-    // tableView:canEditRowAtIndexPath:
-    // tableView:canMoveRowAtIndexPath:
-    // tableView:commitEditingStyle:forRowAtIndexPath 
-    // on your fallback delegate if you need to implement editing and moving
-    dataSource.fallbackTableDataSource = self;
+    // Optional - determine permissions for editing and moving
+    dataSource.tableActionBlock = ^(UITableView *tableView,
+                                    NSIndexPath *indexPath,
+                                    SSCellActionType actionType) {
+        
+        // Disallow moving, allow editing
+        return actionType == SSCellActionTypeEdit;
+    };
+    
+    // Optional - handle managed object deletion
+    dataSource.tableDeletionBlock = ^(UITableView *tableView,
+                                      NSIndexPath *indexPath,
+                                      SSCoreDataSource *aDataSource) {
+                                      
+        Trigger *myObject = [aDataSource itemAtIndexPath:indexPath];
+        
+        // Automatically removes the row from the table as 
+        // SSCoreDataSource conforms to NSFetchedResultsControllerDelegate.
+        [myObject deleteInContext:[NSManagedObjectContext MR_defaultContext]];
+        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    };
 }
 @end
 ```
