@@ -107,7 +107,7 @@ typedef void (^SSTableCellDeletionBlock) (UITableView *parentView, // the parent
 @property (nonatomic, copy) SSTableCellActionBlock tableActionBlock;
 
 /**
- * To implement cell deletion, first specify a `cellActionBlock` that returns
+ * To implement cell deletion, first specify a `tableActionBlock` that returns
  * YES when called with SSCellActionTypeEdit. Then specify this deletion block,
  * which can be as simple as removing the item in question.
  * See the Example project for a full implementation.
