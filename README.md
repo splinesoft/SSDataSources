@@ -200,9 +200,9 @@ You're a modern wo/man-about-Internet and sometimes you want to present a `UITab
     dataSource.rowAnimation = UITableViewRowAnimationFade;
     
     // Optional - determine permissions for editing and moving
-    dataSource.tableActionBlock = ^(UITableView *tableView,
-                                    NSIndexPath *indexPath,
-                                    SSCellActionType actionType) {
+    dataSource.tableActionBlock = ^BOOL(UITableView *tableView,
+                                        NSIndexPath *indexPath,
+                                        SSCellActionType actionType) {
         
         // Disallow moving, allow editing
         return actionType == SSCellActionTypeEdit;
@@ -215,10 +215,10 @@ You're a modern wo/man-about-Internet and sometimes you want to present a `UITab
                                       
         Trigger *myObject = [aDataSource itemAtIndexPath:indexPath];
         
-        // Automatically removes the row from the table as 
-        // SSCoreDataSource conforms to NSFetchedResultsControllerDelegate.
-        [myObject deleteInContext:[NSManagedObjectContext MR_defaultContext]];
-        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+        // SSCoreDataSource conforms to NSFetchedResultsControllerDelegate,
+        // so saving the object's context will automatically update the table.
+        [myObject deleteInContext:myObject.managedObjectContext];
+        [myObject.managedObjectContext MR_saveToPersistentStoreAndWait];
     };
 }
 @end
