@@ -69,6 +69,16 @@
                                  userInfo:nil];
 }
 
+#pragma mark - Common
+
+- (void)configureCell:(id)cell
+              forItem:(id)item
+           parentView:(id)parentView
+            indexPath:(NSIndexPath *)indexPath {
+    if (self.cellConfigureBlock)
+        self.cellConfigureBlock( cell, item, parentView, indexPath );
+}
+
 #pragma mark - UITableViewDataSource
 
 - (void)setTableView:(UITableView *)tableView {
@@ -89,10 +99,9 @@
     else
         cell = [self.cellClass cellForTableView:tv];
 
-    if (self.cellConfigureBlock)
-        self.cellConfigureBlock( cell, item, tv, indexPath );
-    
-    return cell;    
+    [self configureCell:cell forItem:item parentView:tv indexPath:indexPath];
+
+    return cell;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -156,10 +165,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     else
         cell = [self.cellClass cellForCollectionView:cv
                                            indexPath:indexPath];
-    
-    if (self.cellConfigureBlock)
-        self.cellConfigureBlock( cell, item, cv, indexPath );
-    
+
+    [self configureCell:cell forItem:item parentView:cv indexPath:indexPath];
+
     return cell;
 }
 
