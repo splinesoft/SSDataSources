@@ -16,9 +16,7 @@
                                                                             indexPath:indexPath];
     
     if( !header.label ) {
-        header.label = [[UILabel alloc] initWithFrame:(CGRect){
-            {5, 0},
-            {CGRectGetWidth(cv.frame) - 10, 40}}];
+        header.label = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, CGRectGetWidth(cv.frame) - 10, 40)];
         header.label.backgroundColor = [UIColor clearColor];
         header.label.font = [UIFont boldSystemFontOfSize:18.0f];
         header.label.textColor = [UIColor darkGrayColor];

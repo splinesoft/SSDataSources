@@ -27,7 +27,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    [self.label setFrame:(CGRect){ {0, 0}, self.frame.size }];
+    [self.label setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
 
 @end

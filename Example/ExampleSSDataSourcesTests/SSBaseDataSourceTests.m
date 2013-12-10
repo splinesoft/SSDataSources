@@ -128,7 +128,7 @@
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
     layout.headerReferenceSize = CGSizeMake(20, 20);
     
-    collectionView = [[UICollectionView alloc] initWithFrame:(CGRect){0, 0, 100, 100}
+    collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)
                                         collectionViewLayout:layout];
     
     [collectionView registerClass:[SSBaseCollectionReusableView class]
