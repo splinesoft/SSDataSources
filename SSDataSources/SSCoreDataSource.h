@@ -26,6 +26,12 @@
 @property (nonatomic, strong) NSFetchedResultsController *controller;
 
 /**
+ * Any error experienced during the most recent fetch.
+ * nil if the fetch succeeded.
+ */
+@property (nonatomic, strong) NSError *fetchError;
+
+/**
  * Create a data source with a fetched results controller.
  * @param controller - the FRC backing this data source
  */

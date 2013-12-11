@@ -14,6 +14,8 @@
 @property (nonatomic, strong) NSMutableArray *sectionUpdates;
 @property (nonatomic, strong) NSMutableArray *objectUpdates;
 
+- (void) _performFetch;
+
 @end
 
 @implementation SSCoreDataSource
@@ -30,6 +32,11 @@
 - (instancetype) initWithFetchedResultsController:(NSFetchedResultsController *)aController {
     if ((self = [self init])) {
         _controller = aController;
+        _controller.delegate = self;
+        
+        if (!_controller.fetchedObjects) {
+            [self _performFetch];
+        }
     }
     
     return self;
@@ -41,13 +48,13 @@
     
     if ((self = [self init])) {
         _controller = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                              managedObjectContext:context
-                                                                sectionNameKeyPath:sectionNameKeyPath
-                                                                         cacheName:nil];
+                                                          managedObjectContext:context
+                                                            sectionNameKeyPath:sectionNameKeyPath
+                                                                     cacheName:nil];
         
         _controller.delegate = self;
         
-        [_controller performFetch:nil];
+        [self _performFetch];
     }
     
     return self;
@@ -58,6 +65,14 @@
     self.controller = nil;
     [self.sectionUpdates removeAllObjects];
     [self.objectUpdates removeAllObjects];
+}
+
+#pragma mark - Fetching
+
+- (void)_performFetch {
+    NSError *fetchErr;
+    [_controller performFetch:&fetchErr];
+    _fetchError = fetchErr;
 }
 
 #pragma mark - Base data source
