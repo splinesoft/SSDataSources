@@ -25,7 +25,7 @@
  * This identifier is used in the `SSSectionedDataSource` helper method
  * indexOfSectionWithIdentifier:.
  */
-@property (nonatomic, copy) id <NSCopying> sectionIdentifier;
+@property (nonatomic, strong) id sectionIdentifier;
 
 /**
  * Simple strings to use for headers and footers.

@@ -75,6 +75,7 @@
               forItem:(id)item
            parentView:(id)parentView
             indexPath:(NSIndexPath *)indexPath {
+    
     if (self.cellConfigureBlock)
         self.cellConfigureBlock( cell, item, parentView, indexPath );
 }
@@ -99,7 +100,10 @@
     else
         cell = [self.cellClass cellForTableView:tv];
 
-    [self configureCell:cell forItem:item parentView:tv indexPath:indexPath];
+    [self configureCell:cell
+                forItem:item
+             parentView:tv
+              indexPath:indexPath];
 
     return cell;
 }
@@ -166,7 +170,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         cell = [self.cellClass cellForCollectionView:cv
                                            indexPath:indexPath];
 
-    [self configureCell:cell forItem:item parentView:cv indexPath:indexPath];
+    [self configureCell:cell
+                forItem:item
+             parentView:cv
+              indexPath:indexPath];
 
     return cell;
 }

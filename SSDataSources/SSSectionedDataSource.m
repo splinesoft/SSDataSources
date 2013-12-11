@@ -27,7 +27,7 @@
 
 - (instancetype)initWithItems:(NSArray *)items {
     if ((self = [self init])) {
-        if( [items count] > 0 )
+        if ([items count] > 0)
             [self appendSection:[SSSection sectionWithItems:items]];
     }
     
@@ -36,7 +36,7 @@
 
 - (instancetype)initWithSection:(SSSection *)section {
     if ((self = [self init])) {
-        if( section )
+        if (section)
             [self appendSection:section];
     }
   
@@ -45,7 +45,7 @@
 
 - (instancetype)initWithSections:(NSArray *)newSections {
     if ((self = [self init])) {
-        if( [newSections count] > 0 )
+        if ([newSections count] > 0)
             [self insertSections:newSections
                        atIndexes:[NSIndexSet indexSetWithIndexesInRange:
                                   NSMakeRange(0, [newSections count])]];

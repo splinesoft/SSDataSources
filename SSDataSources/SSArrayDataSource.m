@@ -20,9 +20,9 @@
 - (instancetype)initWithItems:(NSArray *)anItems {
   
   if ((self = [self init])) {
-    self.items = ( anItems
-                   ? [NSMutableArray arrayWithArray:anItems]
-                   : [NSMutableArray array] );
+      self.items = (anItems
+                    ? [NSMutableArray arrayWithArray:anItems]
+                    : [NSMutableArray array]);
   }
   
   return self;
@@ -48,10 +48,10 @@
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
     if (!indexPath)
-      return nil;
+        return nil;
   
     if (indexPath.row < (NSInteger)[self.items count])
-      return self.items[(NSUInteger)indexPath.row];
+        return self.items[(NSUInteger)indexPath.row];
   
     return nil;
 }
@@ -181,12 +181,12 @@
 #pragma mark - item access
 
 - (NSIndexPath *)indexPathForItem:(id)item {
-  NSUInteger row = [self.items indexOfObjectIdenticalTo:item];
+    NSUInteger row = [self.items indexOfObjectIdenticalTo:item];
   
-  if (row == NSNotFound)
-    return nil;
+    if (row == NSNotFound)
+        return nil;
   
-  return [NSIndexPath indexPathForRow:(NSInteger)row inSection:0];
+    return [NSIndexPath indexPathForRow:(NSInteger)row inSection:0];
 }
 
 - (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)itemId {
