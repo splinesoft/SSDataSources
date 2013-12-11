@@ -70,7 +70,7 @@
 #pragma mark - Fetching
 
 - (void)_performFetch {
-    NSError *fetchErr;
+    NSError *fetchErr = nil;
     [_controller performFetch:&fetchErr];
     _fetchError = fetchErr;
 }
