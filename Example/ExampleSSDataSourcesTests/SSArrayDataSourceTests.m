@@ -408,9 +408,9 @@
 
     expect(ds.numberOfItems).to.equal(@3);
     
-    ds.tableDeletionBlock = ^(UITableView *tableView,
-                              NSIndexPath *indexPath,
-                              SSArrayDataSource *dataSource) {
+    ds.tableDeletionBlock = ^(SSArrayDataSource *dataSource,
+                              UITableView *tableView,
+                              NSIndexPath *indexPath) {
         
         [dataSource removeItemAtIndex:(NSUInteger)indexPath.row];
     };

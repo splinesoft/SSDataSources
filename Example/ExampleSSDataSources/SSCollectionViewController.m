@@ -76,8 +76,8 @@
         cell.label.text = [number stringValue];
     };
     dataSource.collectionSupplementaryConfigureBlock = ^(SSCollectionViewSectionHeader *header,
-                                                         UICollectionView *collectionView,
                                                          NSString *kind,
+                                                         UICollectionView *collectionView,
                                                          NSIndexPath *indexPath) {
         header.label.text = ( [kind isEqualToString:UICollectionElementKindSectionHeader]
                               ? @"A section header"

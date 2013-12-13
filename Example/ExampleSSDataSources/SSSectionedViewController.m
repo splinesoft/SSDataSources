@@ -44,9 +44,9 @@ forHeaderFooterViewReuseIdentifier:[SSBaseHeaderFooterView identifier]];
     dataSource = [[SSSectionedDataSource alloc] initWithSection:
                   [[self class] sectionWithRandomNumber]];
     dataSource.rowAnimation = UITableViewRowAnimationFade;
-    dataSource.tableActionBlock = ^(UITableView *tableView,
-                                    NSIndexPath *indexPath,
-                                    SSCellActionType actionType) {
+    dataSource.tableActionBlock = ^(SSCellActionType actionType,
+                                    UITableView *tableView,
+                                    NSIndexPath *indexPath) {
         // we allow both moving and deleting.
         // You could instead do something like
         // return (action == SSCellActionTypeMove);
@@ -54,9 +54,9 @@ forHeaderFooterViewReuseIdentifier:[SSBaseHeaderFooterView identifier]];
         
         return YES;
     };
-    dataSource.tableDeletionBlock = ^(UITableView *tableView,
-                                      NSIndexPath *indexPath,
-                                      SSSectionedDataSource *aDataSource) {
+    dataSource.tableDeletionBlock = ^(SSSectionedDataSource *aDataSource,
+                                      UITableView *tableView,
+                                      NSIndexPath *indexPath) {
         [aDataSource removeItemAtIndexPath:indexPath];
     };
     dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell,

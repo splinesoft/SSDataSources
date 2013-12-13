@@ -55,7 +55,7 @@
     // override me!
     @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                    reason:[NSString stringWithFormat:
-                                          @"Did you forget to override %@?",
+                                           @"Did you forget to override %@?",
                                            NSStringFromSelector(_cmd)]
                                  userInfo:nil];
 }
@@ -96,7 +96,7 @@
     id cell;
     
     if (self.cellCreationBlock)
-        cell = self.cellCreationBlock( item, tv, indexPath );
+        cell = self.cellCreationBlock(item, tv, indexPath);
     else
         cell = [self.cellClass cellForTableView:tv];
 
@@ -119,9 +119,9 @@
 - (BOOL)tableView:(UITableView *)tv canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (self.tableActionBlock) {
-        return self.tableActionBlock(tv,
-                                     indexPath,
-                                     SSCellActionTypeMove);
+        return self.tableActionBlock(SSCellActionTypeMove,
+                                     tv,
+                                     indexPath);
     }
     
     return NO;
@@ -130,9 +130,9 @@
 - (BOOL)tableView:(UITableView *)tv canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (self.tableActionBlock) {
-        return self.tableActionBlock(tv,
-                                     indexPath,
-                                     SSCellActionTypeEdit);
+        return self.tableActionBlock(SSCellActionTypeEdit,
+                                     tv,
+                                     indexPath);
     }
     
     return YES;
@@ -143,9 +143,9 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (self.tableDeletionBlock) {
-        self.tableDeletionBlock(tv,
-                                indexPath,
-                                self);
+        self.tableDeletionBlock(self,
+                                tv,
+                                indexPath);
     }
 }
 
@@ -165,7 +165,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     id cell;
     
     if (self.cellCreationBlock)
-        cell = self.cellCreationBlock( item, cv, indexPath );
+        cell = self.cellCreationBlock(item, cv, indexPath);
     else
         cell = [self.cellClass cellForCollectionView:cv
                                            indexPath:indexPath];
@@ -195,16 +195,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionReusableView *supplementaryView;
     
     if (self.collectionSupplementaryCreationBlock)
-        supplementaryView = self.collectionSupplementaryCreationBlock( cv, kind, indexPath );
+        supplementaryView = self.collectionSupplementaryCreationBlock(kind, cv, indexPath);
     else
         supplementaryView = [self.collectionViewSupplementaryElementClass
                              supplementaryViewForCollectionView:cv
                              kind:kind
                              indexPath:indexPath];
-            
+    
     if (self.collectionSupplementaryConfigureBlock)
-        self.collectionSupplementaryConfigureBlock( supplementaryView, cv, kind, indexPath );
-
+        self.collectionSupplementaryConfigureBlock(supplementaryView, kind, cv, indexPath);
+    
     return supplementaryView;
 }
 

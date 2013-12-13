@@ -82,9 +82,9 @@
 {
     id ip = [NSIndexPath indexPathForRow:0 inSection:0];
 
-    ds.tableActionBlock = ^BOOL(UITableView *tableView,
-                                NSIndexPath *indexPath,
-                                SSCellActionType action) {
+    ds.tableActionBlock = ^BOOL(SSCellActionType action,
+                                UITableView *tableView,
+                                NSIndexPath *indexPath) {
         
         return action == SSCellActionTypeMove;
     };
@@ -96,9 +96,9 @@
 {
     id ip = [NSIndexPath indexPathForRow:0 inSection:0];
 
-    ds.tableActionBlock = ^BOOL(UITableView *tableView,
-                                NSIndexPath *indexPath,
-                                SSCellActionType action) {
+    ds.tableActionBlock = ^BOOL(SSCellActionType action,
+                                UITableView *tableView,
+                                NSIndexPath *indexPath) {
         
         
         return action == SSCellActionTypeEdit;

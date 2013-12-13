@@ -40,9 +40,9 @@
     
     dataSource = [[SSArrayDataSource alloc] initWithItems:items];
     dataSource.rowAnimation = UITableViewRowAnimationRight;
-    dataSource.tableActionBlock = ^BOOL(UITableView *tableView,
-                                        NSIndexPath *indexPath,
-                                        SSCellActionType action) {
+    dataSource.tableActionBlock = ^BOOL(SSCellActionType action,
+                                        UITableView *tableView,
+                                        NSIndexPath *indexPath) {
         
         // we allow both moving and deleting.
         // You could instead do something like
@@ -51,9 +51,9 @@
         
         return YES;
     };
-    dataSource.tableDeletionBlock = ^(UITableView *tableView,
-                                      NSIndexPath *indexPath,
-                                      SSArrayDataSource *aDataSource) {
+    dataSource.tableDeletionBlock = ^(SSArrayDataSource *aDataSource,
+                                      UITableView *tableView,
+                                      NSIndexPath *indexPath) {
         
         [aDataSource removeItemAtIndex:(NSUInteger)indexPath.row];
     };

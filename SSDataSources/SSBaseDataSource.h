@@ -33,14 +33,14 @@ typedef id   (^SSCellCreationBlock)  (id object,               // The object bei
 
 // Optional block used to create a UICollectionView supplementary view.
 typedef UICollectionReusableView * (^SSCollectionSupplementaryViewCreationBlock)
-                                                            (UICollectionView *cv,    // the parent collection view
-                                                             NSString *kind,          // the kind of reusable view
-                                                             NSIndexPath *indexPath); // index path for this view
+                                     (NSString *kind,          // the kind of reusable view
+                                      UICollectionView *cv,    // the parent collection view
+                                      NSIndexPath *indexPath); // index path for this view
 
 // Optional block used to configure UICollectionView supplementary views.
 typedef void (^SSCollectionSupplementaryViewConfigureBlock) (id view,                 // the header/footer view
-                                                             UICollectionView *cv,    // the parent collection view
                                                              NSString *kind,          // the kind of reusable view
+                                                             UICollectionView *cv,    // the parent collection view
                                                              NSIndexPath *indexPath); // index path where this view appears
 
 // Optional block used to configure table move/edit behavior.
@@ -49,14 +49,14 @@ typedef NS_ENUM(NSUInteger, SSCellActionType) {
     SSCellActionTypeMove
 };
 
-typedef BOOL (^SSTableCellActionBlock) (UITableView *parentView,      // the parent table view
-                                        NSIndexPath *indexPath,       // the indexPath being edited or moved
-                                        SSCellActionType actionType); // The action type requested for this cell (edit or move)
+typedef BOOL (^SSTableCellActionBlock) (SSCellActionType actionType,  // The action type requested for this cell (edit or move)
+                                        UITableView *parentView,      // the parent table view
+                                        NSIndexPath *indexPath);      // the indexPath being edited or moved
 
 // Optional block used to handle deletion behavior.
-typedef void (^SSTableCellDeletionBlock) (UITableView *parentView, // the parent table view
-                                          NSIndexPath *indexPath,  // the indexPath being deleted
-                                          id dataSource);          // the datasource performing the deletion
+typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the datasource performing the deletion
+                                          UITableView *parentView, // the parent table view
+                                          NSIndexPath *indexPath); // the indexPath being deleted
 
 #pragma mark - base data source setup
 
