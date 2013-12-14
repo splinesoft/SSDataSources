@@ -200,18 +200,18 @@ You're a modern wo/man-about-Internet and sometimes you want to present a `UITab
     dataSource.rowAnimation = UITableViewRowAnimationFade;
     
     // Optional - determine permissions for editing and moving
-    dataSource.tableActionBlock = ^BOOL(UITableView *tableView,
-                                        NSIndexPath *indexPath,
-                                        SSCellActionType actionType) {
+    dataSource.tableActionBlock = ^BOOL(SSCellActionType actionType,
+                                        UITableView *tableView,
+                                        NSIndexPath *indexPath) {
         
         // Disallow moving, allow editing
         return actionType == SSCellActionTypeEdit;
     };
     
     // Optional - handle managed object deletion
-    dataSource.tableDeletionBlock = ^(UITableView *tableView,
-                                      NSIndexPath *indexPath,
-                                      SSCoreDataSource *aDataSource) {
+    dataSource.tableDeletionBlock = ^(SSCoreDataSource *aDataSource,
+                                      UITableView *tableView,
+                                      NSIndexPath *indexPath) {
                                       
         Trigger *myObject = [aDataSource itemAtIndexPath:indexPath];
         
