@@ -1,7 +1,7 @@
 SSDataSources
 =============
 
-[![Build Status](https://travis-ci.org/splinesoft/SSDataSources.png?branch=master)](https://travis-ci.org/splinesoft/SSDataSources)
+[![Build Status](https://travis-ci.org/splinesoft/SSDataSources.png?branch=master)](https://travis-ci.org/splinesoft/SSDataSources) 
 
 Simple data sources for your `UITableView` and `UICollectionView` because proper developers don't repeat themselves. :)
 
