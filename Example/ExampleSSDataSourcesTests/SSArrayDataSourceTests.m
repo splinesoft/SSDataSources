@@ -278,7 +278,7 @@
     [mockTableView verify];
 }
 
-- (void)testRelplacingItemsReloadsItemsInDataSourceCollectionView
+- (void)testReplacingItemsReloadsItemsInDataSourceCollectionView
 {
     SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[@"foo", @"baz"]];
     id mockCollectionView = collectionView;
