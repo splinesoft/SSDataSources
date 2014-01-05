@@ -5,11 +5,11 @@ set -e
 cd Example
 pod install
 
-xctool \
+xcodebuild \
 -workspace ExampleSSDataSources.xcworkspace \
 -scheme ExampleSSDataSources \
 -sdk iphonesimulator \
 build test \
 ONLY_ACTIVE_ARCH=NO \
 RUN_CLANG_STATIC_ANALYZER=YES \
-CLANG_STATIC_ANALYZER_MODE=deep
+CLANG_STATIC_ANALYZER_MODE=deep | xcpretty
