@@ -165,6 +165,16 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
  */
 - (NSUInteger) numberOfItemsInSection:(NSUInteger)section;
 
+#pragma mark - Custom Animations
+
+/**
+ * Perform a tableView/collectionView operation, like inserting or deleting rows,
+ * with a custom animation duration and completion block.
+ */
+- (void) performAnimations:(void (^)(void))animations
+                  duration:(NSTimeInterval)duration
+                completion:(void (^)(void))completion;
+
 #pragma mark - Base tableView/collectionView operations
 
 - (void) insertCellsAtIndexPaths:(NSArray *)indexPaths;

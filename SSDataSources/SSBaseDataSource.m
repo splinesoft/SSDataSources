@@ -69,6 +69,29 @@
                                  userInfo:nil];
 }
 
+#pragma mark - Custom Animations
+
+- (void)performAnimations:(void (^)(void))animations
+                 duration:(NSTimeInterval)duration
+               completion:(void (^)(void))completion {
+    
+    if (!animations) {
+        return;
+    }
+    
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:completion];
+    
+    [UIView animateWithDuration:duration
+                     animations:^{
+                         [self.tableView beginUpdates];
+                         animations();
+                         [self.tableView endUpdates];
+                     }];
+    
+    [CATransaction commit];
+}
+
 #pragma mark - UITableView/UICollectionView
 
 - (void)insertCellsAtIndexPaths:(NSArray *)indexPaths {
