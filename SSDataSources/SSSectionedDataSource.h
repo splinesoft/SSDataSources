@@ -92,6 +92,12 @@
 - (void) insertItem:(id)item atIndexPath:(NSIndexPath *)indexPath;
 
 /**
+ * Replace an item at a particular section (indexPath.section) and row (indexPath.row).
+ * Reloads the cell.
+ */
+- (void) replaceItemAtIndexPath:(NSIndexPath *)indexPath withItem:(id)item;
+
+/**
  * Insert multiple items within a single section.
  * The number of `items` should be equal to the number of `indexes`.
  */

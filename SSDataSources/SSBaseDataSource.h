@@ -143,7 +143,7 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
  */
 @property (nonatomic, copy) SSCollectionSupplementaryViewConfigureBlock collectionSupplementaryConfigureBlock;
 
-#pragma mark - item access
+#pragma mark - Base item access
 
 /**
  * Return the item at a given index path. Override me in your subclass.
@@ -164,6 +164,18 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
  * Return the total number of items in a given section. Override me!
  */
 - (NSUInteger) numberOfItemsInSection:(NSUInteger)section;
+
+#pragma mark - Base tableView/collectionView operations
+
+- (void) insertCellsAtIndexPaths:(NSArray *)indexPaths;
+- (void) deleteCellsAtIndexPaths:(NSArray *)indexPaths;
+- (void) reloadCellsAtIndexPaths:(NSArray *)indexPaths;
+
+- (void) moveCellAtIndexPath:(NSIndexPath *)index1 toIndexPath:(NSIndexPath *)index2;
+- (void) moveSectionAtIndex:(NSUInteger)index1 toIndex:(NSUInteger)index2;
+
+- (void) insertSectionsAtIndexes:(NSIndexSet *)indexes;
+- (void) deleteSectionsAtIndexes:(NSIndexSet *)indexes;
 
 #pragma mark - helpers
 

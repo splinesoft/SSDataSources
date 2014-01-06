@@ -31,7 +31,7 @@
     self.tableDeletionBlock = nil;
 }
 
-#pragma mark - item access
+#pragma mark - Base item access
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
     // override me!
@@ -67,6 +67,59 @@
                                            @"Did you forget to override %@?",
                                            NSStringFromSelector(_cmd)]
                                  userInfo:nil];
+}
+
+#pragma mark - UITableView/UICollectionView
+
+- (void)insertCellsAtIndexPaths:(NSArray *)indexPaths {
+    [_tableView insertRowsAtIndexPaths:indexPaths
+                      withRowAnimation:self.rowAnimation];
+    
+    [_collectionView insertItemsAtIndexPaths:indexPaths];
+}
+
+- (void)deleteCellsAtIndexPaths:(NSArray *)indexPaths {
+    [_tableView deleteRowsAtIndexPaths:indexPaths
+                      withRowAnimation:self.rowAnimation];
+    
+    [_collectionView deleteItemsAtIndexPaths:indexPaths];
+}
+
+- (void)reloadCellsAtIndexPaths:(NSArray *)indexPaths {
+    [_tableView reloadRowsAtIndexPaths:indexPaths
+                      withRowAnimation:self.rowAnimation];
+    
+    [_collectionView reloadItemsAtIndexPaths:indexPaths];
+}
+
+- (void)moveCellAtIndexPath:(NSIndexPath *)index1 toIndexPath:(NSIndexPath *)index2 {
+    [_tableView moveRowAtIndexPath:index1
+                       toIndexPath:index2];
+    
+    [_collectionView moveItemAtIndexPath:index1
+                             toIndexPath:index2];
+}
+
+- (void)moveSectionAtIndex:(NSUInteger)index1 toIndex:(NSUInteger)index2 {
+    [_tableView moveSection:index1
+                  toSection:index2];
+    
+    [_collectionView moveSection:index1
+                       toSection:index2];
+}
+
+- (void)insertSectionsAtIndexes:(NSIndexSet *)indexes {
+    [_tableView insertSections:indexes
+              withRowAnimation:self.rowAnimation];
+    
+    [_collectionView insertSections:indexes];
+}
+
+- (void)deleteSectionsAtIndexes:(NSIndexSet *)indexes {
+    [_tableView deleteSections:indexes
+              withRowAnimation:self.rowAnimation];
+    
+    [_collectionView deleteSections:indexes];
 }
 
 #pragma mark - Common

@@ -53,4 +53,17 @@
     expect(ds.numberOfSections).to.equal(0);
 }
 
+- (void) test_replacing_item
+{
+    SSSection *section;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    
+    ds = [[SSSectionedDataSource alloc] initWithItems:@[ @"foo" ]];
+    section = [ds sectionAtIndex:indexPath.section];
+    expect(section.items).to.haveCountOf(1);
+    [ds replaceItemAtIndexPath:indexPath withItem:@"bar"];
+    expect(section.items).to.haveCountOf(1);
+    expect([ds itemAtIndexPath:indexPath]).to.equal(@"bar");
+}
+
 @end

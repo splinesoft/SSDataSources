@@ -89,45 +89,21 @@
     
     [self.items addObjectsFromArray:newItems];
     
-    if (self.tableView)
-        [self.tableView insertRowsAtIndexPaths:
-         [[self class] indexPathArrayWithRange:NSMakeRange(count, [newItems count])
-                                     inSection:0]
-                              withRowAnimation:self.rowAnimation];
-    
-    if (self.collectionView)
-        [self.collectionView insertItemsAtIndexPaths:
-         [[self class] indexPathArrayWithRange:NSMakeRange(count, [newItems count])
-                                     inSection:0]];
+    [self insertCellsAtIndexPaths:[self.class indexPathArrayWithRange:NSMakeRange(count, [newItems count])
+                                                            inSection:0]];
 }
 
 - (void)insertItems:(NSArray *)newItems atIndexes:(NSIndexSet *)indexes {    
     [self.items insertObjects:newItems atIndexes:indexes];
     
-    if (self.tableView)
-        [self.tableView insertRowsAtIndexPaths:[[self class] indexPathArrayWithIndexSet:indexes
-                                                                              inSection:0]
-                              withRowAnimation:self.rowAnimation];
-    
-    if (self.collectionView)
-        [self.collectionView insertItemsAtIndexPaths:
-         [[self class] indexPathArrayWithIndexSet:indexes
-                                        inSection:0]];
+    [self insertCellsAtIndexPaths:[self.class indexPathArrayWithIndexSet:indexes
+                                                               inSection:0]];
 }
 
 - (void)replaceItemAtIndex:(NSUInteger)index withItem:(id)item {
     [self.items replaceObjectAtIndex:index withObject:item];
-
-    if (self.tableView)
-        [self.tableView reloadRowsAtIndexPaths:@[
-            [NSIndexPath indexPathForRow:(NSInteger)index inSection:0]
-         ]
-                              withRowAnimation:self.rowAnimation];
     
-    if (self.collectionView)
-        [self.collectionView reloadItemsAtIndexPaths:@[
-            [NSIndexPath indexPathForRow:(NSInteger)index inSection:0]
-         ]];
+    [self reloadCellsAtIndexPaths:@[ [NSIndexPath indexPathForRow:(NSInteger)index inSection:0] ]];
 }
 
 - (void)moveItemAtIndex:(NSUInteger)index1 toIndex:(NSUInteger)index2 {
@@ -140,42 +116,21 @@
     [self.items removeObject:item];
     [self.items insertObject:item atIndex:index2];
     
-    if (self.tableView)
-        [self.tableView moveRowAtIndexPath:indexPath1
-                               toIndexPath:indexPath2];
-    
-    if (self.collectionView)
-        [self.collectionView moveItemAtIndexPath:indexPath1
-                                     toIndexPath:indexPath2];
+    [self moveCellAtIndexPath:indexPath1
+                  toIndexPath:indexPath2];
 }
 
 - (void)removeItemsInRange:(NSRange)range {    
     [self.items removeObjectsInRange:range];
     
-    if (self.tableView)
-        [self.tableView deleteRowsAtIndexPaths:[[self class] indexPathArrayWithRange:range
-                                                                           inSection:0]
-                              withRowAnimation:self.rowAnimation];
-    
-    if (self.collectionView)
-        [self.collectionView deleteItemsAtIndexPaths:
-         [[self class] indexPathArrayWithRange:range
-                                     inSection:0]];
+    [self deleteCellsAtIndexPaths:[self.class indexPathArrayWithRange:range
+                                                            inSection:0]];
 }
 
 - (void)removeItemAtIndex:(NSUInteger)index {
     [self.items removeObjectAtIndex:index];
     
-    if (self.tableView)
-        [self.tableView deleteRowsAtIndexPaths:@[
-            [NSIndexPath indexPathForRow:(NSInteger)index inSection:0]
-         ]
-                              withRowAnimation:self.rowAnimation];
-    
-    if (self.collectionView)
-        [self.collectionView deleteItemsAtIndexPaths:@[
-            [NSIndexPath indexPathForRow:(NSInteger)index inSection:0]
-         ]];
+    [self deleteCellsAtIndexPaths:@[ [NSIndexPath indexPathForRow:(NSInteger)index inSection:0] ]];
 }
 
 #pragma mark - item access

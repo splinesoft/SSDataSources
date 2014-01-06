@@ -132,10 +132,7 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     [self.sections insertObject:section
                         atIndex:toIndex];
     
-    [self.tableView moveSection:fromIndex
-                      toSection:toIndex];
-    [self.collectionView moveSection:fromIndex
-                           toSection:toIndex];
+    [self moveSectionAtIndex:fromIndex toIndex:toIndex];
 }
 
 #pragma mark - Adding
@@ -149,9 +146,7 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     [self.sections insertObject:newSection
                         atIndex:index];
     
-    [self.tableView insertSections:[NSIndexSet indexSetWithIndex:index]
-                  withRowAnimation:self.rowAnimation];
-    [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:index]];
+    [self insertSectionsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
 }
 
 - (void) insertSections:(NSArray *)newSections atIndexes:(NSIndexSet *)indexes {
@@ -171,47 +166,46 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     [self.sections insertObjects:mutableSections
                        atIndexes:indexes];
     
-    [self.tableView insertSections:indexes
-                  withRowAnimation:self.rowAnimation];
-    [self.collectionView insertSections:indexes];
+    [self insertSectionsAtIndexes:indexes];
 }
 
 - (void)insertItem:(id)item atIndexPath:(NSIndexPath *)indexPath {
     [[self sectionAtIndex:indexPath.section].items insertObject:item
                                                         atIndex:indexPath.row];
     
-    [self.tableView insertRowsAtIndexPaths:@[ indexPath ]
-                          withRowAnimation:self.rowAnimation];
-    [self.collectionView insertItemsAtIndexPaths:@[ indexPath ]];
+    [self insertCellsAtIndexPaths:@[ indexPath ]];
 }
 
 - (void)insertItems:(NSArray *)items
           atIndexes:(NSIndexSet *)indexes
           inSection:(NSUInteger)section {
     
-    NSArray *indexPaths = [[self class] indexPathArrayWithIndexSet:indexes
-                                                         inSection:section];
-    
     [[self sectionAtIndex:section].items insertObjects:items
                                              atIndexes:indexes];
     
-    [self.tableView insertRowsAtIndexPaths:indexPaths
-                          withRowAnimation:self.rowAnimation];
-    [self.collectionView insertItemsAtIndexPaths:indexPaths];
+    [self insertCellsAtIndexPaths:[self.class indexPathArrayWithIndexSet:indexes
+                                                               inSection:section]];
 }
 
 - (void)appendItems:(NSArray *)items toSection:(NSUInteger)section {
     NSUInteger sectionCount = [self numberOfItemsInSection:section];
     
-    NSArray *indexPaths = [[self class] indexPathArrayWithRange:NSMakeRange(sectionCount,
-                                                                            [items count])
-                                                      inSection:section];
-    
     [[self sectionAtIndex:section].items addObjectsFromArray:items];
     
-    [self.tableView insertRowsAtIndexPaths:indexPaths
-                          withRowAnimation:self.rowAnimation];
-    [self.collectionView insertItemsAtIndexPaths:indexPaths];
+    [self insertCellsAtIndexPaths:[self.class indexPathArrayWithRange:NSMakeRange(sectionCount,
+                                                                                  [items count])
+                                                            inSection:section]];
+}
+
+#pragma mark - Replacing
+
+- (void)replaceItemAtIndexPath:(NSIndexPath *)indexPath withItem:(id)item {
+    
+    [[self sectionAtIndex:indexPath.section].items removeObjectAtIndex:indexPath.row];
+    [[self sectionAtIndex:indexPath.section].items insertObject:item
+                                                        atIndex:indexPath.row];
+    
+    [self reloadCellsAtIndexPaths:@[ indexPath ]];
 }
 
 #pragma mark - Removing
@@ -230,9 +224,7 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 - (void)removeSectionAtIndex:(NSUInteger)index {
     [self.sections removeObjectAtIndex:index];
     
-    [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:index]
-                  withRowAnimation:self.rowAnimation];
-    [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:index]];
+    [self deleteSectionsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
 }
 
 - (void)removeSectionsInRange:(NSRange)range {
@@ -240,17 +232,13 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     
     [self.sections removeObjectsAtIndexes:indexes];
     
-    [self.tableView deleteSections:indexes
-                  withRowAnimation:self.rowAnimation];
-    [self.collectionView deleteSections:indexes];
+    [self deleteSectionsAtIndexes:indexes];
 }
 
 - (void)removeSectionsAtIndexes:(NSIndexSet *)indexes {
     [self.sections removeObjectsAtIndexes:indexes];
     
-    [self.tableView deleteSections:indexes
-                  withRowAnimation:self.rowAnimation];
-    [self.collectionView deleteSections:indexes];
+    [self deleteSectionsAtIndexes:indexes];
 }
 
 - (void)removeItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -261,9 +249,7 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
         return;
     }
     
-    [self.tableView deleteRowsAtIndexPaths:@[ indexPath ]
-                          withRowAnimation:self.rowAnimation];
-    [self.collectionView deleteItemsAtIndexPaths:@[ indexPath ]];
+    [self deleteCellsAtIndexPaths:@[ indexPath ]];
 }
 
 - (void)removeItemsAtIndexes:(NSIndexSet *)indexes inSection:(NSUInteger)section {
@@ -276,10 +262,8 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
         [self removeSectionAtIndex:section];
         return;
     }
-
-    [self.tableView deleteRowsAtIndexPaths:indexPaths
-                          withRowAnimation:self.rowAnimation];
-    [self.collectionView deleteItemsAtIndexPaths:indexPaths];
+    
+    [self deleteCellsAtIndexPaths:indexPaths];
 }
 
 - (void)removeItemsInRange:(NSRange)range inSection:(NSUInteger)section {
