@@ -5,7 +5,7 @@ SSDataSources
 
 Simple data sources for your `UITableView` and `UICollectionView` because proper developers don't repeat themselves. :)
 
-No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numberOfRowsInSection:` (and `collectionView:cellForItemAtIndexPath:` and `collectionView:numberOfItemsInSection:`) dance many times before. You may also have updated your data and neglected to update the table or collection view. Whoops -- crash! Is there a better way?
+No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numberOfRowsInSection:` and `collectionView:cellForItemAtIndexPath:` and `collectionView:numberOfItemsInSection:` dances many times before. You may also have updated your data and forgotten to update the table or collection view. Whoops -- crash! Is there a better way?
 
 `SSDataSources` is a collection of objects that conform to `UITableViewDataSource` and `UICollectionViewDataSource`. This is my own implementation of ideas featured in [objc.io's wonderful first issue](http://www.objc.io/issue-1/table-views.html).
 
@@ -32,24 +32,25 @@ Check out the example project for sample table and collection views that use the
 
 ```objc
 @interface WizardicTableViewController : UITableViewController
+
+@property (nonatomic, strong) SSArrayDataSource *wizardDataSource;
+
 @end
 
-@implementation WizardicTableViewController {
-    SSArrayDataSource *wizardDataSource;
-}
+@implementation WizardicTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    wizardDataSource = [[SSArrayDataSource alloc] initWithItems:
-                        @[ @"Merlyn", @"Gandalf", @"Melisandre" ]];
+    _wizardDataSource = [[SSArrayDataSource alloc] initWithItems:
+                         @[ @"Merlyn", @"Gandalf", @"Melisandre" ]];
 
 	// SSDataSources creates your cell and calls
 	// this configure block for each cell with 
 	// the object being presented in that cell,
 	// the parent table or collection view,
 	// and the index path at which the cell appears.
-    wizardDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
+    _wizardDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
                                             NSString *wizard,
                                             UITableView *tableView,
                                             NSIndexPath *indexPath) {
@@ -59,7 +60,7 @@ Check out the example project for sample table and collection views that use the
     // Set the tableView property and the data source will perform
     // insert/reload/delete calls on the table as its data changes.
     // This also assigns the table's `dataSource` property.
-    wizardDataSource.tableView = self.tableView;
+    _wizardDataSource.tableView = self.tableView;
 }
 @end
 ```
@@ -91,10 +92,11 @@ Perhaps you have custom table cell classes or multiple classes in the same table
 wizardDataSource.cellCreationBlock = ^id(NSString *wizard, 
                                          UITableView *tableView, 
                                          NSIndexPath *indexPath) {
-	if( [wizard isEqualToString:@"Gandalf"] )
+	if ([wizard isEqualToString:@"Gandalf"]) {
 		return [MiddleEarthWizardCell cellForTableView:tableView];
-	else if( [wizard isEqualToString:@"Merlyn"] )
+	} else if ([wizard isEqualToString:@"Merlyn"]) {
 		return [ArthurianWizardCell cellForTableView:tableView];
+    }
 };
 
 ```
@@ -117,29 +119,30 @@ Check out the example project for a sample table that uses the sectioned data so
 
 ```objc
 @interface ElementalTableViewController : UITableViewController
+
+@property (nonatomic, strong) SSSectionedDataSource *elementDataSource;
+
 @end
 
-@implementation ElementalTableViewController {
-    SSSectionedDataSource *elementDataSource;
-}
+@implementation ElementalTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     // Let's start with one section
-    elementDataSource = [[SSSectionedDataSource alloc] initWithItems:@[ @"Earth" ]];
+    _elementDataSource = [[SSSectionedDataSource alloc] initWithItems:@[ @"Earth" ]];
 
-    elementDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
-                                             NSString *element,
-                                             UITableView *tableView,
-                                             NSIndexPath *indexPath) {
-        cell.textLabel.text = element;
+    _elementDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
+                                              NSString *element,
+                                              UITableView *tableView,
+                                              NSIndexPath *indexPath) {
+         cell.textLabel.text = element;
     };
     
     // Setting the tableView property automatically updates 
     // the table in response to data changes.
     // This also sets the table's `dataSource` property.
-    elementDataSource.tableView = self.tableView;
+    _elementDataSource.tableView = self.tableView;
 }
 @end
 ```
@@ -157,7 +160,7 @@ elementDataSource.rowAnimation = UITableViewRowAnimationFade;
 [elementDataSource appendSection:[SSSection sectionWithItems:@[ @"Heart", @"GOOOO PLANET!" ]]];
 
 // Are you 4 srs, heart?
-[elementDataSource removeSectionAtIndex:( [elementDataSource numberOfSections] - 1 )];
+[elementDataSource removeSectionAtIndex:([elementDataSource numberOfSections] - 1)];
 ```
 
 ## Core Data
@@ -166,6 +169,9 @@ You're a modern wo/man-about-Internet and sometimes you want to present a `UITab
 
 ```objc
 @interface SSCoreDataTableViewController : UITableViewController
+
+@property (nonatomic, strong) SSCoreDataSource *dataSource;
+
 @end
 
 @implementation SSCoreDataTableViewController {
@@ -178,47 +184,47 @@ You're a modern wo/man-about-Internet and sometimes you want to present a `UITab
 	NSFetchRequest *triggerFetch = [Trigger MR_requestAllSortedBy:[Trigger defaultSortField]
                                                         ascending:[Trigger defaultSortAscending]];
    
-    dataSource = [[SSCoreDataSource alloc] initWithFetchRequest:worldFetch
-                                                      inContext:[NSManagedObjectContext 
-                                                                 MR_defaultContext]
-                                             sectionNameKeyPath:nil];
+    _dataSource = [[SSCoreDataSource alloc] initWithFetchRequest:worldFetch
+                                                       inContext:[NSManagedObjectContext 
+                                                                  MR_defaultContext]
+                                              sectionNameKeyPath:nil];
                                                  
-    dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
-                                      Trigger *trigger, 
-                                      UITableView *tableView,
-                                      NSIndexPath *indexPath ) {
-        cell.textLabel.text = trigger.name;
+    _dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
+                                       Trigger *trigger, 
+                                       UITableView *tableView,
+                                       NSIndexPath *indexPath ) {
+         cell.textLabel.text = trigger.name;
     };
     
     // SSCoreDataSource conforms to NSFetchedResultsControllerDelegate.
     // Set the `tableView` property to automatically update the table 
     // after changes in the data source's managed object context.
     // This also sets the tableview's `dataSource`.
-    dataSource.tableView = self.tableView;
+    _dataSource.tableView = self.tableView;
     
     // Optional - row animation to use for update events.
-    dataSource.rowAnimation = UITableViewRowAnimationFade;
+    _dataSource.rowAnimation = UITableViewRowAnimationFade;
     
-    // Optional - determine permissions for editing and moving
-    dataSource.tableActionBlock = ^BOOL(SSCellActionType actionType,
-                                        UITableView *tableView,
-                                        NSIndexPath *indexPath) {
-        
-        // Disallow moving, allow editing
-        return actionType == SSCellActionTypeEdit;
+    // Optional - permissions for editing and moving
+    _dataSource.tableActionBlock = ^BOOL(SSCellActionType actionType,
+                                         UITableView *tableView,
+                                         NSIndexPath *indexPath) {
+         
+         // Disallow moving, allow editing
+         return actionType == SSCellActionTypeEdit;
     };
     
     // Optional - handle managed object deletion
-    dataSource.tableDeletionBlock = ^(SSCoreDataSource *aDataSource,
-                                      UITableView *tableView,
-                                      NSIndexPath *indexPath) {
+    _dataSource.tableDeletionBlock = ^(SSCoreDataSource *aDataSource,
+                                       UITableView *tableView,
+                                       NSIndexPath *indexPath) {
                                       
         Trigger *myObject = [aDataSource itemAtIndexPath:indexPath];
         
         // SSCoreDataSource conforms to NSFetchedResultsControllerDelegate,
         // so saving the object's context will automatically update the table.
         [myObject deleteInContext:myObject.managedObjectContext];
-        [myObject.managedObjectContext MR_saveToPersistentStoreAndWait];
+        [myObject.managedObjectContext MR_saveToPersistentStoreWithCompletion:nil];
     };
 }
 @end
