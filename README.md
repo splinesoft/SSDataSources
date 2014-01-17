@@ -51,9 +51,9 @@ Check out the example project for sample table and collection views that use the
 	// the parent table or collection view,
 	// and the index path at which the cell appears.
     _wizardDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
-                                            NSString *wizard,
-                                            UITableView *tableView,
-                                            NSIndexPath *indexPath) {
+                                             NSString *wizard,
+                                             UITableView *tableView,
+                                             NSIndexPath *indexPath) {
         cell.textLabel.text = wizard;
     };
     
@@ -182,7 +182,7 @@ You're a modern wo/man-about-Internet and sometimes you want to present a `UITab
 	NSFetchRequest *triggerFetch = [Trigger MR_requestAllSortedBy:[Trigger defaultSortField]
                                                         ascending:[Trigger defaultSortAscending]];
    
-    _dataSource = [[SSCoreDataSource alloc] initWithFetchRequest:worldFetch
+    _dataSource = [[SSCoreDataSource alloc] initWithFetchRequest:triggerFetch
                                                        inContext:[NSManagedObjectContext 
                                                                   MR_defaultContext]
                                               sectionNameKeyPath:nil];
