@@ -174,9 +174,7 @@ You're a modern wo/man-about-Internet and sometimes you want to present a `UITab
 
 @end
 
-@implementation SSCoreDataTableViewController {
-    SSCoreDataSource *dataSource;
-}
+@implementation SSCoreDataTableViewController
 
 - (void) viewDidLoad {
 	[super viewDidLoad];
