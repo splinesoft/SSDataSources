@@ -6,7 +6,7 @@ xcodebuild \
 -workspace Example/ExampleSSDataSources.xcworkspace \
 -scheme ExampleSSDataSources \
 -sdk iphonesimulator \
-build test \
+clean build test \
 ONLY_ACTIVE_ARCH=NO \
 RUN_CLANG_STATIC_ANALYZER=YES \
 CLANG_STATIC_ANALYZER_MODE=deep | xcpretty -c

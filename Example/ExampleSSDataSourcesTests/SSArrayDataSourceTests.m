@@ -363,6 +363,42 @@
     [mockCollectionView verify];
 }
 
+- (void)testRemoveItemsAtIndexes
+{
+    SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[@"foo", @"baz", @"bar"]];
+    [ds removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 2)]];
+    expect(ds.allItems).to.equal((@[@"foo"]));
+}
+
+- (void)testRemovingItemsAtIndexesDeletesRowsInDataSourceTableView
+{
+    SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[@"foo", @"baz", @"bar"]];
+    id mockTableView = tableView;
+    ds.tableView = mockTableView;
+    
+    [[mockTableView expect] deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0],
+                                                     [NSIndexPath indexPathForRow:2 inSection:0]]
+                                  withRowAnimation:ds.rowAnimation];
+    
+    [ds removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 2)]];
+    
+    [mockTableView verify];
+}
+
+- (void)testRemovingItemsAtIndexesDeletesItemsInDataSourceCollectionView
+{
+    SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[@"foo", @"baz", @"bar"]];
+    id mockCollectionView = collectionView;
+    ds.collectionView = mockCollectionView;
+    
+    [[mockCollectionView expect] deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0],
+                                                           [NSIndexPath indexPathForRow:2 inSection:0]]];
+    
+    [ds removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 2)]];
+    
+    [mockCollectionView verify];
+}
+
 #pragma mark Item movement
 
 - (void)testMoveItem

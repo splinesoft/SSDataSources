@@ -37,21 +37,35 @@
 - (void) insertItems:(NSArray *)items atIndexes:(NSIndexSet *)indexes;
 
 /**
- * Returns all items, or replaces them.
+ * Returns all items in the data source.
  */
 - (NSArray *) allItems;
+
+/**
+ * Replace all items in the data source.
+ * This will reload the table or collection view.
+ */
 - (void) updateItems:(NSArray *)newItems;
 
-/*
+/**
  * Replace an item.
  */
 - (void) replaceItemAtIndex:(NSUInteger)index withItem:(id)item;
 
 /**
- * Remove items.
+ * Remove the item at the specified index.
+ */
+- (void) removeItemAtIndex:(NSUInteger)index;
+
+/**
+ * Remove items in the specified range.
  */
 - (void) removeItemsInRange:(NSRange)range;
-- (void) removeItemAtIndex:(NSUInteger)index;
+
+/**
+ * Remove items at the specified indexes.
+ */
+- (void) removeItemsAtIndexes:(NSIndexSet *)indexes;
 
 /**
  * Move an item to a new index.

@@ -133,6 +133,13 @@
     [self deleteCellsAtIndexPaths:@[ [NSIndexPath indexPathForRow:(NSInteger)index inSection:0] ]];
 }
 
+- (void)removeItemsAtIndexes:(NSIndexSet *)indexes {
+    [self.items removeObjectsAtIndexes:indexes];
+    
+    [self deleteCellsAtIndexPaths:[self.class indexPathArrayWithIndexSet:indexes
+                                                               inSection:0]];
+}
+
 #pragma mark - item access
 
 - (NSIndexPath *)indexPathForItem:(id)item {
