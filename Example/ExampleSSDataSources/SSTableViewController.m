@@ -93,9 +93,9 @@
          target:self
          action:@selector(addRow)],
         [[UIBarButtonItem alloc]
-         initWithBarButtonSystemItem:( [self.tableView isEditing]
+         initWithBarButtonSystemItem:([self.tableView isEditing]
                                       ? UIBarButtonSystemItemDone
-                                      : UIBarButtonSystemItemEdit )
+                                      : UIBarButtonSystemItemEdit)
          target:self
          action:@selector(toggleEditing)]
     ];
