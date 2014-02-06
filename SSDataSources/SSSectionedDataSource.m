@@ -212,9 +212,7 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 
 - (void)clearSections {
     [self.sections removeAllObjects];
-  
-    [self.tableView reloadData];
-    [self.collectionView reloadData];
+    [self reloadData];
 }
 
 - (void)removeAllSections {

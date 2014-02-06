@@ -8,6 +8,14 @@
 
 #import "SSDataSources.h"
 
+@interface SSBaseDataSource ()
+
+@property (nonatomic, assign) UITableViewCellSeparatorStyle cachedSeparatorStyle;
+
+- (void) _updateEmptyView;
+
+@end
+
 @implementation SSBaseDataSource
 
 #pragma mark - init
@@ -23,6 +31,11 @@
 }
 
 - (void)dealloc {
+    if (self.emptyView) {
+        [self.emptyView removeFromSuperview];
+        self.emptyView = nil;
+    }
+    
     self.cellConfigureBlock = nil;
     self.cellCreationBlock = nil;
     self.collectionSupplementaryConfigureBlock = nil;
@@ -92,59 +105,6 @@
     [CATransaction commit];
 }
 
-#pragma mark - UITableView/UICollectionView
-
-- (void)insertCellsAtIndexPaths:(NSArray *)indexPaths {
-    [_tableView insertRowsAtIndexPaths:indexPaths
-                      withRowAnimation:self.rowAnimation];
-    
-    [_collectionView insertItemsAtIndexPaths:indexPaths];
-}
-
-- (void)deleteCellsAtIndexPaths:(NSArray *)indexPaths {
-    [_tableView deleteRowsAtIndexPaths:indexPaths
-                      withRowAnimation:self.rowAnimation];
-    
-    [_collectionView deleteItemsAtIndexPaths:indexPaths];
-}
-
-- (void)reloadCellsAtIndexPaths:(NSArray *)indexPaths {
-    [_tableView reloadRowsAtIndexPaths:indexPaths
-                      withRowAnimation:self.rowAnimation];
-    
-    [_collectionView reloadItemsAtIndexPaths:indexPaths];
-}
-
-- (void)moveCellAtIndexPath:(NSIndexPath *)index1 toIndexPath:(NSIndexPath *)index2 {
-    [_tableView moveRowAtIndexPath:index1
-                       toIndexPath:index2];
-    
-    [_collectionView moveItemAtIndexPath:index1
-                             toIndexPath:index2];
-}
-
-- (void)moveSectionAtIndex:(NSUInteger)index1 toIndex:(NSUInteger)index2 {
-    [_tableView moveSection:index1
-                  toSection:index2];
-    
-    [_collectionView moveSection:index1
-                       toSection:index2];
-}
-
-- (void)insertSectionsAtIndexes:(NSIndexSet *)indexes {
-    [_tableView insertSections:indexes
-              withRowAnimation:self.rowAnimation];
-    
-    [_collectionView insertSections:indexes];
-}
-
-- (void)deleteSectionsAtIndexes:(NSIndexSet *)indexes {
-    [_tableView deleteSections:indexes
-              withRowAnimation:self.rowAnimation];
-    
-    [_collectionView deleteSections:indexes];
-}
-
 #pragma mark - Common
 
 - (void)configureCell:(id)cell
@@ -160,9 +120,10 @@
 
 - (void)setTableView:(UITableView *)tableView {
     _tableView = tableView;
-    
-    if (tableView)
+        
+    if (tableView) {
         tableView.dataSource = self;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tv
@@ -282,6 +243,135 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         self.collectionSupplementaryConfigureBlock(supplementaryView, kind, cv, indexPath);
     
     return supplementaryView;
+}
+
+#pragma mark - Empty Views
+
+- (void)setEmptyView:(UIView *)emptyView {
+    if (self.emptyView) {
+        [self.emptyView removeFromSuperview];
+    }
+    
+    _emptyView = emptyView;
+    
+    [self _updateEmptyView];
+}
+
+- (void)_updateEmptyView {
+    if (!self.emptyView) {
+        return;
+    }
+    
+    UIScrollView *targetView = (self.tableView ?: self.collectionView);
+    
+    if (!targetView) {
+        return;
+    }
+    
+    if (self.emptyView.superview != targetView) {
+        [targetView addSubview:self.emptyView];
+    }
+    
+    BOOL shouldShowEmptyView = ([self numberOfItems] == 0);
+    BOOL isShowingEmptyView = !self.emptyView.hidden;
+    
+    if (shouldShowEmptyView == isShowingEmptyView) {
+        return;
+    }
+    
+    if (shouldShowEmptyView) {
+        self.cachedSeparatorStyle = self.tableView.separatorStyle;
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+        if (CGRectEqualToRect(self.emptyView.frame, CGRectZero)) {
+            CGRect frame = UIEdgeInsetsInsetRect(targetView.bounds, targetView.contentInset);
+            
+            if (self.tableView.tableHeaderView) {
+                frame.size.height -= CGRectGetHeight(self.tableView.tableHeaderView.frame);
+            }
+            
+            [self.emptyView setFrame:frame];
+        }
+        
+        self.emptyView.autoresizingMask = targetView.autoresizingMask;
+    } else {
+        self.tableView.separatorStyle = self.cachedSeparatorStyle;
+    }
+    
+    self.emptyView.hidden = !shouldShowEmptyView;
+    
+    // Reloading seems to work around an awkward delay where the empty view
+    // is not immediately visible but the separator lines still are
+    [self.tableView reloadData];
+    [self.collectionView reloadData];
+}
+
+#pragma mark - UITableView/UICollectionView Operations
+
+- (void)insertCellsAtIndexPaths:(NSArray *)indexPaths {
+    [_tableView insertRowsAtIndexPaths:indexPaths
+                      withRowAnimation:self.rowAnimation];
+    
+    [_collectionView insertItemsAtIndexPaths:indexPaths];
+    
+    [self _updateEmptyView];
+}
+
+- (void)deleteCellsAtIndexPaths:(NSArray *)indexPaths {
+    [_tableView deleteRowsAtIndexPaths:indexPaths
+                      withRowAnimation:self.rowAnimation];
+    
+    [_collectionView deleteItemsAtIndexPaths:indexPaths];
+    
+    [self _updateEmptyView];
+}
+
+- (void)reloadCellsAtIndexPaths:(NSArray *)indexPaths {
+    [_tableView reloadRowsAtIndexPaths:indexPaths
+                      withRowAnimation:self.rowAnimation];
+    
+    [_collectionView reloadItemsAtIndexPaths:indexPaths];
+}
+
+- (void)moveCellAtIndexPath:(NSIndexPath *)index1 toIndexPath:(NSIndexPath *)index2 {
+    [_tableView moveRowAtIndexPath:index1
+                       toIndexPath:index2];
+    
+    [_collectionView moveItemAtIndexPath:index1
+                             toIndexPath:index2];
+}
+
+- (void)moveSectionAtIndex:(NSUInteger)index1 toIndex:(NSUInteger)index2 {
+    [_tableView moveSection:index1
+                  toSection:index2];
+    
+    [_collectionView moveSection:index1
+                       toSection:index2];
+}
+
+- (void)insertSectionsAtIndexes:(NSIndexSet *)indexes {
+    [_tableView insertSections:indexes
+              withRowAnimation:self.rowAnimation];
+    
+    [_collectionView insertSections:indexes];
+    
+    [self _updateEmptyView];
+}
+
+- (void)deleteSectionsAtIndexes:(NSIndexSet *)indexes {
+    [_tableView deleteSections:indexes
+              withRowAnimation:self.rowAnimation];
+    
+    [_collectionView deleteSections:indexes];
+    
+    [self _updateEmptyView];
+}
+
+- (void)reloadData {
+    [self.tableView reloadData];
+    [self.collectionView reloadData];
+    
+    [self _updateEmptyView];
 }
 
 #pragma mark - NSIndexPath helpers

@@ -85,6 +85,13 @@
     };
     
     dataSource.collectionView = self.collectionView;
+    
+    UILabel *noItemsLabel = [UILabel new];
+    noItemsLabel.text = @"No Items";
+    noItemsLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+    noItemsLabel.textAlignment = NSTextAlignmentCenter;
+    
+    dataSource.emptyView = noItemsLabel;
 }
 
 - (void)addItem {
