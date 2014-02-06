@@ -61,15 +61,6 @@ Check out the example project for sample table and collection views that use the
     // insert/reload/delete calls on the table as its data changes.
     // This also assigns the table's `dataSource` property.
     self.wizardDataSource.tableView = self.tableView;
-    
-    // Sometimes it's nice to add a view that automatically 
-    // shows when the data source is empty and
-    // hides when the data source has items.
-    UILabel *noItemsLabel = [UILabel new];
-    noItemsLabel.text = @"No Items";
-    noItemsLabel.font = [UIFont boldSystemFontOfSize:18.0f];
-    noItemsLabel.textAlignment = NSTextAlignmentCenter;
-    self.wizardDataSource.emptyView = noItemsLabel;
 }
 @end
 ```
@@ -79,6 +70,15 @@ That's it - you're done!
 Perhaps your data changes:
 
 ```objc
+// Sometimes it's nice to add a view that automatically 
+// shows when the data source is empty and
+// hides when the data source has items.
+UILabel *noItemsLabel = [UILabel new];
+noItemsLabel.text = @"No Items";
+noItemsLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+noItemsLabel.textAlignment = NSTextAlignmentCenter;
+self.wizardDataSource.emptyView = noItemsLabel;
+
 // Optional - row animation for table updates.
 self.wizardDataSource.rowAnimation = UITableViewRowAnimationFade;
 	
@@ -152,16 +152,6 @@ Check out the example project for a sample table that uses the sectioned data so
     // the table in response to data changes.
     // This also sets the table's `dataSource` property.
     self.elementDataSource.tableView = self.tableView;
-    
-    // Sometimes it's nice to add a view that automatically 
-    // shows when the data source is empty and
-    // hides when the data source has items.
-    UILabel *noItemsLabel = [UILabel new];
-    noItemsLabel.text = @"No Items";
-    noItemsLabel.font = [UIFont boldSystemFontOfSize:18.0f];
-    noItemsLabel.textAlignment = NSTextAlignmentCenter;
-    self.elementDataSource.emptyView = noItemsLabel;
-
 }
 @end
 ```
@@ -169,6 +159,15 @@ Check out the example project for a sample table that uses the sectioned data so
 `SSSectionedDataSource` has you covered if your data changes:
  
 ```objc
+// Sometimes it's nice to add a view that automatically 
+// shows when the data source is empty and
+// hides when the data source has items.
+UILabel *noItemsLabel = [UILabel new];
+noItemsLabel.text = @"No Items";
+noItemsLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+noItemsLabel.textAlignment = NSTextAlignmentCenter;
+self.elementDataSource.emptyView = noItemsLabel;
+    
 // Animation for table updates
 self.elementDataSource.rowAnimation = UITableViewRowAnimationFade;
 
