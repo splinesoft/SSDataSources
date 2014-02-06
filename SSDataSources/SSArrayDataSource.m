@@ -61,8 +61,7 @@
 - (void)clearItems {
     [self.items removeAllObjects];
     
-    [self.tableView reloadData];
-    [self.collectionView reloadData];
+    [self reloadData];
 }
 
 - (void)removeAllItems {
@@ -72,8 +71,7 @@
 - (void)updateItems:(NSArray *)newItems {
     self.items = [NSMutableArray arrayWithArray:newItems];
     
-    [self.tableView reloadData];
-    [self.collectionView reloadData];
+    [self reloadData];
 }
 
 - (NSArray *)allItems {

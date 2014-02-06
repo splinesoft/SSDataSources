@@ -58,7 +58,7 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
                                           UITableView *parentView, // the parent table view
                                           NSIndexPath *indexPath); // the indexPath being deleted
 
-#pragma mark - base data source setup
+#pragma mark - Base Data Source
 
 /**
  * The base class to use to instantiate new cells.
@@ -80,6 +80,16 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
  * See block signature above.
  */
 @property (nonatomic, copy) SSCellCreationBlock cellCreationBlock;
+
+/**
+ * Optional view that will be added to the table or collection view if there
+ * are no items in the datasource, then removed again once the datasource
+ * has items.
+ *
+ * If this view's frame is equal to CGRectZero, the view's frame
+ * will be sized to match the parent table or collection view.
+ */
+@property (nonatomic, strong) UIView *emptyView;
 
 #pragma mark - UITableView
 
@@ -186,6 +196,8 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
 
 - (void) insertSectionsAtIndexes:(NSIndexSet *)indexes;
 - (void) deleteSectionsAtIndexes:(NSIndexSet *)indexes;
+
+- (void) reloadData;
 
 #pragma mark - helpers
 

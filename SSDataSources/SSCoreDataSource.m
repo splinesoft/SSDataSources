@@ -265,6 +265,9 @@ sectionForSectionIndexTitle:(NSString *)title
     
     [self.sectionUpdates removeAllObjects];
     [self.objectUpdates removeAllObjects];
+    
+    // Hackish; force recalculation of empty view state
+    self.emptyView = self.emptyView;
 }
 
 @end
