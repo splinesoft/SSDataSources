@@ -3,7 +3,7 @@ SSDataSources
 
 [![Build Status](https://travis-ci.org/splinesoft/SSDataSources.png?branch=master)](https://travis-ci.org/splinesoft/SSDataSources) 
 
-Simple data sources for your `UITableView` and `UICollectionView` because proper developers don't repeat themselves. :)
+Simple data sources for your `UITableView` and `UICollectionView`. *wow, much DRY*
 
 No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numberOfRowsInSection:` and `collectionView:cellForItemAtIndexPath:` and `collectionView:numberOfItemsInSection:` dances many times before. You may also have updated your data and forgotten to update the table or collection view. Whoops -- crash! Is there a better way?
 
@@ -50,17 +50,26 @@ Check out the example project for sample table and collection views that use the
 	// the object being presented in that cell,
 	// the parent table or collection view,
 	// and the index path at which the cell appears.
-    _wizardDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
-                                             NSString *wizard,
-                                             UITableView *tableView,
-                                             NSIndexPath *indexPath) {
+    self.wizardDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
+                                                 NSString *wizard,
+                                                 UITableView *tableView,
+                                                 NSIndexPath *indexPath) {
         cell.textLabel.text = wizard;
     };
     
     // Set the tableView property and the data source will perform
     // insert/reload/delete calls on the table as its data changes.
     // This also assigns the table's `dataSource` property.
-    _wizardDataSource.tableView = self.tableView;
+    self.wizardDataSource.tableView = self.tableView;
+    
+    // Sometimes it's nice to add a view that automatically 
+    // shows when the data source is empty and
+    // hides when the data source has items.
+    UILabel *noItemsLabel = [UILabel new];
+    noItemsLabel.text = @"No Items";
+    noItemsLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+    noItemsLabel.textAlignment = NSTextAlignmentCenter;
+    self.wizardDataSource.emptyView = noItemsLabel;
 }
 @end
 ```
@@ -71,27 +80,27 @@ Perhaps your data changes:
 
 ```objc
 // Optional - row animation for table updates.
-wizardDataSource.rowAnimation = UITableViewRowAnimationFade;
+self.wizardDataSource.rowAnimation = UITableViewRowAnimationFade;
 	
 // Automatically inserts two new cells at the end of the table.
-[wizardDataSource appendItems:@[ @"Saruman", @"Alatar" ]];
+[self.wizardDataSource appendItems:@[ @"Saruman", @"Alatar" ]];
 
 // Update the fourth item; reloads the fourth row.
-[wizardDataSource replaceItemAtIndex:3 withItem:@"Pallando"];
+[self.wizardDataSource replaceItemAtIndex:3 withItem:@"Pallando"];
 
 // Sorry Merlyn :(
-[wizardDataSource moveItemAtIndex:0 toIndex:1];
+[self.wizardDataSource moveItemAtIndex:0 toIndex:1];
 	
 // Remove the second and third cells.
-[wizardDataSource removeItemsInRange:NSMakeRange( 1, 2 )];
+[self.wizardDataSource removeItemsInRange:NSMakeRange( 1, 2 )];
 ```
 
 Perhaps you have custom table cell classes or multiple classes in the same table:
 
 ```objc
-wizardDataSource.cellCreationBlock = ^id(NSString *wizard, 
-                                         UITableView *tableView, 
-                                         NSIndexPath *indexPath) {
+self.wizardDataSource.cellCreationBlock = ^id(NSString *wizard, 
+                                              UITableView *tableView, 
+                                              NSIndexPath *indexPath) {
 	if ([wizard isEqualToString:@"Gandalf"]) {
 		return [MiddleEarthWizardCell cellForTableView:tableView];
 	} else if ([wizard isEqualToString:@"Merlyn"]) {
@@ -105,7 +114,7 @@ Your view controller should continue to implement `UITableViewDelegate`. `SSData
 
 ```objc
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	NSString *wizard = [wizardDataSource itemAtIndexPath:indexPath];
+	NSString *wizard = [self.wizardDataSource itemAtIndexPath:indexPath];
 	
 	// do something with `wizard`
 }
@@ -132,17 +141,27 @@ Check out the example project for a sample table that uses the sectioned data so
     // Let's start with one section
     _elementDataSource = [[SSSectionedDataSource alloc] initWithItems:@[ @"Earth" ]];
 
-    _elementDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
-                                              NSString *element,
-                                              UITableView *tableView,
-                                              NSIndexPath *indexPath) {
+    self.elementDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
+                                                  NSString *element,
+                                                  UITableView *tableView,
+                                                  NSIndexPath *indexPath) {
          cell.textLabel.text = element;
     };
     
     // Setting the tableView property automatically updates 
     // the table in response to data changes.
     // This also sets the table's `dataSource` property.
-    _elementDataSource.tableView = self.tableView;
+    self.elementDataSource.tableView = self.tableView;
+    
+    // Sometimes it's nice to add a view that automatically 
+    // shows when the data source is empty and
+    // hides when the data source has items.
+    UILabel *noItemsLabel = [UILabel new];
+    noItemsLabel.text = @"No Items";
+    noItemsLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+    noItemsLabel.textAlignment = NSTextAlignmentCenter;
+    self.elementDataSource.emptyView = noItemsLabel;
+
 }
 @end
 ```
@@ -151,16 +170,16 @@ Check out the example project for a sample table that uses the sectioned data so
  
 ```objc
 // Animation for table updates
-elementDataSource.rowAnimation = UITableViewRowAnimationFade;
+self.elementDataSource.rowAnimation = UITableViewRowAnimationFade;
 
 // Add some new sections
-[elementDataSource appendSection:[SSSection sectionWithItems:@[ @"Fire" ]]];
-[elementDataSource appendSection:[SSSection sectionWithItems:@[ @"Wind" ]]];
-[elementDataSource appendSection:[SSSection sectionWithItems:@[ @"Water" ]]];
-[elementDataSource appendSection:[SSSection sectionWithItems:@[ @"Heart", @"GOOOO PLANET!" ]]];
+[self.elementDataSource appendSection:[SSSection sectionWithItems:@[ @"Fire" ]]];
+[self.elementDataSource appendSection:[SSSection sectionWithItems:@[ @"Wind" ]]];
+[self.elementDataSource appendSection:[SSSection sectionWithItems:@[ @"Water" ]]];
+[self.elementDataSource appendSection:[SSSection sectionWithItems:@[ @"Heart", @"GOOOO PLANET!" ]]];
 
 // Are you 4 srs, heart?
-[elementDataSource removeSectionAtIndex:([elementDataSource numberOfSections] - 1)];
+[self.elementDataSource removeSectionAtIndex:([elementDataSource numberOfSections] - 1)];
 ```
 
 ## Core Data
@@ -187,10 +206,10 @@ You're a modern wo/man-about-Internet and sometimes you want to present a `UITab
                                                                   MR_defaultContext]
                                               sectionNameKeyPath:nil];
                                                  
-    _dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
-                                       Trigger *trigger, 
-                                       UITableView *tableView,
-                                       NSIndexPath *indexPath ) {
+    self.dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
+                                           Trigger *trigger, 
+                                           UITableView *tableView,
+                                           NSIndexPath *indexPath ) {
          cell.textLabel.text = trigger.name;
     };
     
@@ -198,24 +217,24 @@ You're a modern wo/man-about-Internet and sometimes you want to present a `UITab
     // Set the `tableView` property to automatically update the table 
     // after changes in the data source's managed object context.
     // This also sets the tableview's `dataSource`.
-    _dataSource.tableView = self.tableView;
+    self.dataSource.tableView = self.tableView;
     
     // Optional - row animation to use for update events.
-    _dataSource.rowAnimation = UITableViewRowAnimationFade;
+    self.dataSource.rowAnimation = UITableViewRowAnimationFade;
     
     // Optional - permissions for editing and moving
-    _dataSource.tableActionBlock = ^BOOL(SSCellActionType actionType,
-                                         UITableView *tableView,
-                                         NSIndexPath *indexPath) {
+    self.dataSource.tableActionBlock = ^BOOL(SSCellActionType actionType,
+                                             UITableView *tableView,
+                                             NSIndexPath *indexPath) {
          
          // Disallow moving, allow editing
          return actionType == SSCellActionTypeEdit;
     };
     
     // Optional - handle managed object deletion
-    _dataSource.tableDeletionBlock = ^(SSCoreDataSource *aDataSource,
-                                       UITableView *tableView,
-                                       NSIndexPath *indexPath) {
+    self.dataSource.tableDeletionBlock = ^(SSCoreDataSource *aDataSource,
+                                           UITableView *tableView,
+                                           NSIndexPath *indexPath) {
                                       
         Trigger *myObject = [aDataSource itemAtIndexPath:indexPath];
         
