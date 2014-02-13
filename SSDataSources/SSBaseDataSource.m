@@ -254,6 +254,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     _emptyView = emptyView;
     
+    _emptyView.hidden = YES;
+    
     [self _updateEmptyView];
 }
 
