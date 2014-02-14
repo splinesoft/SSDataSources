@@ -304,4 +304,16 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     return [self sectionAtIndex:section].footer;
 }
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone {
+    SSSectionedDataSource *dataSource = [super copyWithZone:zone];
+    
+    for (SSSection *section in self.sections) {
+        [dataSource appendSection:[section copy]];
+    }
+    
+    return dataSource;
+}
+
 @end

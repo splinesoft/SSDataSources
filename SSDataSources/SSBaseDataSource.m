@@ -376,6 +376,34 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self _updateEmptyView];
 }
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone {
+    SSBaseDataSource *dataSource = [self.class new];
+    
+    // base
+    dataSource.cellClass = self.cellClass;
+    dataSource.cellConfigureBlock = self.cellConfigureBlock;
+    dataSource.cellCreationBlock = self.cellCreationBlock;
+    dataSource.emptyView = self.emptyView;
+    
+    // table
+    dataSource.rowAnimation = self.rowAnimation;
+    dataSource.tableActionBlock = self.tableActionBlock;
+    dataSource.tableDeletionBlock = self.tableDeletionBlock;
+    
+    // collection
+    dataSource.collectionViewSupplementaryElementClass = self.collectionViewSupplementaryElementClass;
+    dataSource.collectionSupplementaryCreationBlock = self.collectionSupplementaryCreationBlock;
+    dataSource.collectionSupplementaryConfigureBlock = self.collectionSupplementaryConfigureBlock;
+    
+    // this will change the table and collection's datasource!
+    dataSource.tableView = self.tableView;
+    dataSource.collectionView = self.collectionView;
+    
+    return dataSource;
+}
+
 #pragma mark - NSIndexPath helpers
 
 + (NSArray *)indexPathArrayWithIndexSet:(NSIndexSet *)indexes

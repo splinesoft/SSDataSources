@@ -56,6 +56,10 @@
     return nil;
 }
 
+- (id)itemAtIndex:(NSUInteger)index {
+    return [self itemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+}
+
 #pragma mark - updating items
 
 - (void)clearItems {
@@ -200,6 +204,17 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     id item = [self itemAtIndexPath:sourceIndexPath];
     [self.items removeObject:item];
     [self.items insertObject:item atIndex:(NSUInteger)destinationIndexPath.row];
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone {
+    SSArrayDataSource *dataSource = [super copyWithZone:zone];
+    
+    dataSource.items = [NSMutableArray arrayWithArray:self.items];
+    [dataSource reloadData];
+    
+    return dataSource;
 }
 
 @end

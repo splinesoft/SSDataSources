@@ -67,7 +67,7 @@
     [self.objectUpdates removeAllObjects];
 }
 
-#pragma mark - Fetching
+#pragma mark - NSFetchedResultsController
 
 - (void)_performFetch {
     NSError *fetchErr = nil;
@@ -75,7 +75,7 @@
     _fetchError = fetchErr;
 }
 
-#pragma mark - Base data source
+#pragma mark - Base Data Source
 
 - (NSUInteger)numberOfSections {
     return (NSUInteger)[[_controller sections] count];
@@ -95,11 +95,11 @@
     return count;
 }
 
-#pragma mark - item access
-
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
     return [_controller objectAtIndexPath:indexPath];
 }
+
+#pragma mark - NSManagedObject access
 
 - (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)objectId {
     for (NSUInteger section = 0; section < [self numberOfSections]; section++) {

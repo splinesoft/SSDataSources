@@ -455,4 +455,17 @@
     expect(ds.numberOfItems).to.equal(@2);
 }
 
+- (void)testArrayDataSourceCopy
+{
+    SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[ @1, @2, @3 ]];
+    
+    SSArrayDataSource *ds2 = [ds copy];
+    
+    expect(ds2).toNot.equal(ds);
+    expect(ds2.numberOfItems).to.equal(ds.numberOfItems);
+    expect([ds2 itemAtIndex:0]).to.equal(@1);
+    expect([ds2 itemAtIndex:1]).to.equal(@2);
+    expect([ds2 itemAtIndex:2]).to.equal(@3);
+}
+
 @end

@@ -66,4 +66,18 @@
     expect([ds itemAtIndexPath:indexPath]).to.equal(@"bar");
 }
 
+- (void) testSectionedDataSourceCopy
+{
+    ds = [[SSSectionedDataSource alloc] initWithItems:@[ @"foo" ]];
+    
+    SSSectionedDataSource *ds2 = [ds copy];
+    
+    expect(ds2).toNot.equal(ds);
+    expect(ds2.numberOfSections).to.equal(ds.numberOfSections);
+    expect(ds2.numberOfItems).to.equal(ds.numberOfItems);
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    expect([ds2 itemAtIndexPath:indexPath]).to.equal([ds itemAtIndexPath:indexPath]);
+}
+
 @end

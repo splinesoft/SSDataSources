@@ -16,7 +16,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface SSBaseDataSource : NSObject <UITableViewDataSource, UICollectionViewDataSource>
+@interface SSBaseDataSource : NSObject <UITableViewDataSource, UICollectionViewDataSource, NSCopying>
 
 #pragma mark - SSDataSources block signatures
 

@@ -16,7 +16,7 @@
 
 #pragma mark - SSSectionedDataSource
 
-@interface SSSectionedDataSource : SSBaseDataSource
+@interface SSSectionedDataSource : SSBaseDataSource <NSCopying>
 
 /**
  * Sections appearing in the datasource.

@@ -177,4 +177,22 @@
     expect(indexPaths).to.equal(@[[NSIndexPath indexPathForRow:1 inSection:0]]);
 }
 
+#pragma mark - NSCopying
+
+- (void) testBaseDataSourceCopy
+{
+    ds.rowAnimation = UITableViewRowAnimationLeft;
+    ds.cellClass = [self class];
+    ds.collectionViewSupplementaryElementClass = [self class];
+    
+    SSBaseDataSource *dataSource = [ds copy];
+    
+    expect(dataSource).toNot.equal(ds); // what is the self?
+    expect(dataSource.cellClass).to.equal(ds.cellClass);
+    expect(dataSource.rowAnimation).to.equal(ds.rowAnimation);
+    expect(dataSource.collectionViewSupplementaryElementClass).to.equal(ds.collectionViewSupplementaryElementClass);
+    expect(dataSource.collectionView).to.equal(ds.collectionView);
+    expect(dataSource.tableView).to.equal(ds.tableView);
+}
+
 @end

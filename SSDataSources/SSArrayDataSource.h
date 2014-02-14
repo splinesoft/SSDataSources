@@ -15,7 +15,7 @@
  * Data source for single-sectioned table and collection views.
  */
 
-@interface SSArrayDataSource : SSBaseDataSource
+@interface SSArrayDataSource : SSBaseDataSource <NSCopying>
 
 /**
  * Create a new array data source by specifying an array of items.
@@ -23,6 +23,12 @@
 - (instancetype) initWithItems:(NSArray *)items;
 
 #pragma mark - item access
+
+/**
+ * Synonym for
+ * -[SSArrayDataSource itemAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]]
+ */
+- (id) itemAtIndex:(NSUInteger)index;
 
 /**
  * Add some more items to the end of the items array.
