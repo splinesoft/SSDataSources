@@ -19,6 +19,23 @@
 @interface SSSectionedDataSource : SSBaseDataSource
 
 /**
+ * Sections that have 0 items will still display a header and footer
+ * in their table or collection view. By default, SSSectionedDataSource
+ * will remove these empty sections for you.
+ *
+ * If YES, automatically removes any section that becomes empty --
+ * the `SSSection` object contains 0 items --
+ * after a call to one of the following:
+ * 
+ * removeItemAtIndexPath:
+ * removeItemsAtIndexes:inSection:
+ * removeItemsInRange:inSection:
+ *
+ * Defaults to YES.
+ */
+@property (nonatomic, assign) BOOL shouldRemoveEmptySections;
+
+/**
  * Sections appearing in the datasource.
  * You should not mutate this directly - rather, use the insert/move/remove accessors below.
  */

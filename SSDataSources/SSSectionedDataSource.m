@@ -20,6 +20,7 @@
 - (instancetype)init {
     if ((self = [super init])) {
         self.sections = [NSMutableArray array];
+        self.shouldRemoveEmptySections = YES;
     }
     
     return self;
@@ -54,29 +55,28 @@
     return self;
 }
 
-#pragma mark - Item access
-
-- (id)itemAtIndexPath:(NSIndexPath *)indexPath {
-    return [[self sectionAtIndex:indexPath.section] itemAtIndex:indexPath.row];
-}
-
-#pragma mark - Base data source
+#pragma mark - Base Data Source
 
 - (NSUInteger)numberOfSections {
-  return [self.sections count];
+    return [self.sections count];
 }
 
 - (NSUInteger)numberOfItemsInSection:(NSUInteger)section {
-  return [[self sectionAtIndex:section] numberOfItems];
+    return [[self sectionAtIndex:section] numberOfItems];
 }
 
 - (NSUInteger)numberOfItems {
-  NSUInteger count = 0;
+    NSUInteger count = 0;
   
-  for (SSSection *section in self.sections)
-    count += [section numberOfItems];
+    for (SSSection *section in self.sections) {
+        count += [section numberOfItems];
+    }
   
-  return count;
+    return count;
+}
+
+- (id)itemAtIndexPath:(NSIndexPath *)indexPath {
+    return [[self sectionAtIndex:indexPath.section] itemAtIndex:indexPath.row];
 }
 
 #pragma mark - Section access
@@ -242,12 +242,11 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 - (void)removeItemAtIndexPath:(NSIndexPath *)indexPath {
     [[self sectionAtIndex:indexPath.section].items removeObjectAtIndex:indexPath.row];
 
-    if ([self numberOfItemsInSection:indexPath.section] == 0) {
+    if (self.shouldRemoveEmptySections && [self numberOfItemsInSection:indexPath.section] == 0) {
         [self removeSectionAtIndex:indexPath.section];
-        return;
+    } else {
+        [self deleteCellsAtIndexPaths:@[ indexPath ]];
     }
-    
-    [self deleteCellsAtIndexPaths:@[ indexPath ]];
 }
 
 - (void)removeItemsAtIndexes:(NSIndexSet *)indexes inSection:(NSUInteger)section {
@@ -256,16 +255,16 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 
     [[self sectionAtIndex:section].items removeObjectsAtIndexes:indexes];
     
-    if ([self numberOfItemsInSection:section] == 0) {
+    if (self.shouldRemoveEmptySections && [self numberOfItemsInSection:section] == 0) {
         [self removeSectionAtIndex:section];
-        return;
+    } else {
+        [self deleteCellsAtIndexPaths:indexPaths];
     }
-    
-    [self deleteCellsAtIndexPaths:indexPaths];
 }
 
 - (void)removeItemsInRange:(NSRange)range inSection:(NSUInteger)section {
-    [self removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range] inSection:section];
+    [self removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range]
+                     inSection:section];
 }
 
 #pragma mark - UITableViewDelegate helpers

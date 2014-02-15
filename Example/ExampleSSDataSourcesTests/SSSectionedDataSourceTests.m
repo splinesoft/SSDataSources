@@ -66,4 +66,18 @@
     expect([ds itemAtIndexPath:indexPath]).to.equal(@"bar");
 }
 
+- (void) test_automatic_section_removal
+{
+    ds = [[SSSectionedDataSource alloc] initWithItems:@[ @"foo" ]];
+    [ds appendSection:[SSSection sectionWithItems:@[ @"bar" ]]];
+    
+    expect(ds.numberOfSections).to.equal(2);
+    [ds removeItemsInRange:NSMakeRange(0, 1) inSection:1];
+    expect(ds.numberOfSections).to.equal(1);
+    
+    ds.shouldRemoveEmptySections = NO;
+    [ds removeItemsInRange:NSMakeRange(0, 1) inSection:0];
+    expect(ds.numberOfSections).to.equal(1);
+}
+
 @end
