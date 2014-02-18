@@ -130,12 +130,10 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
         
     id item = [self itemAtIndexPath:indexPath];
-    id cell;
     
-    if (self.cellCreationBlock)
-        cell = self.cellCreationBlock(item, tv, indexPath);
-    else
-        cell = [self.cellClass cellForTableView:tv];
+    id cell = (self.cellCreationBlock
+               ? self.cellCreationBlock(item, tv, indexPath)
+               : [self.cellClass cellForTableView:tv]);
 
     [self configureCell:cell
                 forItem:item
@@ -199,13 +197,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     id item = [self itemAtIndexPath:indexPath];
-    id cell;
     
-    if (self.cellCreationBlock)
-        cell = self.cellCreationBlock(item, cv, indexPath);
-    else
-        cell = [self.cellClass cellForCollectionView:cv
-                                           indexPath:indexPath];
+    id cell = (self.cellCreationBlock
+               ? self.cellCreationBlock(item, cv, indexPath)
+               : [self.cellClass cellForCollectionView:cv
+                                             indexPath:indexPath]);
 
     [self configureCell:cell
                 forItem:item
