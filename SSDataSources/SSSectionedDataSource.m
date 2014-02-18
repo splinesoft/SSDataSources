@@ -10,8 +10,10 @@
 
 @interface SSSectionedDataSource ()
 
+- (instancetype)init;
+
 // Header/footer view helper
-- (SSBaseHeaderFooterView *) headerFooterViewWithClass:(Class)class;
+- (SSBaseHeaderFooterView *)headerFooterViewWithClass:(Class)class;
 
 @end
 
@@ -28,8 +30,9 @@
 
 - (instancetype)initWithItems:(NSArray *)items {
     if ((self = [self init])) {
-        if ([items count] > 0)
+        if ([items count] > 0) {
             [self appendSection:[SSSection sectionWithItems:items]];
+        }
     }
     
     return self;
@@ -37,8 +40,9 @@
 
 - (instancetype)initWithSection:(SSSection *)section {
     if ((self = [self init])) {
-        if (section)
+        if (section) {
             [self appendSection:section];
+        }
     }
   
     return self;
@@ -88,8 +92,9 @@
 - (SSSection *)sectionWithIdentifier:(id)identifier {
     NSUInteger index = [self indexOfSectionWithIdentifier:identifier];
     
-    if (index == NSNotFound)
+    if (index == NSNotFound) {
         return nil;
+    }
     
     return [self sectionAtIndex:index];
 }
@@ -250,15 +255,13 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 }
 
 - (void)removeItemsAtIndexes:(NSIndexSet *)indexes inSection:(NSUInteger)section {
-    NSArray *indexPaths = [[self class] indexPathArrayWithIndexSet:indexes
-                                                         inSection:section];
-
     [[self sectionAtIndex:section].items removeObjectsAtIndexes:indexes];
     
     if (self.shouldRemoveEmptySections && [self numberOfItemsInSection:section] == 0) {
         [self removeSectionAtIndex:section];
     } else {
-        [self deleteCellsAtIndexPaths:indexPaths];
+        [self deleteCellsAtIndexPaths:[[self class] indexPathArrayWithIndexSet:indexes
+                                                                     inSection:section]];
     }
 }
 
