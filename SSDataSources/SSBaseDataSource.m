@@ -25,6 +25,7 @@
         self.cellClass = [SSBaseTableCell class];
         self.collectionViewSupplementaryElementClass = [SSBaseCollectionReusableView class];
         self.rowAnimation = UITableViewRowAnimationAutomatic;
+        self.cachedSeparatorStyle = UITableViewCellSeparatorStyleSingleLine;
     }
     
     return self;
