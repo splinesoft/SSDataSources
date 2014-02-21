@@ -10,7 +10,7 @@
 #import "SSSection.h"
 
 /**
- * SSSectionedDataSource is a data source for multi-sectioned table and collection views.
+ * A data source for multi-sectioned table and collection views.
  * Each section is modeled using an `SSSection` object.
  */
 

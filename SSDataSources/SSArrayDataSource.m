@@ -18,28 +18,27 @@
 @implementation SSArrayDataSource
 
 - (instancetype)initWithItems:(NSArray *)anItems {
+    if ((self = [self init])) {
+        self.items = (anItems
+                      ? [NSMutableArray arrayWithArray:anItems]
+                      : [NSMutableArray array]);
+    }
   
-  if ((self = [self init])) {
-      self.items = (anItems
-                    ? [NSMutableArray arrayWithArray:anItems]
-                    : [NSMutableArray array]);
-  }
-  
-  return self;
+    return self;
 }
 
 - (void)dealloc {
-  self.items = nil;
+    self.items = nil;
 }
 
 #pragma mark - Base Data source
 
 - (NSUInteger)numberOfSections {
-    return ([self numberOfItems] > 0 ? 1 : 0);
+    return 1;
 }
 
 - (NSUInteger)numberOfItemsInSection:(NSUInteger)section {
-    return [self.items count];
+    return [self numberOfItems];
 }
 
 - (NSUInteger)numberOfItems {
@@ -47,11 +46,13 @@
 }
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
-    if (!indexPath)
+    if (!indexPath) {
         return nil;
+    }
   
-    if (indexPath.row < (NSInteger)[self.items count])
+    if (indexPath.row < (NSInteger)[self.items count]) {
         return self.items[(NSUInteger)indexPath.row];
+    }
   
     return nil;
 }
@@ -86,16 +87,16 @@
     }
     
     NSUInteger count = [self numberOfItems];
-    BOOL wasEmpty = (count == 0);
     
     [self.items addObjectsFromArray:newItems];
     
-    if (wasEmpty) {
-        [self insertSectionsAtIndexes:[NSIndexSet indexSetWithIndex:0]];
-    } else {
-        [self insertCellsAtIndexPaths:[self.class indexPathArrayWithRange:NSMakeRange(count, [newItems count])
-                                                                inSection:0]];
-    }
+    [self insertCellsAtIndexPaths:[self.class indexPathArrayWithRange:NSMakeRange(count, [newItems count])
+                                                            inSection:0]];
+}
+
+- (void)insertItem:(id)item atIndex:(NSUInteger)index {
+    [self insertItems:@[ item ]
+            atIndexes:[NSIndexSet indexSetWithIndex:index]];
 }
 
 - (void)insertItems:(NSArray *)newItems atIndexes:(NSIndexSet *)indexes {
@@ -103,16 +104,10 @@
         return;
     }
     
-    BOOL wasEmpty = ([self numberOfItems] == 0);
-    
     [self.items insertObjects:newItems atIndexes:indexes];
-    
-    if (wasEmpty) {
-        [self insertSectionsAtIndexes:[NSIndexSet indexSetWithIndex:0]];
-    } else {
-        [self insertCellsAtIndexPaths:[self.class indexPathArrayWithIndexSet:indexes
-                                                                   inSection:0]];
-    }
+
+    [self insertCellsAtIndexPaths:[self.class indexPathArrayWithIndexSet:indexes
+                                                               inSection:0]];
 }
 
 - (void)replaceItemAtIndex:(NSUInteger)index withItem:(id)item {
@@ -137,34 +132,22 @@
 
 - (void)removeItemsInRange:(NSRange)range {    
     [self.items removeObjectsInRange:range];
-    
-    if ([self numberOfItems] == 0) {
-        [self deleteSectionsAtIndexes:[NSIndexSet indexSetWithIndex:0]];
-    } else {
-        [self deleteCellsAtIndexPaths:[self.class indexPathArrayWithRange:range
-                                                                inSection:0]];
-    }
+
+    [self deleteCellsAtIndexPaths:[self.class indexPathArrayWithRange:range
+                                                            inSection:0]];
 }
 
 - (void)removeItemAtIndex:(NSUInteger)index {
     [self.items removeObjectAtIndex:index];
     
-    if ([self numberOfItems] == 0) {
-        [self deleteSectionsAtIndexes:[NSIndexSet indexSetWithIndex:0]];
-    } else {
-        [self deleteCellsAtIndexPaths:@[ [NSIndexPath indexPathForRow:(NSInteger)index inSection:0] ]];
-    }
+    [self deleteCellsAtIndexPaths:@[ [NSIndexPath indexPathForRow:(NSInteger)index inSection:0] ]];
 }
 
 - (void)removeItemsAtIndexes:(NSIndexSet *)indexes {
     [self.items removeObjectsAtIndexes:indexes];
     
-    if ([self numberOfItems] == 0) {
-        [self deleteSectionsAtIndexes:[NSIndexSet indexSetWithIndex:0]];
-    } else {
-        [self deleteCellsAtIndexPaths:[self.class indexPathArrayWithIndexSet:indexes
-                                                                   inSection:0]];
-    }
+    [self deleteCellsAtIndexPaths:[self.class indexPathArrayWithIndexSet:indexes
+                                                               inSection:0]];
 }
 
 #pragma mark - item access
@@ -172,8 +155,9 @@
 - (NSIndexPath *)indexPathForItem:(id)item {
     NSUInteger row = [self.items indexOfObjectIdenticalTo:item];
   
-    if (row == NSNotFound)
+    if (row == NSNotFound) {
         return nil;
+    }
   
     return [NSIndexPath indexPathForRow:(NSInteger)row inSection:0];
 }
@@ -185,8 +169,9 @@
       return [[object objectID] isEqual:itemId];
     }];
   
-    if( row == NSNotFound )
+    if (row == NSNotFound) {
         return nil;
+    }
   
     return [NSIndexPath indexPathForRow:(NSInteger)row inSection:0];
 }
@@ -199,7 +184,8 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     
     id item = [self itemAtIndexPath:sourceIndexPath];
     [self.items removeObject:item];
-    [self.items insertObject:item atIndex:(NSUInteger)destinationIndexPath.row];
+    [self.items insertObject:item
+                     atIndex:(NSUInteger)destinationIndexPath.row];
 }
 
 @end
