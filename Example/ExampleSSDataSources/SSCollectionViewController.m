@@ -100,7 +100,7 @@
 
 - (void)removeItem {
     if( [dataSource numberOfItems] > 0 )
-        [dataSource removeItemAtIndex:(arc4random_uniform([dataSource numberOfItems]))];
+        [dataSource removeItemAtIndex:(arc4random_uniform((unsigned int)[dataSource numberOfItems]))];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
