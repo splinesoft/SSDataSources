@@ -16,6 +16,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@class SSHeightCache;
+
 @interface SSBaseDataSource : NSObject <UITableViewDataSource, UICollectionViewDataSource>
 
 #pragma mark - SSDataSources block signatures
@@ -90,6 +92,11 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
  * will be sized to match the parent table or collection view.
  */
 @property (nonatomic, strong) UIView *emptyView;
+
+/**
+ * Cache for dynamically calculated heights and/or sizes.
+ */
+@property (nonatomic, strong) SSHeightCache *heightCache;
 
 #pragma mark - UITableView
 
@@ -199,7 +206,7 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
 
 - (void) reloadData;
 
-#pragma mark - helpers
+#pragma mark - Index path helpers
 
 /**
  * Helper functions to generate arrays of NSIndexPaths.

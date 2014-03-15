@@ -12,13 +12,13 @@
 @interface SSTableViewController ()
 - (void) addRow;
 - (void) toggleEditing;
-
 - (void) updateBarButtonItems;
+
+@property (nonatomic, strong) SSArrayDataSource *dataSource;
+
 @end
 
-@implementation SSTableViewController {
-    SSArrayDataSource *dataSource;
-}
+@implementation SSTableViewController
 
 - (instancetype)init {
     if( ( self = [self initWithStyle:UITableViewStylePlain] ) ) {
@@ -38,11 +38,11 @@
     for( NSUInteger i = 0; i < 5; i++ )
         [items addObject:@( arc4random_uniform( 10000 ) )];
     
-    dataSource = [[SSArrayDataSource alloc] initWithItems:items];
-    dataSource.rowAnimation = UITableViewRowAnimationRight;
-    dataSource.tableActionBlock = ^BOOL(SSCellActionType action,
-                                        UITableView *tableView,
-                                        NSIndexPath *indexPath) {
+    _dataSource = [[SSArrayDataSource alloc] initWithItems:items];
+    self.dataSource.rowAnimation = UITableViewRowAnimationRight;
+    self.dataSource.tableActionBlock = ^BOOL(SSCellActionType action,
+                                             UITableView *tableView,
+                                             NSIndexPath *indexPath) {
         
         // we allow both moving and deleting.
         // You could instead do something like
@@ -51,32 +51,32 @@
         
         return YES;
     };
-    dataSource.tableDeletionBlock = ^(SSArrayDataSource *aDataSource,
-                                      UITableView *tableView,
-                                      NSIndexPath *indexPath) {
+    self.dataSource.tableDeletionBlock = ^(SSArrayDataSource *aDataSource,
+                                           UITableView *tableView,
+                                           NSIndexPath *indexPath) {
         
         [aDataSource removeItemAtIndex:(NSUInteger)indexPath.row];
     };
-    dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
-                                      NSNumber *number, 
-                                      UITableView *tableView,
-                                      NSIndexPath *ip ) {
+    self.dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell,
+                                           NSNumber *number,
+                                           UITableView *tableView,
+                                           NSIndexPath *ip ) {
         cell.textLabel.text = [number stringValue];
     };
-    dataSource.tableView = self.tableView;
+    self.dataSource.tableView = self.tableView;
     
     UILabel *noItemsLabel = [UILabel new];
     noItemsLabel.text = @"No Items";
     noItemsLabel.font = [UIFont boldSystemFontOfSize:18.0f];
     noItemsLabel.textAlignment = NSTextAlignmentCenter;
     
-    dataSource.emptyView = noItemsLabel;
+    self.dataSource.emptyView = noItemsLabel;
 }
 
 #pragma mark - actions
 
 - (void)addRow {
-    [dataSource appendItem:@( arc4random_uniform( 10000 ) )];
+    [self.dataSource appendItem:@( arc4random_uniform( 10000 ) )];
 }
 
 - (void)toggleEditing {
@@ -103,8 +103,20 @@
 
 #pragma mark - UITableViewDelegate
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = [self.dataSource.heightCache cachedHeightForRowAtIndexPath:indexPath];
+    
+    if (height < 1.0f) {
+        height = tableView.rowHeight; // or, you know, an expensive calculation
+        
+        [self.dataSource.heightCache cacheHeight:height forRowAtIndexPath:indexPath];
+    }
+    
+    return height;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSNumber *item = [dataSource itemAtIndexPath:indexPath];
+    NSNumber *item = [self.dataSource itemAtIndexPath:indexPath];
     
     NSLog(@"selected item %@", item);
     
