@@ -7,6 +7,7 @@
 //
 
 #import "SSDataSources.h"
+#import "SSHeightCache.h"
 
 @interface SSBaseDataSource ()
 
@@ -26,6 +27,7 @@
         self.collectionViewSupplementaryElementClass = [SSBaseCollectionReusableView class];
         self.rowAnimation = UITableViewRowAnimationAutomatic;
         self.cachedSeparatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        self.heightCache = [SSHeightCache new];
     }
     
     return self;
@@ -43,6 +45,7 @@
     self.collectionSupplementaryCreationBlock = nil;
     self.tableActionBlock = nil;
     self.tableDeletionBlock = nil;
+    [self.heightCache removeAllObjects];
 }
 
 #pragma mark - Base item access

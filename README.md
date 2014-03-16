@@ -3,7 +3,7 @@ SSDataSources
 
 [![Build Status](https://travis-ci.org/splinesoft/SSDataSources.png?branch=master)](https://travis-ci.org/splinesoft/SSDataSources) 
 
-Simple data sources for your `UITableView` and `UICollectionView`. *wow, much DRY*
+Flexible data sources for your `UITableView` and `UICollectionView`. *wow, much DRY*
 
 No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numberOfRowsInSection:` and `collectionView:cellForItemAtIndexPath:` and `collectionView:numberOfItemsInSection:` dances many times before. You may also have updated your data and forgotten to update the table or collection view. Whoops -- crash! Is there a better way?
 
@@ -244,6 +244,26 @@ You're a modern wo/man-about-Internet and sometimes you want to present a `UITab
     };
 }
 @end
+```
+
+## Height Cache
+
+Sometimes you need to perform an expensive operation to calculate the height of a cell. Each data source includes a height cache that you can use in your `UITableViewDelegate`:
+
+```objc
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat height = [self.dataSource.heightCache cachedHeightForRowAtIndexPath:indexPath];
+
+    if (height == 0.0f) {
+        height = ... an expensive calculation ...
+
+        [self.dataSource.heightCache cacheHeight:height forRowAtIndexPath:indexPath];
+    }
+
+    return height;
+}
 ```
 
 ## Thanks!
