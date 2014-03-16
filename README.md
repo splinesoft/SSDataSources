@@ -248,7 +248,7 @@ You're a modern wo/man-about-Internet and sometimes you want to present a `UITab
 
 ## Height Cache
 
-Sometimes you need to perform an expensive operation to cache the height of a cell. Each data source includes a height cache that you can use in your `UITableViewDelegate`:
+Sometimes you need to perform an expensive operation to calculate the height of a cell. Each data source includes a height cache that you can use in your `UITableViewDelegate`:
 
 ```objc
 #pragma mark - UITableViewDelegate
@@ -257,7 +257,7 @@ Sometimes you need to perform an expensive operation to cache the height of a ce
     CGFloat height = [self.dataSource.heightCache cachedHeightForRowAtIndexPath:indexPath];
 
     if (height == 0.0f) {
-        height = // ... an expensive calculation ...
+        height = ... an expensive calculation ...
 
         [self.dataSource.heightCache cacheHeight:height forRowAtIndexPath:indexPath];
     }
