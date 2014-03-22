@@ -3,13 +3,13 @@ SSDataSources
 
 [![Build Status](https://travis-ci.org/splinesoft/SSDataSources.png?branch=master)](https://travis-ci.org/splinesoft/SSDataSources) 
 
-Simple data sources for your `UITableView` and `UICollectionView`. *wow, much DRY*
+Flexible data sources for your `UITableView` and `UICollectionView`. *wow, much DRY*
 
 No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numberOfRowsInSection:` and `collectionView:cellForItemAtIndexPath:` and `collectionView:numberOfItemsInSection:` dances many times before. You may also have updated your data and forgotten to update the table or collection view. Whoops -- crash! Is there a better way?
 
 `SSDataSources` is a collection of objects that conform to `UITableViewDataSource` and `UICollectionViewDataSource`. This is my own implementation of ideas featured in [objc.io's wonderful first issue](http://www.objc.io/issue-1/table-views.html).
 
-`SSDataSources` powers single-section, multi-section, and Core Data-backed tables in my app [MUDRammer - a modern MUD client for iPhone and iPad](https://itunes.apple.com/us/app/mudrammer-a-modern-mud-client/id597157072?mt=8). Let me know if you use it in your app!
+`SSDataSources` powers single-section, multi-section, and Core Data-backed tables in my app [MUDRammer - a modern MUD client for iPhone and iPad](https://itunes.apple.com/us/app/mudrammer-a-modern-mud-client/id597157072?mt=8).
 
 ## Install
 
