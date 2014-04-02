@@ -18,53 +18,63 @@ typedef NS_ENUM( NSUInteger, SSDataSourcesExample ) {
     SSDataSourcesExampleCollectionView,
 };
 
-@implementation SSRootViewController {
-    SSArrayDataSource *dataSource;
+@interface SSRootViewController ()
+
+@property (nonatomic, strong) SSArrayDataSource *dataSource;
+
+@end
+
+@implementation SSRootViewController
+
+- (id)init {
+    if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
+        self.title = NSLocalizedString(@"SSDataSources", nil);
+        
+        _dataSource = [[SSArrayDataSource alloc] initWithItems:@[
+                                                     @(SSDataSourcesExampleTable),
+                                                     @(SSDataSourcesExampleSectionedTable),
+                                                     @(SSDataSourcesExampleCollectionView)
+                                                 ]];
+        
+        self.dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell,
+                                               NSNumber *exampleType,
+                                               UITableView *tableView,
+                                               NSIndexPath *indexPath) {
+            NSString *title;
+            
+            switch( [exampleType unsignedIntegerValue] ) {
+                case SSDataSourcesExampleTable:
+                    title =  NSLocalizedString(@"Table View", nil);
+                    break;
+                case SSDataSourcesExampleCollectionView:
+                    title = NSLocalizedString(@"Collection View", nil);
+                    break;
+                case SSDataSourcesExampleSectionedTable:
+                    title = NSLocalizedString(@"Sectioned Table", nil);
+                    break;
+                default:
+                    break;
+            }
+            
+            cell.textLabel.text = title;
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        };
+    }
+    
+    return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"SSDataSources", nil);
-    
-    dataSource = [[SSArrayDataSource alloc] initWithItems:@[
-                    @(SSDataSourcesExampleTable),
-                    @(SSDataSourcesExampleSectionedTable),
-                    @(SSDataSourcesExampleCollectionView)
-                 ]];
-    
-    dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
-                                      NSNumber *exampleType, 
-                                      UITableView *tableView,
-                                      NSIndexPath *indexPath) {
-        NSString *title;
-        
-        switch( [exampleType unsignedIntegerValue] ) {
-            case SSDataSourcesExampleTable:
-                title =  NSLocalizedString(@"Table View", nil);
-                break;
-            case SSDataSourcesExampleCollectionView:
-                title = NSLocalizedString(@"Collection View", nil);
-                break;
-            case SSDataSourcesExampleSectionedTable:
-                title = NSLocalizedString(@"Sectioned Table", nil);
-                break;
-            default:
-                break;
-        }
-        
-        cell.textLabel.text = title;
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    };
-    
-    self.tableView.dataSource = dataSource;
+    self.dataSource.tableView = self.tableView;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     UIViewController *viewController;
-    SSDataSourcesExample example = [[dataSource itemAtIndexPath:indexPath] unsignedIntegerValue];
+    SSDataSourcesExample example = [[self.dataSource itemAtIndexPath:indexPath] unsignedIntegerValue];
     
-    switch( example ) {
+    switch (example) {
         case SSDataSourcesExampleTable:
             viewController = [SSTableViewController new];
             break;
@@ -78,9 +88,10 @@ typedef NS_ENUM( NSUInteger, SSDataSourcesExample ) {
             break;
     }
     
-    if( viewController )
+    if (viewController) {
         [self.navigationController pushViewController:viewController
                                              animated:YES];
+    }
 }
 
 @end

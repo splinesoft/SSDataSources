@@ -15,7 +15,7 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:
-                                      [[SSRootViewController alloc] initWithStyle:UITableViewStyleGrouped]];
+                                      [SSRootViewController new]];
     [self.window makeKeyAndVisible];
     return YES;
 }

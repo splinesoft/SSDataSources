@@ -13,21 +13,48 @@ CGFloat const kHeaderHeight = 30.0f;
 CGFloat const kFooterHeight = 30.0f;
 
 @interface SSSectionedViewController ()
+
+@property (nonatomic, strong) SSSectionedDataSource *dataSource;
+
 - (void) addRow;
 - (void) toggleEditing;
 
 - (void) updateBarButtonItems;
 
 + (SSSection *) sectionWithRandomNumber;
+
 @end
 
-@implementation SSSectionedViewController {
-    SSSectionedDataSource *dataSource;
-}
+@implementation SSSectionedViewController
 
 - (instancetype)init {
-    if( ( self = [self initWithStyle:UITableViewStyleGrouped] ) ) {
+    if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
         self.title = @"Sectioned Table";
+        
+        _dataSource = [[SSSectionedDataSource alloc] initWithSection:
+                       [[self class] sectionWithRandomNumber]];
+        self.dataSource.rowAnimation = UITableViewRowAnimationFade;
+        self.dataSource.tableActionBlock = ^BOOL(SSCellActionType actionType,
+                                                 UITableView *tableView,
+                                                 NSIndexPath *indexPath) {
+            // we allow both moving and deleting.
+            // You could instead do something like
+            // return (action == SSCellActionTypeMove);
+            // to only allow moving and disallow deleting.
+            
+            return YES;
+        };
+        self.dataSource.tableDeletionBlock = ^(SSSectionedDataSource *aDataSource,
+                                               UITableView *tableView,
+                                               NSIndexPath *indexPath) {
+            [aDataSource removeItemAtIndexPath:indexPath];
+        };
+        self.dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell,
+                                               NSNumber *number,
+                                               UITableView *tableView,
+                                               NSIndexPath *ip ) {
+            cell.textLabel.text = [number stringValue];
+        };
     }
     
     return self;
@@ -41,38 +68,14 @@ CGFloat const kFooterHeight = 30.0f;
     [self.tableView registerClass:[SSBaseHeaderFooterView class]
 forHeaderFooterViewReuseIdentifier:[SSBaseHeaderFooterView identifier]];
     
-    dataSource = [[SSSectionedDataSource alloc] initWithSection:
-                  [[self class] sectionWithRandomNumber]];
-    dataSource.rowAnimation = UITableViewRowAnimationFade;
-    dataSource.tableActionBlock = ^BOOL(SSCellActionType actionType,
-                                        UITableView *tableView,
-                                        NSIndexPath *indexPath) {
-        // we allow both moving and deleting.
-        // You could instead do something like
-        // return (action == SSCellActionTypeMove);
-        // to only allow moving and disallow deleting.
-        
-        return YES;
-    };
-    dataSource.tableDeletionBlock = ^(SSSectionedDataSource *aDataSource,
-                                      UITableView *tableView,
-                                      NSIndexPath *indexPath) {
-        [aDataSource removeItemAtIndexPath:indexPath];
-    };
-    dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell,
-                                      NSNumber *number,
-                                      UITableView *tableView,
-                                      NSIndexPath *ip ) {
-        cell.textLabel.text = [number stringValue];
-    };
-    dataSource.tableView = self.tableView;
+    self.dataSource.tableView = self.tableView;
     
     UILabel *noItemsLabel = [UILabel new];
     noItemsLabel.text = @"No Items";
     noItemsLabel.font = [UIFont boldSystemFontOfSize:18.0f];
     noItemsLabel.textAlignment = NSTextAlignmentCenter;
     
-    dataSource.emptyView = noItemsLabel;
+    self.dataSource.emptyView = noItemsLabel;
 }
 
 + (SSSection *)sectionWithRandomNumber {
@@ -90,15 +93,15 @@ forHeaderFooterViewReuseIdentifier:[SSBaseHeaderFooterView identifier]];
 - (void)addRow {
     NSNumber *newItem = @( arc4random_uniform( 10000 ) );
     
-    if( [dataSource numberOfSections] == 0 || arc4random_uniform(2) == 0 ) {
+    if( [self.dataSource numberOfSections] == 0 || arc4random_uniform(2) == 0 ) {
         // new section
-        [dataSource appendSection:[[self class] sectionWithRandomNumber]];
+        [self.dataSource appendSection:[self.class sectionWithRandomNumber]];
     } else {
         // new row
-        NSUInteger section = arc4random_uniform((unsigned int)[dataSource numberOfSections]);
-        NSUInteger row = arc4random_uniform((unsigned int)[dataSource numberOfItemsInSection:section]);
-        [dataSource insertItem:newItem
-                   atIndexPath:[NSIndexPath indexPathForRow:(NSInteger)row
+        NSUInteger section = arc4random_uniform((unsigned int)[self.dataSource numberOfSections]);
+        NSUInteger row = arc4random_uniform((unsigned int)[self.dataSource numberOfItemsInSection:section]);
+        [self.dataSource insertItem:newItem
+                        atIndexPath:[NSIndexPath indexPathForRow:(NSInteger)row
                                                   inSection:(NSInteger)section]];
     }
 }
@@ -123,6 +126,16 @@ forHeaderFooterViewReuseIdentifier:[SSBaseHeaderFooterView identifier]];
                                                  target:self
                                                  action:@selector(toggleEditing)]
                                                 ];
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSNumber *item = [self.dataSource itemAtIndexPath:indexPath];
+    
+    NSLog(@"selected item %@", item);
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end
