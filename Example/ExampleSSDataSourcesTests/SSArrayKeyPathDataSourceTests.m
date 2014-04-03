@@ -2,7 +2,7 @@
 #import <SSDataSources.h>
 
 /**
- * TODO Write documentation
+ * A model object within the tests that has a to-many employees relationsihp.
  */
 @interface Department : NSObject
 @property (nonatomic, copy) NSArray *employees;

@@ -10,12 +10,17 @@
 #import "SSArrayDataSource.h"
 
 /**
- * TODO Write documentation
+ * Data source for single-sectioned table and collection views that's backed by
+ * an array (representing a to-many relationship) on some source object. Data
+ * updates are channeled via KVO.
  */
 @interface SSArrayKeyPathDataSource : SSBaseDataSource <SSArrayItemAccess>
 
 /**
- * TODO Write documentation
+ * Designated initializer.
+ *
+ * @param source - the object that the given key path is relative to
+ * @param keyPath - a key path for that identifiers an NSArray of data for the receiver
  */
 - (instancetype)initWithSource:(id)source keyPath:(NSString *)keyPath;
 
