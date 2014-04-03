@@ -53,6 +53,32 @@
     return [self numberOfItems];
 }
 
+#pragma mark SSArrayItemAccess
+
+- (NSIndexPath *)indexPathForItem:(id)item {
+    NSUInteger row = [self.itemsAtKeyPath indexOfObjectIdenticalTo:item];
+
+    if (row == NSNotFound) {
+        return nil;
+    }
+
+    return [NSIndexPath indexPathForRow:(NSInteger)row inSection:0];
+}
+
+- (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)itemId {
+    NSUInteger row = [self.itemsAtKeyPath indexOfObjectPassingTest:^BOOL(NSManagedObject *object,
+                                                                NSUInteger index,
+                                                                BOOL *stop) {
+      return [[object objectID] isEqual:itemId];
+    }];
+
+    if (row == NSNotFound) {
+        return nil;
+    }
+
+    return [NSIndexPath indexPathForRow:(NSInteger)row inSection:0];
+}
+
 #pragma mark - Private
 
 - (NSArray *)itemsAtKeyPath {

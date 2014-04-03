@@ -66,4 +66,14 @@
     expect([dataSource numberOfItemsInSection:0]).to.equal(4);
 }
 
+#pragma mark Array item access
+
+- (void)test_indexPath_for_item
+{
+    expect([dataSource indexPathForItem:@"Josh"])
+        .to.equal([NSIndexPath indexPathForRow:0 inSection:0]);
+    expect([dataSource indexPathForItem:@"Shelley"])
+        .to.equal([NSIndexPath indexPathForRow:1 inSection:0]);
+}
+
 @end

@@ -7,11 +7,12 @@
 //
 
 #import "SSBaseDataSource.h"
+#import "SSArrayDataSource.h"
 
 /**
  * TODO Write documentation
  */
-@interface SSArrayKeyPathDataSource : SSBaseDataSource
+@interface SSArrayKeyPathDataSource : SSBaseDataSource <SSArrayItemAccess>
 
 /**
  * TODO Write documentation
