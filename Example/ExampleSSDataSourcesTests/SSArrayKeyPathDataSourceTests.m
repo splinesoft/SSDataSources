@@ -85,6 +85,19 @@
     expect([dataSource numberOfItems]).to.equal(5);
 }
 
+- (void)test_adding_item_inserts_cell
+{
+    OCMockObject *mockDataSource = [OCMockObject partialMockForObject:dataSource];
+    [[mockDataSource expect] insertCellsAtIndexPaths:@[
+        [NSIndexPath indexPathForRow:4 inSection:0]
+    ]];
+
+    NSMutableArray *employees = [department mutableArrayValueForKey:@"employees"];
+    [employees addObject:@"Samuel"];
+
+    [mockDataSource verify];
+}
+
 #pragma mark Item insertion
 
 - (void)test_inserting_item_at_keyPath_updates_data_source
@@ -94,6 +107,19 @@
     expect([dataSource numberOfItems]).to.equal(5);
     expect([dataSource itemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]])
         .to.equal(@"Bob");
+}
+
+- (void)test_inserting_item_inserts_cell
+{
+    OCMockObject *mockDataSource = [OCMockObject partialMockForObject:dataSource];
+    [[mockDataSource expect] insertCellsAtIndexPaths:@[
+        [NSIndexPath indexPathForRow:0 inSection:0]
+    ]];
+
+    NSMutableArray *employees = [department mutableArrayValueForKey:@"employees"];
+    [employees insertObject:@"Bob" atIndex:0];
+
+    [mockDataSource verify];
 }
 
 #pragma mark Item removal
@@ -107,6 +133,19 @@
         .to.equal([NSIndexPath indexPathForRow:1 inSection:0]);
 }
 
+- (void)test_removing_item_removes_cell
+{
+    OCMockObject *mockDataSource = [OCMockObject partialMockForObject:dataSource];
+    [[mockDataSource expect] deleteCellsAtIndexPaths:@[
+        [NSIndexPath indexPathForRow:0 inSection:0]
+    ]];
+
+    NSMutableArray *employees = [department mutableArrayValueForKey:@"employees"];
+    [employees removeObject:@"Josh"];
+
+    [mockDataSource verify];
+}
+
 #pragma mark Item replacement
 
 - (void)test_updating_item_at_keyPath_updates_data_source
@@ -115,6 +154,19 @@
     [employees replaceObjectAtIndex:1 withObject:@"Samuel"];
     expect([dataSource itemAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]])
             .to.equal(@"Samuel");
+}
+
+- (void)test_updating_item_reloads_cell
+{
+    OCMockObject *mockDataSource = [OCMockObject partialMockForObject:dataSource];
+    [[mockDataSource expect] reloadCellsAtIndexPaths:@[
+        [NSIndexPath indexPathForRow:1 inSection:0]
+    ]];
+
+    NSMutableArray *employees = [department mutableArrayValueForKey:@"employees"];
+    [employees replaceObjectAtIndex:1 withObject:@"Samuel"];
+
+    [mockDataSource verify];
 }
 
 @end

@@ -8,6 +8,8 @@
 
 #import "SSArrayKeyPathDataSource.h"
 
+static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
+
 @interface SSArrayKeyPathDataSource ()
 
 @property (nonatomic, weak) id source;
@@ -23,8 +25,19 @@
     if ((self = [self init])) {
         self.source = source;
         self.keyPath = keyPath;
+
+        [self.source addObserver:self
+                      forKeyPath:self.keyPath
+                         options:NSKeyValueObservingOptionInitial
+                         context:&SSArrayKeyPathDataSourceContext];
     }
     return self;
+}
+
+- (void)dealloc {
+    [self.source removeObserver:self
+                     forKeyPath:self.keyPath
+                        context:&SSArrayKeyPathDataSourceContext];
 }
 
 #pragma mark - Base Data source
@@ -84,5 +97,37 @@
 - (NSArray *)itemsAtKeyPath {
     return [self.source valueForKeyPath:self.keyPath];
 }
+
+#pragma mark Key-value observing
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context == SSArrayKeyPathDataSourceContext && [keyPath isEqualToString:self.keyPath]) {
+        NSKeyValueChange changeKind = [change[NSKeyValueChangeKindKey] unsignedIntegerValue];
+        NSMutableArray *indexPaths = ({
+            NSMutableArray *indexPaths = [NSMutableArray array];
+            NSIndexSet *indexes = change[NSKeyValueChangeIndexesKey];
+            [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+                [indexPaths addObject:[NSIndexPath indexPathForRow:idx inSection:0]];
+            }];
+            indexPaths;
+        });
+        switch (changeKind) {
+            case NSKeyValueChangeInsertion:
+                [self insertCellsAtIndexPaths:indexPaths];
+                break;
+            case NSKeyValueChangeRemoval:
+                [self deleteCellsAtIndexPaths:indexPaths];
+                break;
+            case NSKeyValueChangeReplacement:
+                [self reloadCellsAtIndexPaths:indexPaths];
+                break;
+            case NSKeyValueChangeSetting:
+            default:
+                break;
+        }
+    }
+    else [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+}
+
 
 @end
