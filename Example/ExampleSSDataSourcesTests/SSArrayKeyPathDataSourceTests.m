@@ -76,4 +76,45 @@
         .to.equal([NSIndexPath indexPathForRow:1 inSection:0]);
 }
 
+#pragma mark Item addition
+
+- (void)test_adding_item_at_keyPath_updates_data_source
+{
+    NSMutableArray *employees = [department mutableArrayValueForKey:@"employees"];
+    [employees addObject:@"Samuel"];
+    expect([dataSource numberOfItems]).to.equal(5);
+}
+
+#pragma mark Item insertion
+
+- (void)test_inserting_item_at_keyPath_updates_data_source
+{
+    NSMutableArray *employees = [department mutableArrayValueForKey:@"employees"];
+    [employees insertObject:@"Bob" atIndex:0];
+    expect([dataSource numberOfItems]).to.equal(5);
+    expect([dataSource itemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]])
+        .to.equal(@"Bob");
+}
+
+#pragma mark Item removal
+
+- (void)test_removing_item_at_keyPath_updates_data_source
+{
+    NSMutableArray *employees = [department mutableArrayValueForKey:@"employees"];
+    [employees removeObject:@"Shelley"];
+    expect([dataSource numberOfItems]).to.equal(3);
+    expect([dataSource indexPathForItem:@"Jenn"])
+        .to.equal([NSIndexPath indexPathForRow:1 inSection:0]);
+}
+
+#pragma mark Item replacement
+
+- (void)test_updating_item_at_keyPath_updates_data_source
+{
+    NSMutableArray *employees = [department mutableArrayValueForKey:@"employees"];
+    [employees replaceObjectAtIndex:1 withObject:@"Samuel"];
+    expect([dataSource itemAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]])
+            .to.equal(@"Samuel");
+}
+
 @end
