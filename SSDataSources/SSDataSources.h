@@ -18,6 +18,7 @@
 #import "SSBaseDataSource.h"
 #import "SSSectionedDataSource.h"
 #import "SSArrayDataSource.h"
+#import "SSArrayKeyPathDataSource.h"
 #import "SSCoreDataSource.h"
 
 #endif
