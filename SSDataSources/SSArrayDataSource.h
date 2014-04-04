@@ -12,15 +12,9 @@
 #import <CoreData/CoreData.h>
 
 /**
- * Data source for single-sectioned table and collection views.
+ * Defines the protocol for accessigning items within an array-backed SSDataSource.
  */
-
-@interface SSArrayDataSource : SSBaseDataSource
-
-/**
- * Create a new array data source by specifying an array of items.
- */
-- (instancetype) initWithItems:(NSArray *)items;
+@protocol SSArrayItemAccess <NSObject>
 
 #pragma mark - Item access
 
@@ -33,6 +27,21 @@
  * Helper for managed objects. As with `indexPathForItem`, but for managed object IDs.
  */
 - (NSIndexPath *) indexPathForItemWithId:(NSManagedObjectID *)itemId;
+
+@end
+
+#pragma mark -
+
+/**
+ * Data source for single-sectioned table and collection views.
+ */
+
+@interface SSArrayDataSource : SSBaseDataSource <SSArrayItemAccess>
+
+/**
+ * Create a new array data source by specifying an array of items.
+ */
+- (instancetype) initWithItems:(NSArray *)items;
 
 #pragma mark - All or None Operations
 
