@@ -122,6 +122,7 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
                 [self reloadCellsAtIndexPaths:indexPaths];
                 break;
             case NSKeyValueChangeSetting:
+                break;
             default:
                 break;
         }
