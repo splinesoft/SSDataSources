@@ -34,7 +34,7 @@
         d.employees = @[ @"Josh", @"Shelley", @"Jenn", @"Andrew" ];
         d;
     });
-    dataSource = [[SSArrayKeyPathDataSource alloc] initWithSource:department keyPath:@"employees"];
+    dataSource = [[SSArrayKeyPathDataSource alloc] initWithTarget:department keyPath:@"employees"];
 }
 
 - (void)test_initializable

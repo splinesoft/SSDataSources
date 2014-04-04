@@ -12,7 +12,7 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 
 @interface SSArrayKeyPathDataSource ()
 
-@property (nonatomic, weak) id source;
+@property (nonatomic, weak) id target;
 @property (nonatomic, copy) NSString *keyPath;
 
 @property (nonatomic, readonly) NSArray *itemsAtKeyPath;
@@ -21,12 +21,12 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 
 @implementation SSArrayKeyPathDataSource
 
-- (instancetype)initWithSource:(id)source keyPath:(NSString *)keyPath {
+- (instancetype)initWithTarget:(id)target keyPath:(NSString *)keyPath {
     if ((self = [self init])) {
-        self.source = source;
+        self.target = target;
         self.keyPath = keyPath;
 
-        [self.source addObserver:self
+        [self.target addObserver:self
                       forKeyPath:self.keyPath
                          options:NSKeyValueObservingOptionInitial
                          context:&SSArrayKeyPathDataSourceContext];
@@ -35,7 +35,7 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 }
 
 - (void)dealloc {
-    [self.source removeObserver:self
+    [self.target removeObserver:self
                      forKeyPath:self.keyPath
                         context:&SSArrayKeyPathDataSourceContext];
 }
@@ -95,7 +95,7 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 #pragma mark - Private
 
 - (NSArray *)itemsAtKeyPath {
-    return [self.source valueForKeyPath:self.keyPath];
+    return [self.target valueForKeyPath:self.keyPath];
 }
 
 #pragma mark Key-value observing
