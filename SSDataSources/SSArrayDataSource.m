@@ -13,9 +13,21 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 
 @interface SSArrayDataSource ()
 
+/**
+ * The array that was given to the receiver in -initWithItems:
+ */
 @property (nonatomic, copy) NSArray *internalItems;
 
+/**
+ * The object that the receiver is observing at the given key path when initialized
+ * via -initwithitems:.
+ */
 @property (nonatomic, weak) id target;
+
+/**
+ * The key path for an NSArray off of target the receiver is initialized via
+ * -initwithitems:.
+ */
 @property (nonatomic, copy) NSString *keyPath;
 
 @end
@@ -25,6 +37,11 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 - (instancetype)initWithItems:(NSArray *)anItems {
     if ((self = [self init])) {
         self.internalItems = anItems ?: @[];
+
+        self.target = self;
+        self.keyPath = @"internalItems";
+
+        [self registerKVO];
     }
   
     return self;
@@ -45,6 +62,10 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 
 #pragma mark - Internal mutable items
 
+/**
+ * An NSMutableArray proxy for whatever source array is backing the receiver
+ * data source.
+ */
 - (NSMutableArray *)items {
     if (self.internalItems) return [self mutableArrayValueForKey:@"internalItems"];
     else return [self.target mutableArrayValueForKey:self.keyPath];
@@ -108,15 +129,8 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
     NSUInteger count = [self numberOfItems];
     NSRange newItemsRange = NSMakeRange(count, [newItems count]);
 
-    if (self.internalItems) {
-        [self.items addObjectsFromArray:newItems];
-        [self insertCellsAtIndexPaths:[self.class indexPathArrayWithRange:newItemsRange
-                                                                inSection:0]];
-    }
-    else {
-        [self.items insertObjects:newItems
-                        atIndexes:[NSIndexSet indexSetWithIndexesInRange:newItemsRange]];
-    }
+    [self.items insertObjects:newItems
+                    atIndexes:[NSIndexSet indexSetWithIndexesInRange:newItemsRange]];
 }
 
 - (void)insertItem:(id)item atIndex:(NSUInteger)index {
@@ -130,19 +144,10 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
     }
     
     [self.items insertObjects:newItems atIndexes:indexes];
-
-    if (self.internalItems) {
-        [self insertCellsAtIndexPaths:[self.class indexPathArrayWithIndexSet:indexes
-                                                                   inSection:0]];
-    }
 }
 
 - (void)replaceItemAtIndex:(NSUInteger)index withItem:(id)item {
     [self.items replaceObjectAtIndex:index withObject:item];
-
-    if (self.internalItems) {
-        [self reloadCellsAtIndexPaths:@[ [NSIndexPath indexPathForRow:(NSInteger)index inSection:0] ]];
-    }
 }
 
 - (void)moveItemAtIndex:(NSUInteger)index1 toIndex:(NSUInteger)index2 {
@@ -162,31 +167,15 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 }
 
 - (void)removeItemsInRange:(NSRange)range {
-    if (self.internalItems) {
-        [self.items removeObjectsInRange:range];
-        [self deleteCellsAtIndexPaths:[self.class indexPathArrayWithRange:range
-                                                                inSection:0]];
-    }
-    else {
-        [self.items removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range]];
-    }
+    [self.items removeObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range]];
 }
 
 - (void)removeItemAtIndex:(NSUInteger)index {
     [self.items removeObjectAtIndex:index];
-
-    if (self.internalItems) {
-        [self deleteCellsAtIndexPaths:@[ [NSIndexPath indexPathForRow:(NSInteger)index inSection:0] ]];
-    }
 }
 
 - (void)removeItemsAtIndexes:(NSIndexSet *)indexes {
     [self.items removeObjectsAtIndexes:indexes];
-
-    if (self.internalItems) {
-        [self deleteCellsAtIndexPaths:[self.class indexPathArrayWithIndexSet:indexes
-                                                                   inSection:0]];
-    }
 }
 
 #pragma mark - item access
@@ -247,14 +236,8 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (context == SSArrayKeyPathDataSourceContext && [keyPath isEqualToString:self.keyPath]) {
         NSKeyValueChange changeKind = [change[NSKeyValueChangeKindKey] unsignedIntegerValue];
-        NSMutableArray *indexPaths = ({
-            NSMutableArray *indexPaths = [NSMutableArray array];
-            NSIndexSet *indexes = change[NSKeyValueChangeIndexesKey];
-            [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-                [indexPaths addObject:[NSIndexPath indexPathForRow:idx inSection:0]];
-            }];
-            indexPaths;
-        });
+        NSArray *indexPaths = [self.class indexPathArrayWithIndexSet:change[NSKeyValueChangeIndexesKey]
+                                                           inSection:0];
         switch (changeKind) {
             case NSKeyValueChangeInsertion:
                 [self insertCellsAtIndexPaths:indexPaths];

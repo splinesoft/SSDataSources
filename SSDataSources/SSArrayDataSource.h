@@ -12,31 +12,10 @@
 #import <CoreData/CoreData.h>
 
 /**
- * Defines the protocol for accessigning items within an array-backed SSDataSource.
- */
-@protocol SSArrayItemAccess <NSObject>
-
-#pragma mark - Item access
-
-/**
- * Return the indexpath for a given item in the data source.
- */
-- (NSIndexPath *) indexPathForItem:(id)item;
-
-/**
- * Helper for managed objects. As with `indexPathForItem`, but for managed object IDs.
- */
-- (NSIndexPath *) indexPathForItemWithId:(NSManagedObjectID *)itemId;
-
-@end
-
-#pragma mark -
-
-/**
  * Data source for single-sectioned table and collection views.
  */
 
-@interface SSArrayDataSource : SSBaseDataSource <SSArrayItemAccess>
+@interface SSArrayDataSource : SSBaseDataSource
 
 /**
  * Create a new array data source by specifying an array of items.
@@ -51,6 +30,18 @@
  * @param keyPath - a key path for that identifiers an NSArray of data for the receiver
  */
 - (instancetype)initWithTarget:(id)target keyPath:(NSString *)keyPath;
+
+#pragma mark - Item access
+
+/**
+ * Return the indexpath for a given item in the data source.
+ */
+- (NSIndexPath *) indexPathForItem:(id)item;
+
+/**
+ * Helper for managed objects. As with `indexPathForItem`, but for managed object IDs.
+ */
+- (NSIndexPath *) indexPathForItemWithId:(NSManagedObjectID *)itemId;
 
 #pragma mark - All or None Operations
 
