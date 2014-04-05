@@ -290,4 +290,16 @@
     expect(reloadCellsMessageSendCount).to.equal(1);
 }
 
+#pragma mark Observed object memory semantics
+
+- (void)test_no_exception_if_target_goes_away
+{
+    Department *someDepartment = [Department new];
+    dataSource = [[SSArrayDataSource alloc] initWithTarget:someDepartment keyPath:@"employees"];
+    someDepartment = nil;
+    expect(^{
+        [dataSource clearItems];
+    }).toNot.raiseAny();
+}
+
 @end
