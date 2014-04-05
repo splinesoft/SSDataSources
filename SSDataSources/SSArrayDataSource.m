@@ -67,8 +67,7 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
  * data source.
  */
 - (NSMutableArray *)items {
-    if (self.internalItems) return [self mutableArrayValueForKey:@"internalItems"];
-    else return [self.target mutableArrayValueForKey:self.keyPath];
+    return [self.target mutableArrayValueForKey:self.keyPath];
 }
 
 #pragma mark - Base Data source
