@@ -28,6 +28,7 @@
                         @"Melisandre",
                         @"Saruman",
                         @"Rudess",
+                        @"Novum",
                         @"Alatar",
                         @"Pallando",
                       ]];
