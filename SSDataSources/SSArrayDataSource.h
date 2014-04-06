@@ -28,6 +28,10 @@
  *
  * @param target - the object that the given key path is relative to
  * @param keyPath - a key path for that identifiers an NSArray of data for the receiver
+ *
+ * @warning The `target` parameter is strongly referenced by the receiver. Make
+ *          sure you don't create a retain cycle by having `target` also hold a
+ *          strong reference to the receiver.
  */
 - (instancetype)initWithTarget:(id)target keyPath:(NSString *)keyPath;
 
