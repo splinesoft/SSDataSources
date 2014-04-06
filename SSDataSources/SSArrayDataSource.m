@@ -82,16 +82,9 @@
 }
 
 - (void)appendItems:(NSArray *)newItems {
-    if ([newItems count] == 0) {
-        return;
-    }
-    
-    NSUInteger count = [self numberOfItems];
-    
-    [self.items addObjectsFromArray:newItems];
-    
-    [self insertCellsAtIndexPaths:[self.class indexPathArrayWithRange:NSMakeRange(count, [newItems count])
-                                                            inSection:0]];
+    [self insertItems:newItems
+            atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange([self numberOfItems],
+                                                                         [newItems count])]];
 }
 
 - (void)insertItem:(id)item atIndex:(NSUInteger)index {
@@ -130,22 +123,16 @@
                   toIndexPath:indexPath2];
 }
 
-- (void)removeItemsInRange:(NSRange)range {    
-    [self.items removeObjectsInRange:range];
-
-    [self deleteCellsAtIndexPaths:[self.class indexPathArrayWithRange:range
-                                                            inSection:0]];
+- (void)removeItemsInRange:(NSRange)range {
+    [self removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range]];
 }
 
 - (void)removeItemAtIndex:(NSUInteger)index {
-    [self.items removeObjectAtIndex:index];
-    
-    [self deleteCellsAtIndexPaths:@[ [NSIndexPath indexPathForRow:(NSInteger)index inSection:0] ]];
+    [self removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
 }
 
 - (void)removeItemsAtIndexes:(NSIndexSet *)indexes {
     [self.items removeObjectsAtIndexes:indexes];
-    
     [self deleteCellsAtIndexPaths:[self.class indexPathArrayWithIndexSet:indexes
                                                                inSection:0]];
 }
