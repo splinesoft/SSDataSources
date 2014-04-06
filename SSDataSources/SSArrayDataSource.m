@@ -22,7 +22,7 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
  * The object that the receiver is observing at the given key path when initialized
  * via -initwithitems:.
  */
-@property (nonatomic, unsafe_unretained) id target;
+@property (nonatomic, strong) id target;
 
 /**
  * The key path for an NSArray off of target the receiver is initialized via
