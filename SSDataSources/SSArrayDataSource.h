@@ -22,6 +22,15 @@
  */
 - (instancetype) initWithItems:(NSArray *)items;
 
+/**
+ * Create a new array data source by specifying a target and key path to observe
+ * for array content.
+ *
+ * @param target - the object that the given key path is relative to
+ * @param keyPath - a key path for that identifiers an NSArray of data for the receiver
+ */
+- (instancetype)initWithTarget:(id)target keyPath:(NSString *)keyPath;
+
 #pragma mark - Item access
 
 /**
