@@ -21,8 +21,8 @@
 
 - (instancetype)init {
     if ((self = [super init])) {
-        self.sections = [NSMutableArray array];
-        self.shouldRemoveEmptySections = YES;
+        _sections = [NSMutableArray array];
+        _shouldRemoveEmptySections = YES;
     }
     
     return self;
@@ -225,33 +225,26 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 }
 
 - (void)removeSectionAtIndex:(NSUInteger)index {
-    [self.sections removeObjectAtIndex:index];
-    
-    [self deleteSectionsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
+    [self removeSectionsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
 }
 
 - (void)removeSectionsInRange:(NSRange)range {
-    NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:range];
-    
-    [self.sections removeObjectsAtIndexes:indexes];
-    
-    [self deleteSectionsAtIndexes:indexes];
+    [self removeSectionsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range]];
 }
 
 - (void)removeSectionsAtIndexes:(NSIndexSet *)indexes {
     [self.sections removeObjectsAtIndexes:indexes];
-    
     [self deleteSectionsAtIndexes:indexes];
 }
 
 - (void)removeItemAtIndexPath:(NSIndexPath *)indexPath {
-    [[self sectionAtIndex:indexPath.section].items removeObjectAtIndex:indexPath.row];
+    [self removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:indexPath.row]
+                     inSection:indexPath.section];
+}
 
-    if (self.shouldRemoveEmptySections && [self numberOfItemsInSection:indexPath.section] == 0) {
-        [self removeSectionAtIndex:indexPath.section];
-    } else {
-        [self deleteCellsAtIndexPaths:@[ indexPath ]];
-    }
+- (void)removeItemsInRange:(NSRange)range inSection:(NSUInteger)section {
+    [self removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range]
+                     inSection:section];
 }
 
 - (void)removeItemsAtIndexes:(NSIndexSet *)indexes inSection:(NSUInteger)section {
@@ -260,14 +253,9 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     if (self.shouldRemoveEmptySections && [self numberOfItemsInSection:section] == 0) {
         [self removeSectionAtIndex:section];
     } else {
-        [self deleteCellsAtIndexPaths:[[self class] indexPathArrayWithIndexSet:indexes
-                                                                     inSection:section]];
+        [self deleteCellsAtIndexPaths:[self.class indexPathArrayWithIndexSet:indexes
+                                                                   inSection:section]];
     }
-}
-
-- (void)removeItemsInRange:(NSRange)range inSection:(NSUInteger)section {
-    [self removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range]
-                     inSection:section];
 }
 
 #pragma mark - UITableViewDelegate helpers

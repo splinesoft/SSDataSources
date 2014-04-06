@@ -19,6 +19,23 @@
 @interface SSSectionedDataSource : SSBaseDataSource
 
 /**
+ * Create a sectioned data source with a single section.
+ * Creates the `SSSection` object for you.
+ */
+- (instancetype) initWithItems:(NSArray *)items;
+
+/**
+ * Create a sectioned data source with a single SSSection object.
+ */
+- (instancetype) initWithSection:(SSSection *)section;
+
+/**
+ * Create a sectioned data source with multiple sections.
+ * Each item in the sections array should be a `SSSection` object.
+ */
+- (instancetype) initWithSections:(NSArray *)sections;
+
+/**
  * Sections that have 0 items will still display a header and footer
  * in their table or collection view. By default, SSSectionedDataSource
  * will remove these empty sections for you.
@@ -39,24 +56,7 @@
  * Sections appearing in the datasource.
  * You should not mutate this directly - rather, use the insert/move/remove accessors below.
  */
-@property (nonatomic, strong) NSMutableArray *sections;
-
-/**
- * Create a sectioned data source with a single section.
- * Creates the `SSSection` object for you.
- */
-- (instancetype) initWithItems:(NSArray *)items;
-
-/**
- * Create a sectioned data source with a single SSSection object.
- */
-- (instancetype) initWithSection:(SSSection *)section;
-
-/**
- * Create a sectioned data source with multiple sections.
- * Each item in the sections array should be a `SSSection` object.
- */
-- (instancetype) initWithSections:(NSArray *)sections;
+@property (nonatomic, strong, readonly) NSMutableArray *sections;
 
 #pragma mark - Section access
 
