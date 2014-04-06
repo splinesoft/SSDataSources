@@ -9,14 +9,36 @@
 #import "SSDataSources.h"
 #import <CoreData/CoreData.h>
 
+/**
+ * An internal container to hold the raw items that are handed to SSArrayDataSource
+ * that can then be KVO'd for changes and manipulation.
+ *
+ * See https://github.com/splinesoft/SSDataSources/pull/29 & -[SSArrayDataSource initWithItems:]
+ */
+@interface SSArrayDataSourceItemsContainer : NSObject
+
+@property (nonatomic, copy) NSArray *items;
+
+- (instancetype)initWithItems:(NSArray *)items;
+
+@end
+
+@implementation SSArrayDataSourceItemsContainer
+
+- (instancetype)initWithItems:(NSArray *)items {
+    if ((self = [self init])) {
+        self.items = items;
+    }
+    return self;
+}
+
+@end
+
+#pragma mark -
+
 static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 
 @interface SSArrayDataSource ()
-
-/**
- * The array that was given to the receiver in -initWithItems:
- */
-@property (nonatomic, copy) NSArray *internalItems;
 
 /**
  * The object that the receiver is observing at the given key path when initialized
@@ -35,16 +57,8 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 @implementation SSArrayDataSource
 
 - (instancetype)initWithItems:(NSArray *)anItems {
-    if ((self = [self init])) {
-        self.internalItems = anItems ?: @[];
-
-        self.target = self;
-        self.keyPath = @"internalItems";
-
-        [self registerKVO];
-    }
-  
-    return self;
+    return [self initWithTarget:[[SSArrayDataSourceItemsContainer alloc] initWithItems:anItems]
+                        keyPath:@"items"];
 }
 
 - (instancetype)initWithTarget:(id)target keyPath:(NSString *)keyPath {
