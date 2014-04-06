@@ -37,6 +37,7 @@
         self.emptyView = nil;
     }
     
+    _currentFilter = nil;
     self.cellConfigureBlock = nil;
     self.cellCreationBlock = nil;
     self.collectionSupplementaryConfigureBlock = nil;
@@ -52,6 +53,26 @@
     return nil;
 }
 
+- (NSIndexPath *)indexPathForItem:(id)item {
+    
+    if (self.currentFilter) {
+        return [self.currentFilter indexPathForItem:item];
+    }
+    
+    __block NSIndexPath *indexPath = nil;
+    
+    [self enumerateItemsWithBlock:^(NSIndexPath *ip,
+                                    id anItem,
+                                    BOOL *stop) {
+        if ([item isEqual:anItem]) {
+            indexPath = [ip copy];
+            *stop = YES;
+        }
+    }];
+    
+    return indexPath;
+}
+
 - (NSUInteger)numberOfItems {
     [self doesNotRecognizeSelector:_cmd];
     return 0;
@@ -65,6 +86,44 @@
 - (NSUInteger)numberOfItemsInSection:(NSUInteger)section {
     [self doesNotRecognizeSelector:_cmd];
     return 0;
+}
+
+- (void)enumerateItemsWithBlock:(SSDataSourceEnumerator)itemBlock {
+    if (!itemBlock) {
+        return;
+    }
+    
+    BOOL stop = NO;
+    
+    if (self.currentFilter) {
+        for (NSUInteger i = 0; i < [self.currentFilter numberOfSections]; i++) {
+            for (NSUInteger j = 0; j < [self.currentFilter numberOfItemsInSection:i]; j++) {
+
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+                id item = [self.currentFilter itemAtIndexPath:indexPath];
+                
+                itemBlock(indexPath, item, &stop);
+                
+                if (stop) {
+                    return;
+                }
+            }
+        }
+    } else {
+        for (NSUInteger i = 0; i < [self numberOfSections]; i++) {
+            for (NSUInteger j = 0; j < [self numberOfItemsInSection:i]; j++) {
+                
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+                id item = [self itemAtIndexPath:indexPath];
+                
+                itemBlock(indexPath, item, &stop);
+                
+                if (stop) {
+                    return;
+                }
+            }
+        }
+    }
 }
 
 #pragma mark - Custom Animations
@@ -351,6 +410,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)reloadData {
+    _currentFilter = nil;
+    
     [self.tableView reloadData];
     [self.collectionView reloadData];
     
@@ -380,6 +441,121 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [ret addObject:[NSIndexPath indexPathForRow:i inSection:section]];
     
     return ret;
+}
+
+#pragma mark - Filtering
+
+- (void)setFilterPredicate:(SSFilterPredicate)predicate {
+    SSResultsFilter *currentFilter = self.currentFilter;
+    SSResultsFilter *newFilter = (predicate
+                                  ? [SSResultsFilter filterWithPredicate:predicate]
+                                  : nil);
+    
+    NSMutableArray *inserts = [NSMutableArray new];
+    NSMutableArray *deletes = [NSMutableArray new];
+    
+    if (!newFilter && currentFilter) {
+        _currentFilter = nil;
+        
+        // Restore objects that did not pass the current filter.
+        [self enumerateItemsWithBlock:^(NSIndexPath *indexPath,
+                                        id item,
+                                        BOOL *stop) {
+            if (!currentFilter.filterPredicate(item)) {
+                [inserts addObject:indexPath];
+            }
+        }];
+        
+        if ([inserts count] > 0) {
+            [self insertCellsAtIndexPaths:inserts];
+        }
+    } else if (newFilter && !currentFilter) {
+        // No current filter. Remove any object not passing the new filter.
+        [newFilter.sections removeAllObjects];
+        
+        for (NSUInteger i = 0; i < [self numberOfSections]; i++) {
+            
+            NSMutableArray *sectionItems = [NSMutableArray new];
+            
+            for (NSUInteger j = 0; j < [self numberOfItemsInSection:i]; j++) {
+                
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+                id item = [self itemAtIndexPath:indexPath];
+                
+                if (!newFilter.filterPredicate(item)) {
+                    [deletes addObject:indexPath];
+                } else {
+                    [sectionItems addObject:item];
+                }
+            }
+            
+            [newFilter.sections addObject:sectionItems];
+        }
+        
+        _currentFilter = newFilter;
+        
+        if ([deletes count] > 0) {
+            [self deleteCellsAtIndexPaths:deletes];
+        }
+    } else if (newFilter && currentFilter) {
+        // Changing active filter
+        
+        [self enumerateItemsWithBlock:^(NSIndexPath *indexPath,
+                                        id item,
+                                        BOOL *stop) {
+            [deletes addObject:indexPath];
+        }];
+        
+        [newFilter.sections removeAllObjects];
+        
+        _currentFilter = nil;
+        
+        for (NSUInteger i = 0; i < [self numberOfSections]; i++) {
+            
+            NSMutableArray *sectionItems = [NSMutableArray new];
+            
+            for (NSUInteger j = 0; j < [self numberOfItemsInSection:i]; j++) {
+                
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+                id item = [self itemAtIndexPath:indexPath];
+                
+                if (newFilter.filterPredicate(item)) {
+                    [inserts addObject:[NSIndexPath indexPathForRow:([sectionItems count])
+                                                          inSection:i]];
+                    [sectionItems addObject:item];
+                }
+            }
+            
+            [newFilter.sections addObject:sectionItems];
+        }
+        
+        _currentFilter = newFilter;
+        
+        void (^ProcessIndexUpdatesBlock)(void) = ^{
+            if ([deletes count] > 0) {
+                [self deleteCellsAtIndexPaths:deletes];
+            }
+            
+            if ([inserts count] > 0) {
+                [self insertCellsAtIndexPaths:inserts];
+            }
+        };
+        
+        if (self.tableView) {
+            [self.tableView beginUpdates];
+            ProcessIndexUpdatesBlock();
+            [self.tableView endUpdates];
+        }
+        
+        if (self.collectionView) {
+            [self.collectionView performBatchUpdates:ProcessIndexUpdatesBlock
+                                          completion:nil];
+        }
+    }
+}
+
+- (void)clearFilterPredicate {
+    [self setFilterPredicate:nil];
 }
 
 @end

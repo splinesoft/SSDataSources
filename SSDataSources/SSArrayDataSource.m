@@ -86,7 +86,7 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
     return [self.target mutableArrayValueForKey:self.keyPath];
 }
 
-#pragma mark - Base Data source
+#pragma mark - Item access
 
 - (NSUInteger)numberOfSections {
     return 1;
@@ -97,12 +97,18 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 }
 
 - (NSUInteger)numberOfItems {
-    return [self.items count];
+    return (self.currentFilter
+            ? [self.currentFilter numberOfItems]
+            : [self.items count]);
 }
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
     if (!indexPath) {
         return nil;
+    }
+    
+    if (self.currentFilter) {
+        return [self.currentFilter itemAtIndexPath:indexPath];
     }
   
     if (indexPath.row < (NSInteger)[self.items count]) {

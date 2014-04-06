@@ -20,4 +20,6 @@
 #import "SSArrayDataSource.h"
 #import "SSCoreDataSource.h"
 
+#import "SSResultsFilter.h"
+
 #endif
