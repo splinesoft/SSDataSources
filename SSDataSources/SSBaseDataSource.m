@@ -54,11 +54,6 @@
 }
 
 - (NSIndexPath *)indexPathForItem:(id)item {
-    
-    if (self.currentFilter) {
-        return [self.currentFilter indexPathForItem:item];
-    }
-    
     __block NSIndexPath *indexPath = nil;
     
     [self enumerateItemsWithBlock:^(NSIndexPath *ip,
