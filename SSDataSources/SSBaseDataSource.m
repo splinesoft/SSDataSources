@@ -95,32 +95,18 @@
     
     BOOL stop = NO;
     
-    if (self.currentFilter) {
-        for (NSUInteger i = 0; i < [self.currentFilter numberOfSections]; i++) {
-            for (NSUInteger j = 0; j < [self.currentFilter numberOfItemsInSection:i]; j++) {
+    id <SSDataSourceItemAccess> dataSource = (self.currentFilter ?: self);
 
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
-                id item = [self.currentFilter itemAtIndexPath:indexPath];
-                
-                itemBlock(indexPath, item, &stop);
-                
-                if (stop) {
-                    return;
-                }
-            }
-        }
-    } else {
-        for (NSUInteger i = 0; i < [self numberOfSections]; i++) {
-            for (NSUInteger j = 0; j < [self numberOfItemsInSection:i]; j++) {
-                
-                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
-                id item = [self itemAtIndexPath:indexPath];
-                
-                itemBlock(indexPath, item, &stop);
-                
-                if (stop) {
-                    return;
-                }
+    for (NSUInteger i = 0; i < [self numberOfSections]; i++) {
+        for (NSUInteger j = 0; j < [self numberOfItemsInSection:i]; j++) {
+            
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+            id item = [dataSource itemAtIndexPath:indexPath];
+            
+            itemBlock(indexPath, item, &stop);
+            
+            if (stop) {
+                return;
             }
         }
     }
