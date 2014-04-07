@@ -29,6 +29,8 @@ All the tables and collection views in the `Example` project are built with `SSD
 
 Check out the example project for sample table and collection views that use the array data source.
 
+`SSArrayDataSource` can also observe a target and key path for array content. 
+
 
 ```objc
 @interface WizardicTableViewController : UITableViewController

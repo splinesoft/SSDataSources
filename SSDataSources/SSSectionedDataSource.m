@@ -50,10 +50,11 @@
 
 - (instancetype)initWithSections:(NSArray *)newSections {
     if ((self = [self init])) {
-        if ([newSections count] > 0)
+        if ([newSections count] > 0) {
             [self insertSections:newSections
                        atIndexes:[NSIndexSet indexSetWithIndexesInRange:
                                   NSMakeRange(0, [newSections count])]];
+        }
     }
     
     return self;

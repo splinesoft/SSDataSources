@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "SSDataSources"
-  s.version      = "0.5.4"
+  s.version      = "0.6.0"
   s.summary      = "Simple data sources for your UITableView and UICollectionView."
   s.homepage     = "https://github.com/splinesoft/SSDataSources"
   s.license      = { :type => 'MIT', :file => 'LICENSE'  }

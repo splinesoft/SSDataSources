@@ -209,7 +209,7 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
     NSUInteger row = [self.items indexOfObjectPassingTest:^BOOL(NSManagedObject *object,
                                                                 NSUInteger index,
                                                                 BOOL *stop) {
-      return [[object objectID] isEqual:itemId];
+        return [[object objectID] isEqual:itemId];
     }];
   
     if (row == NSNotFound) {
