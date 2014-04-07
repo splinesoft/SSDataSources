@@ -86,7 +86,7 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
     return [self.target mutableArrayValueForKey:self.keyPath];
 }
 
-#pragma mark - Item access
+#pragma mark - SSDataSourceItemAccess
 
 - (NSUInteger)numberOfSections {
     return 1;

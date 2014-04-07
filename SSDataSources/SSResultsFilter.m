@@ -37,15 +37,18 @@
 }
 
 - (NSIndexPath *)indexPathForItem:(id)item {
-    for (NSInteger i = 0; i < [self numberOfSections]; i++) {
-        for (NSInteger j = 0; j < [self numberOfItemsInSection:i]; j++) {
-            if ([[self.sections[i] objectAtIndex:j] isEqual:item]) {
-                return [NSIndexPath indexPathForRow:j inSection:i];
-            }
-        }
-    }
+    __block NSIndexPath *indexPath = nil;
     
-    return nil;
+    [self enumerateItemsWithBlock:^(NSIndexPath *ip,
+                                    id anItem,
+                                    BOOL *stop) {
+        if ([item isEqual:anItem]) {
+            indexPath = [ip copy];
+            *stop = YES;
+        }
+    }];
+    
+    return indexPath;
 }
 
 - (NSUInteger)numberOfSections {
@@ -64,6 +67,28 @@
     }
     
     return count;
+}
+
+- (void)enumerateItemsWithBlock:(SSDataSourceEnumerator)itemBlock {
+    if (!itemBlock) {
+        return;
+    }
+    
+    BOOL stop = NO;
+    
+    for (NSInteger i = 0; i < [self numberOfSections]; i++) {
+        for (NSInteger j = 0; j < [self numberOfItemsInSection:i]; j++) {
+            
+            id item = [self.sections[i] objectAtIndex:j];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
+            
+            itemBlock(indexPath, item, &stop);
+            
+            if (stop) {
+                return;
+            }
+        }
+    }
 }
 
 @end

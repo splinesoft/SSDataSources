@@ -9,6 +9,8 @@
 #ifndef __SS_DATASOURCES__
 #define __SS_DATASOURCES__
 
+#import "SSDataSourceItemAccess.h"
+
 #import "SSBaseTableCell.h"
 #import "SSBaseCollectionCell.h"
 #import "SSBaseCollectionReusableView.h"

@@ -46,7 +46,7 @@
     self.tableDeletionBlock = nil;
 }
 
-#pragma mark - SSBaseDataSource
+#pragma mark - SSDataSourceItemAccess
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
     [self doesNotRecognizeSelector:_cmd];

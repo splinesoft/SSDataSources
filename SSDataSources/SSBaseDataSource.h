@@ -15,10 +15,11 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "SSDataSourceItemAccess.h"
 
 @class SSResultsFilter;
 
-@interface SSBaseDataSource : NSObject <UITableViewDataSource, UICollectionViewDataSource>
+@interface SSBaseDataSource : NSObject <UITableViewDataSource, UICollectionViewDataSource, SSDataSourceItemAccess>
 
 #pragma mark - SSDataSources block signatures
 
@@ -63,11 +64,6 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
 // Filter predicate for filtering the data source.
 typedef BOOL (^SSFilterPredicate) (id object);
 
-// Enumeration block for enumerating data source items.
-typedef void (^SSDataSourceEnumerator) (NSIndexPath *indexPath, // Index path for the item
-                                        id item,                // the item itself
-                                        BOOL *stop);            // Out-only stop parameter to stop enumerating
-
 #pragma mark - Base Data Source
 
 /**
@@ -100,45 +96,6 @@ typedef void (^SSDataSourceEnumerator) (NSIndexPath *indexPath, // Index path fo
  * will be sized to match the parent table or collection view.
  */
 @property (nonatomic, strong) UIView *emptyView;
-
-#pragma mark - Item access
-
-/**
- * Return the item at a given index path. Override me in your subclass.
- */
-- (id) itemAtIndexPath:(NSIndexPath *)indexPath;
-
-/**
- *  Search the data source for the first instance of the specified item.
- *  Sends isEqual: to every item in the data source.
- *
- *  @param item an item to search for
- *
- *  @return the item's index path if found, or nil
- */
-- (NSIndexPath *) indexPathForItem:(id)item;
-
-/**
- * Return the total number of items in the data source. Override me in your subclass.
- */
-- (NSUInteger) numberOfItems;
-
-/**
- * Return the total number of sections in the data source. Override me!
- */
-- (NSUInteger) numberOfSections;
-
-/**
- * Return the total number of items in a given section. Override me!
- */
-- (NSUInteger) numberOfItemsInSection:(NSUInteger)section;
-
-/**
- *  Enumerate every item in the data source (or currently-active filter), executing a block for each item.
- *
- *  @param itemBlock block to execute for each item
- */
-- (void) enumerateItemsWithBlock:(SSDataSourceEnumerator)itemBlock;
 
 #pragma mark - Filtering
 

@@ -60,7 +60,7 @@
     return self;
 }
 
-#pragma mark - Item access
+#pragma mark - SSDataSourceItemAccess
 
 - (NSUInteger)numberOfSections {
     return (self.currentFilter
