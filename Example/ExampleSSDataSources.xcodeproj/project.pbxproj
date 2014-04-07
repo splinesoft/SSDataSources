@@ -26,6 +26,7 @@
 		4958CB46179B4C75006AB61C /* SSArrayDataSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4958CB45179B4C75006AB61C /* SSArrayDataSourceTests.m */; };
 		498D8720179B30CF00C8C365 /* SSBaseDataSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 498D871F179B30CF00C8C365 /* SSBaseDataSourceTests.m */; };
 		499A54CE182BDF450009ECF6 /* SSSectionedDataSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 499A54CD182BDF450009ECF6 /* SSSectionedDataSourceTests.m */; };
+		49F8C94618EE001300569F18 /* SSArrayDataSourceKeyPathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F8C94518EE001300569F18 /* SSArrayDataSourceKeyPathTests.m */; };
 		5E144177179B6B7700030595 /* SSRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E144176179B6B7700030595 /* SSRootViewController.m */; };
 		5EDF4B8E17CC1E5700788CB5 /* SSSectionedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDF4B8D17CC1E5700788CB5 /* SSSectionedViewController.m */; };
 		5EDFCA3D17B41DC50018D895 /* SSCollectionViewSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDFCA3C17B41DC50018D895 /* SSCollectionViewSectionHeader.m */; };
@@ -72,6 +73,7 @@
 		4958CB47179B4CBD006AB61C /* SSTestHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSTestHelper.h; sourceTree = "<group>"; };
 		498D871F179B30CF00C8C365 /* SSBaseDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSBaseDataSourceTests.m; sourceTree = "<group>"; };
 		499A54CD182BDF450009ECF6 /* SSSectionedDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSectionedDataSourceTests.m; sourceTree = "<group>"; };
+		49F8C94518EE001300569F18 /* SSArrayDataSourceKeyPathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSArrayDataSourceKeyPathTests.m; sourceTree = "<group>"; };
 		51DB34876E1C4A29A4580FA5 /* Pods-ExampleSSDataSourcesTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSSDataSourcesTests.xcconfig"; path = "Pods/Pods-ExampleSSDataSourcesTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 		5E144175179B6B7700030595 /* SSRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRootViewController.h; sourceTree = "<group>"; };
 		5E144176179B6B7700030595 /* SSRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRootViewController.m; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				4958CB45179B4C75006AB61C /* SSArrayDataSourceTests.m */,
+				49F8C94518EE001300569F18 /* SSArrayDataSourceKeyPathTests.m */,
 				498D871F179B30CF00C8C365 /* SSBaseDataSourceTests.m */,
 				499A54CD182BDF450009ECF6 /* SSSectionedDataSourceTests.m */,
 				492A5D30179B29B600A137CC /* Supporting Files */,
@@ -392,6 +395,7 @@
 				498D8720179B30CF00C8C365 /* SSBaseDataSourceTests.m in Sources */,
 				499A54CE182BDF450009ECF6 /* SSSectionedDataSourceTests.m in Sources */,
 				4958CB46179B4C75006AB61C /* SSArrayDataSourceTests.m in Sources */,
+				49F8C94618EE001300569F18 /* SSArrayDataSourceKeyPathTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
