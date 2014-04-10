@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "492A5D27179B29B600A137CC"
-               BuildableName = "ExampleSSDataSourcesTests.octest"
+               BuildableName = "ExampleSSDataSourcesTests.xctest"
                BlueprintName = "ExampleSSDataSourcesTests"
                ReferencedContainer = "container:ExampleSSDataSources.xcodeproj">
             </BuildableReference>

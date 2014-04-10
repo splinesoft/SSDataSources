@@ -16,7 +16,7 @@
 
 #pragma mark -
 
-@interface SSArrayDataSourceKeyPathTests : SenTestCase
+@interface SSArrayDataSourceKeyPathTests : XCTestCase
 @end
 
 @implementation SSArrayDataSourceKeyPathTests

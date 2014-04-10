@@ -1,7 +1,7 @@
 #import "SSTestHelper.h"
 #import <SSDataSources.h>
 
-@interface SSArrayDataSourceTests : SenTestCase
+@interface SSArrayDataSourceTests : XCTestCase
 @end
 
 @implementation SSArrayDataSourceTests
