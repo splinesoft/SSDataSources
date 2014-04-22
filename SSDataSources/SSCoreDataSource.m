@@ -14,6 +14,8 @@
 @property (nonatomic, strong) NSMutableArray *sectionUpdates;
 @property (nonatomic, strong) NSMutableArray *objectUpdates;
 
+@property (nonatomic, copy) SSResultsFilter *lastFilter;
+
 - (void) _performFetch;
 
 @end
@@ -52,7 +54,7 @@
                                                             sectionNameKeyPath:sectionNameKeyPath
                                                                      cacheName:nil];
         
-        _controller.delegate = self;
+        self.controller.delegate = self;
         
         [self _performFetch];
     }
@@ -71,39 +73,49 @@
 
 - (void)_performFetch {
     NSError *fetchErr = nil;
-    [_controller performFetch:&fetchErr];
+    [self.controller performFetch:&fetchErr];
     _fetchError = fetchErr;
 }
 
-#pragma mark - Base data source
+#pragma mark - SSDataSourceItemAccess
 
 - (NSUInteger)numberOfSections {
-    return (NSUInteger)[[_controller sections] count];
+    return (self.currentFilter
+            ? [self.currentFilter numberOfSections]
+            : (NSUInteger)[[self.controller sections] count]);
 }
 
 - (NSUInteger)numberOfItemsInSection:(NSUInteger)section {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [_controller sections][(NSUInteger)section];
+    if (self.currentFilter) {
+        return [self.currentFilter numberOfItemsInSection:section];
+    }
+    
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.controller sections][(NSUInteger)section];
     return (NSUInteger)[sectionInfo numberOfObjects];
 }
 
 - (NSUInteger)numberOfItems {
+    if (self.currentFilter) {
+        return [self.currentFilter numberOfItems];
+    }
+    
     NSUInteger count = 0;
   
-    for (id <NSFetchedResultsSectionInfo> section in [_controller sections])
+    for (id <NSFetchedResultsSectionInfo> section in [self.controller sections])
         count += [section numberOfObjects];
   
     return count;
 }
 
-#pragma mark - item access
-
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
-    return [_controller objectAtIndexPath:indexPath];
+    return (self.currentFilter
+            ? [self.currentFilter itemAtIndexPath:indexPath]
+            : [self.controller objectAtIndexPath:indexPath]);
 }
 
 - (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)objectId {
     for (NSUInteger section = 0; section < [self numberOfSections]; section++) {
-        id <NSFetchedResultsSectionInfo> sec = [_controller sections][section];
+        id <NSFetchedResultsSectionInfo> sec = [self.controller sections][section];
         
         NSUInteger index = [[sec objects] indexOfObjectPassingTest:^BOOL(NSManagedObject *object,
                                                                          NSUInteger idx,
@@ -123,15 +135,15 @@
 - (NSInteger)tableView:(UITableView *)tableView
 sectionForSectionIndexTitle:(NSString *)title
                atIndex:(NSInteger)index {
-    return [_controller sectionForSectionIndexTitle:title atIndex:index];
+    return [self.controller sectionForSectionIndexTitle:title atIndex:index];
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    return [_controller sectionIndexTitles];
+    return [self.controller sectionIndexTitles];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [_controller sections][(NSUInteger)section];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.controller sections][(NSUInteger)section];
     return [sectionInfo name];
 }
 
@@ -142,6 +154,10 @@ sectionForSectionIndexTitle:(NSString *)title
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
+    _lastFilter = (self.currentFilter ?: nil);
+    
+    [self setCurrentFilter:nil];
+    
     [self.tableView beginUpdates];
 }
 
@@ -265,6 +281,11 @@ sectionForSectionIndexTitle:(NSString *)title
     
     [self.sectionUpdates removeAllObjects];
     [self.objectUpdates removeAllObjects];
+    
+    if (self.lastFilter) {
+        [self setCurrentFilter:self.lastFilter];
+        _lastFilter = nil;
+    }
     
     // Hackish; force recalculation of empty view state
     self.emptyView = self.emptyView;

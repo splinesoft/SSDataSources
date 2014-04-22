@@ -15,8 +15,11 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "SSDataSourceItemAccess.h"
 
-@interface SSBaseDataSource : NSObject <UITableViewDataSource, UICollectionViewDataSource>
+@class SSResultsFilter;
+
+@interface SSBaseDataSource : NSObject <UITableViewDataSource, UICollectionViewDataSource, SSDataSourceItemAccess>
 
 #pragma mark - SSDataSources block signatures
 
@@ -91,6 +94,17 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
  */
 @property (nonatomic, strong) UIView *emptyView;
 
+#pragma mark - Filtering
+
+/**
+ *  Apply a filter predicate to the data source.
+ *  The data source's fetched objects will be evaluated against the new filter
+ *  and the table or collection view will be updated.
+ *
+ *  @param predicate a block to evaluate for each fetched object
+ */
+@property (nonatomic, strong) SSResultsFilter *currentFilter;
+
 #pragma mark - UITableView
 
 /**
@@ -152,28 +166,6 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
  * Optional configure block for supplementary collection view elements.
  */
 @property (nonatomic, copy) SSCollectionSupplementaryViewConfigureBlock collectionSupplementaryConfigureBlock;
-
-#pragma mark - Base item access
-
-/**
- * Return the item at a given index path. Override me in your subclass.
- */
-- (id) itemAtIndexPath:(NSIndexPath *)indexPath;
-
-/**
- * Return the total number of items in the data source. Override me in your subclass.
- */
-- (NSUInteger) numberOfItems;
-
-/**
- * Return the total number of sections in the data source. Override me!
- */
-- (NSUInteger) numberOfSections;
-
-/**
- * Return the total number of items in a given section. Override me!
- */
-- (NSUInteger) numberOfItemsInSection:(NSUInteger)section;
 
 #pragma mark - Custom Animations
 

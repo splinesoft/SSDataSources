@@ -60,17 +60,25 @@
     return self;
 }
 
-#pragma mark - Base Data Source
+#pragma mark - SSDataSourceItemAccess
 
 - (NSUInteger)numberOfSections {
-    return [self.sections count];
+    return (self.currentFilter
+            ? [self.currentFilter numberOfSections]
+            :  [self.sections count]);
 }
 
 - (NSUInteger)numberOfItemsInSection:(NSUInteger)section {
-    return [[self sectionAtIndex:section] numberOfItems];
+    return (self.currentFilter
+            ? [self.currentFilter numberOfItemsInSection:section]
+            : [[self sectionAtIndex:section] numberOfItems]);
 }
 
 - (NSUInteger)numberOfItems {
+    if (self.currentFilter) {
+        return [self.currentFilter numberOfItems];
+    }
+    
     NSUInteger count = 0;
   
     for (SSSection *section in self.sections) {
@@ -81,7 +89,9 @@
 }
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
-    return [[self sectionAtIndex:indexPath.section] itemAtIndex:indexPath.row];
+    return (self.currentFilter
+            ? [self.currentFilter itemAtIndexPath:indexPath]
+            : [[self sectionAtIndex:indexPath.section] itemAtIndex:indexPath.row]);
 }
 
 #pragma mark - Section access

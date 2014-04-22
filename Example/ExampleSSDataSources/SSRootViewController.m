@@ -11,11 +11,13 @@
 #import "SSCollectionViewController.h"
 #import "SSTableViewController.h"
 #import "SSSectionedViewController.h"
+#import "SSFilterableTableController.h"
 
 typedef NS_ENUM( NSUInteger, SSDataSourcesExample ) {
     SSDataSourcesExampleTable,
     SSDataSourcesExampleSectionedTable,
     SSDataSourcesExampleCollectionView,
+    SSDataSourcesExampleFilterTable,
 };
 
 @interface SSRootViewController ()
@@ -33,7 +35,8 @@ typedef NS_ENUM( NSUInteger, SSDataSourcesExample ) {
         _dataSource = [[SSArrayDataSource alloc] initWithItems:@[
                                                      @(SSDataSourcesExampleTable),
                                                      @(SSDataSourcesExampleSectionedTable),
-                                                     @(SSDataSourcesExampleCollectionView)
+                                                     @(SSDataSourcesExampleCollectionView),
+                                                     @(SSDataSourcesExampleFilterTable),
                                                  ]];
         
         self.dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell,
@@ -51,6 +54,9 @@ typedef NS_ENUM( NSUInteger, SSDataSourcesExample ) {
                     break;
                 case SSDataSourcesExampleSectionedTable:
                     title = NSLocalizedString(@"Sectioned Table", nil);
+                    break;
+                case SSDataSourcesExampleFilterTable:
+                    title = NSLocalizedString(@"Filterable Table", nil);
                     break;
                 default:
                     break;
@@ -83,6 +89,9 @@ typedef NS_ENUM( NSUInteger, SSDataSourcesExample ) {
             break;
         case SSDataSourcesExampleSectionedTable:
             viewController = [SSSectionedViewController new];
+            break;
+        case SSDataSourcesExampleFilterTable:
+            viewController = [SSFilterableTableController new];
             break;
         default:
             break;

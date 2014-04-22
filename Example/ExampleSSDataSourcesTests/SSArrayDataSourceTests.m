@@ -455,4 +455,42 @@
     expect(ds.numberOfItems).to.equal(@2);
 }
 
+#pragma mark - Filtering
+
+- (void) testFilterableDataSources
+{
+    SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[ @1, @2, @3, @4 ]];
+    
+    expect(ds.numberOfItems).to.equal(4);
+    
+    [ds setCurrentFilter:[SSResultsFilter filterWithBlock:^BOOL(NSNumber *number) {
+        return [number integerValue] < 3;
+    }]];
+    
+    expect(ds.numberOfItems).to.equal(2);
+    
+    [ds setCurrentFilter:nil];
+    
+    expect(ds.numberOfItems).to.equal(4);
+}
+
+- (void) testItemEnumeration
+{
+    SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[ @1, @2, @3, @4 ]];
+    
+    __block NSUInteger count = 0, sum = 0;
+    
+    expect(ds.numberOfItems).to.equal(4);
+    
+    [ds enumerateItemsWithBlock:^(NSIndexPath *indexPath,
+                                  NSNumber *item,
+                                  BOOL *stop) {
+        count++;
+        sum += [item integerValue];
+    }];
+    
+    expect(ds.numberOfItems).to.equal(count);
+    expect(sum).to.equal(10);
+}
+
 @end

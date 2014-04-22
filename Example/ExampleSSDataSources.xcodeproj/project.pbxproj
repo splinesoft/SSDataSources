@@ -30,6 +30,7 @@
 		5EBDEC0A18F701780031A2B3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EBDEC0918F701780031A2B3 /* XCTest.framework */; };
 		5EDF4B8E17CC1E5700788CB5 /* SSSectionedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDF4B8D17CC1E5700788CB5 /* SSSectionedViewController.m */; };
 		5EDFCA3D17B41DC50018D895 /* SSCollectionViewSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDFCA3C17B41DC50018D895 /* SSCollectionViewSectionHeader.m */; };
+		5EFCC99918EC80ED00917F02 /* SSFilterableTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFCC99818EC80ED00917F02 /* SSFilterableTableController.m */; };
 		6E97BC13EA9A4BD9B57E81D6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60DE92F2CD3643D180EFBAC8 /* libPods.a */; };
 		A69E5B74D1A04ADB91B98B23 /* libPods-ExampleSSDataSourcesTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B8DA104C6404BC8ACAC8664 /* libPods-ExampleSSDataSourcesTests.a */; };
 /* End PBXBuildFile section */
@@ -82,6 +83,8 @@
 		5EDF4B8D17CC1E5700788CB5 /* SSSectionedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSectionedViewController.m; sourceTree = "<group>"; };
 		5EDFCA3B17B41DC50018D895 /* SSCollectionViewSectionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSCollectionViewSectionHeader.h; sourceTree = "<group>"; };
 		5EDFCA3C17B41DC50018D895 /* SSCollectionViewSectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCollectionViewSectionHeader.m; sourceTree = "<group>"; };
+		5EFCC99718EC80ED00917F02 /* SSFilterableTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSFilterableTableController.h; sourceTree = "<group>"; };
+		5EFCC99818EC80ED00917F02 /* SSFilterableTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSFilterableTableController.m; sourceTree = "<group>"; };
 		60DE92F2CD3643D180EFBAC8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		749801420B034565A7EF0AFB /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -156,6 +159,8 @@
 				492A5D43179B2AC800A137CC /* SSCollectionViewController.m */,
 				5EDFCA3B17B41DC50018D895 /* SSCollectionViewSectionHeader.h */,
 				5EDFCA3C17B41DC50018D895 /* SSCollectionViewSectionHeader.m */,
+				5EFCC99718EC80ED00917F02 /* SSFilterableTableController.h */,
+				5EFCC99818EC80ED00917F02 /* SSFilterableTableController.m */,
 				492A5D44179B2AC800A137CC /* SSSolidColorCollectionCell.h */,
 				492A5D45179B2AC800A137CC /* SSSolidColorCollectionCell.m */,
 				5E144175179B6B7700030595 /* SSRootViewController.h */,
@@ -366,6 +371,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EFCC99918EC80ED00917F02 /* SSFilterableTableController.m in Sources */,
 				492A5D18179B29B600A137CC /* main.m in Sources */,
 				492A5D48179B2AC800A137CC /* SSAppDelegate.m in Sources */,
 				492A5D49179B2AC800A137CC /* SSCollectionViewController.m in Sources */,

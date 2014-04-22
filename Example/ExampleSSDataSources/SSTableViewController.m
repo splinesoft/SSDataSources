@@ -27,8 +27,9 @@
         
         NSMutableArray *items = [NSMutableArray array];
         
-        for( NSUInteger i = 0; i < 5; i++ )
+        for (NSUInteger i = 0; i < 5; i++) {
             [items addObject:@( arc4random_uniform( 10000 ) )];
+        }
         
         _dataSource = [[SSArrayDataSource alloc] initWithItems:items];
         self.dataSource.rowAnimation = UITableViewRowAnimationRight;
