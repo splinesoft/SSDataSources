@@ -61,9 +61,6 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
                                           UITableView *parentView, // the parent table view
                                           NSIndexPath *indexPath); // the indexPath being deleted
 
-// Filter predicate for filtering the data source.
-typedef BOOL (^SSFilterPredicate) (id object);
-
 #pragma mark - Base Data Source
 
 /**
@@ -99,21 +96,14 @@ typedef BOOL (^SSFilterPredicate) (id object);
 
 #pragma mark - Filtering
 
-@property (nonatomic, strong, readonly) SSResultsFilter *currentFilter;
-
 /**
- *  Add a block-based filter predicate to the data source.
+ *  Apply a filter predicate to the data source.
  *  The data source's fetched objects will be evaluated against the new filter
  *  and the table or collection view will be updated.
  *
  *  @param predicate a block to evaluate for each fetched object
  */
-- (void) setFilterPredicate:(SSFilterPredicate)predicate;
-
-/**
- *  Remove the current filter predicate, if any.
- */
-- (void) clearFilterPredicate;
+@property (nonatomic, strong) SSResultsFilter *currentFilter;
 
 #pragma mark - UITableView
 

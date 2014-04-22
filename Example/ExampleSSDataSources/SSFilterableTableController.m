@@ -85,12 +85,12 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     if ([searchText length] == 0) {
-        [self.dataSource clearFilterPredicate];
+        [self.dataSource setCurrentFilter:nil];
     } else {
-        [self.dataSource setFilterPredicate:^BOOL(NSString *wizard) {
+        [self.dataSource setCurrentFilter:[SSResultsFilter filterWithBlock:^BOOL(NSString *wizard) {
             return [wizard rangeOfString:searchText
                                  options:NSCaseInsensitiveSearch].location != NSNotFound;
-        }];
+        }]];
     }
 }
 
@@ -106,7 +106,7 @@
     [self.searchBar setShowsCancelButton:NO animated:YES];
     [self.searchBar resignFirstResponder];
     [self.searchBar setText:nil];
-    [self.dataSource clearFilterPredicate];
+    [self.dataSource setCurrentFilter:nil];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {

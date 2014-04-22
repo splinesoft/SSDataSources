@@ -13,15 +13,24 @@
 @interface SSResultsFilter : NSObject <SSDataSourceItemAccess>
 
 /**
- *  Start here - create a data source filter with the specified filter predicate block.
+ *  Start here - create a data source filter with the specified predicate.
  *
- *  @param predicate predicate block to use
+ *  @param predicate predicate
  *
  *  @return an initialized filter
  */
-+ (instancetype) filterWithPredicate:(SSFilterPredicate)predicate;
++ (instancetype) filterWithPredicate:(NSPredicate *)predicate;
 
-@property (nonatomic, copy) SSFilterPredicate filterPredicate;
+/**
+ *  Convenience method to create a filter that evaluates objects using the specified block.
+ *
+ *  @param filterBlock filter block to use
+ *
+ *  @return an initialized filter
+ */
++ (instancetype) filterWithBlock:(BOOL (^)(id item))filterBlock;
+
+@property (nonatomic, strong) NSPredicate *filterPredicate;
 @property (nonatomic, strong) NSMutableArray *sections;
 
 @end

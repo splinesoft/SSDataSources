@@ -18,12 +18,25 @@
     return self;
 }
 
-+ (instancetype)filterWithPredicate:(SSFilterPredicate)predicate {
++ (instancetype)filterWithPredicate:(NSPredicate *)predicate {
     SSResultsFilter *filter = [SSResultsFilter new];
     
     filter.filterPredicate = predicate;
     
     return filter;
+}
+
++ (instancetype)filterWithBlock:(BOOL (^)(id))filterBlock {
+    if (!filterBlock) {
+        return nil;
+    }
+    
+    return [self filterWithPredicate:
+            [NSPredicate predicateWithBlock:
+             ^BOOL(id object, NSDictionary *bindings) {
+        
+        return filterBlock(object);
+    }]];
 }
 
 #pragma mark - Item access

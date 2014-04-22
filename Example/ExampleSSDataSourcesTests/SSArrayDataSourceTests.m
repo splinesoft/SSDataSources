@@ -463,13 +463,13 @@
     
     expect(ds.numberOfItems).to.equal(4);
     
-    [ds setFilterPredicate:^BOOL(NSNumber *number) {
+    [ds setCurrentFilter:[SSResultsFilter filterWithBlock:^BOOL(NSNumber *number) {
         return [number integerValue] < 3;
-    }];
+    }]];
     
     expect(ds.numberOfItems).to.equal(2);
     
-    [ds clearFilterPredicate];
+    [ds setCurrentFilter:nil];
     
     expect(ds.numberOfItems).to.equal(4);
 }

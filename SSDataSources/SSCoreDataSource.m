@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSMutableArray *sectionUpdates;
 @property (nonatomic, strong) NSMutableArray *objectUpdates;
 
-@property (nonatomic, copy) SSFilterPredicate lastPredicate;
+@property (nonatomic, copy) SSResultsFilter *lastFilter;
 
 - (void) _performFetch;
 
@@ -154,11 +154,9 @@ sectionForSectionIndexTitle:(NSString *)title
 }
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-    _lastPredicate = (self.currentFilter
-                      ? [self.currentFilter.filterPredicate copy]
-                      : nil);
+    _lastFilter = (self.currentFilter ?: nil);
     
-    [self clearFilterPredicate];
+    [self setCurrentFilter:nil];
     
     [self.tableView beginUpdates];
 }
@@ -284,9 +282,9 @@ sectionForSectionIndexTitle:(NSString *)title
     [self.sectionUpdates removeAllObjects];
     [self.objectUpdates removeAllObjects];
     
-    if (self.lastPredicate) {
-        [self setFilterPredicate:self.lastPredicate];
-        _lastPredicate = nil;
+    if (self.lastFilter) {
+        [self setCurrentFilter:self.lastFilter];
+        _lastFilter = nil;
     }
     
     // Hackish; force recalculation of empty view state

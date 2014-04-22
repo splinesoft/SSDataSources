@@ -426,11 +426,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark - Filtering
 
-- (void)setFilterPredicate:(SSFilterPredicate)predicate {
+- (void)setCurrentFilter:(SSResultsFilter *)newFilter {
     SSResultsFilter *currentFilter = self.currentFilter;
-    SSResultsFilter *newFilter = (predicate
-                                  ? [SSResultsFilter filterWithPredicate:predicate]
-                                  : nil);
     
     NSMutableArray *inserts = [NSMutableArray new];
     NSMutableArray *deletes = [NSMutableArray new];
@@ -442,7 +439,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [self enumerateItemsWithBlock:^(NSIndexPath *indexPath,
                                         id item,
                                         BOOL *stop) {
-            if (!currentFilter.filterPredicate(item)) {
+            if (![currentFilter.filterPredicate evaluateWithObject:item]) {
                 [inserts addObject:indexPath];
             }
         }];
@@ -463,7 +460,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
                 id item = [self itemAtIndexPath:indexPath];
                 
-                if (!newFilter.filterPredicate(item)) {
+                if (![newFilter.filterPredicate evaluateWithObject:item]) {
                     [deletes addObject:indexPath];
                 } else {
                     [sectionItems addObject:item];
@@ -500,7 +497,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j inSection:i];
                 id item = [self itemAtIndexPath:indexPath];
                 
-                if (newFilter.filterPredicate(item)) {
+                if ([newFilter.filterPredicate evaluateWithObject:item]) {
                     [inserts addObject:[NSIndexPath indexPathForRow:([sectionItems count])
                                                           inSection:i]];
                     [sectionItems addObject:item];
@@ -533,10 +530,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                                           completion:nil];
         }
     }
-}
-
-- (void)clearFilterPredicate {
-    [self setFilterPredicate:nil];
 }
 
 @end
