@@ -45,42 +45,26 @@
     self.tableDeletionBlock = nil;
 }
 
-#pragma mark - Base item access
+#pragma mark - SSBaseDataSource
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
-    // override me!
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:[NSString stringWithFormat:
-                                           @"Did you forget to override %@?",
-                                           NSStringFromSelector(_cmd)]
-                                 userInfo:nil];
+    [self doesNotRecognizeSelector:_cmd];
+    return nil;
 }
 
 - (NSUInteger)numberOfItems {
-    // override me!
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:[NSString stringWithFormat:
-                                           @"Did you forget to override %@?",
-                                           NSStringFromSelector(_cmd)]
-                                 userInfo:nil];
+    [self doesNotRecognizeSelector:_cmd];
+    return 0;
 }
 
 - (NSUInteger)numberOfSections {
-    // override me!
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:[NSString stringWithFormat:
-                                           @"Did you forget to override %@?",
-                                           NSStringFromSelector(_cmd)]
-                                 userInfo:nil];
+    [self doesNotRecognizeSelector:_cmd];
+    return 0;
 }
 
 - (NSUInteger)numberOfItemsInSection:(NSUInteger)section {
-    // override me!
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                   reason:[NSString stringWithFormat:
-                                           @"Did you forget to override %@?",
-                                           NSStringFromSelector(_cmd)]
-                                 userInfo:nil];
+    [self doesNotRecognizeSelector:_cmd];
+    return 0;
 }
 
 #pragma mark - Custom Animations
