@@ -59,7 +59,7 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 
 - (instancetype)initWithItems:(NSArray *)anItems {
     return [self initWithTarget:[[SSArrayDataSourceItemsContainer alloc] initWithItems:anItems]
-                        keyPath:NSStringFromSelector(@selector(items))];
+                        keyPath:@"items"];
 }
 
 - (instancetype)initWithTarget:(id)target keyPath:(NSString *)keyPath {
