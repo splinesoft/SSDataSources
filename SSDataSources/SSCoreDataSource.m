@@ -81,7 +81,7 @@
     return (NSUInteger)[[_controller sections] count];
 }
 
-- (NSUInteger)numberOfItemsInSection:(NSUInteger)section {
+- (NSUInteger)numberOfItemsInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [_controller sections][(NSUInteger)section];
     return (NSUInteger)[sectionInfo numberOfObjects];
 }

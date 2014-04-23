@@ -64,7 +64,7 @@
  * Return the section object at a particular index.
  * Use `itemAtIndexPath:` for items.
  */
-- (SSSection *) sectionAtIndex:(NSUInteger)index;
+- (SSSection *) sectionAtIndex:(NSInteger)index;
 
 /**
  * Return the first section with a given identifier, or nil if not found.
@@ -79,7 +79,7 @@
 
 #pragma mark - Moving sections
 
-- (void) moveSectionAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
+- (void) moveSectionAtIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex;
 
 #pragma mark - Inserting sections
 
@@ -91,7 +91,7 @@
 /**
  * Insert a section at a particular index.
  */
-- (void) insertSection:(SSSection *)newSection atIndex:(NSUInteger)index;
+- (void) insertSection:(SSSection *)newSection atIndex:(NSInteger)index;
 
 /**
  * Insert some new sections at the specified indexes.
@@ -120,12 +120,12 @@
  */
 - (void) insertItems:(NSArray *)items
            atIndexes:(NSIndexSet *)indexes
-           inSection:(NSUInteger)section;
+           inSection:(NSInteger)section;
 
 /**
  * Append multiple items to the end of a single section.
  */
-- (void) appendItems:(NSArray *)items toSection:(NSUInteger)section;
+- (void) appendItems:(NSArray *)items toSection:(NSInteger)section;
 
 #pragma mark - Removing sections
 
@@ -138,7 +138,7 @@
 /**
  * Remove the section at a given index.
  */
-- (void) removeSectionAtIndex:(NSUInteger)index;
+- (void) removeSectionAtIndex:(NSInteger)index;
 
 /**
  * Remove the sections in a given range.
@@ -160,12 +160,12 @@
 /**
  * Remove multiple items within a single section.
  */
-- (void) removeItemsAtIndexes:(NSIndexSet *)indexes inSection:(NSUInteger)section;
+- (void) removeItemsAtIndexes:(NSIndexSet *)indexes inSection:(NSInteger)section;
 
 /**
  * Remove multiple items in a range within a single section.
  */
-- (void) removeItemsInRange:(NSRange)range inSection:(NSUInteger)section;
+- (void) removeItemsInRange:(NSRange)range inSection:(NSInteger)section;
 
 #pragma mark - UITableViewDelegate helpers
 
@@ -176,23 +176,23 @@
  * Assumes your header/footer view is a subclass of SSBaseHeaderFooterView.
  * See the Example project for sample usage.
  */
-- (SSBaseHeaderFooterView *) viewForHeaderInSection:(NSUInteger)section;
-- (SSBaseHeaderFooterView *) viewForFooterInSection:(NSUInteger)section;
+- (SSBaseHeaderFooterView *) viewForHeaderInSection:(NSInteger)section;
+- (SSBaseHeaderFooterView *) viewForFooterInSection:(NSInteger)section;
 
 /**
  * As above, but for section header/footer heights.
  * This is simply a shortcut for
  * [myDataSource sectionAtIndex:section].headerHeight;
  */
-- (CGFloat) heightForHeaderInSection:(NSUInteger)section;
-- (CGFloat) heightForFooterInSection:(NSUInteger)section;
+- (CGFloat) heightForHeaderInSection:(NSInteger)section;
+- (CGFloat) heightForFooterInSection:(NSInteger)section;
 
 /**
  * As above, for section header/footer titles.
  * This is simply a shortcut for
  * [myDataSource sectionAtIndex:section].header/footer
  */
-- (NSString *) titleForHeaderInSection:(NSUInteger)section;
-- (NSString *) titleForFooterInSection:(NSUInteger)section;
+- (NSString *) titleForHeaderInSection:(NSInteger)section;
+- (NSString *) titleForFooterInSection:(NSInteger)section;
 
 @end

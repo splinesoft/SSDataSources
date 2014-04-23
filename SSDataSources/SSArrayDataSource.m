@@ -92,7 +92,7 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
     return 1;
 }
 
-- (NSUInteger)numberOfItemsInSection:(NSUInteger)section {
+- (NSUInteger)numberOfItemsInSection:(NSInteger)section {
     return [self numberOfItems];
 }
 

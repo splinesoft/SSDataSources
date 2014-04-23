@@ -98,8 +98,8 @@ forHeaderFooterViewReuseIdentifier:[SSBaseHeaderFooterView identifier]];
         [self.dataSource appendSection:[self.class sectionWithRandomNumber]];
     } else {
         // new row
-        NSUInteger section = arc4random_uniform((unsigned int)[self.dataSource numberOfSections]);
-        NSUInteger row = arc4random_uniform((unsigned int)[self.dataSource numberOfItemsInSection:section]);
+        NSInteger section = (NSInteger)arc4random_uniform((unsigned int)[self.dataSource numberOfSections]);
+        NSInteger row = (NSInteger)arc4random_uniform((unsigned int)[self.dataSource numberOfItemsInSection:section]);
         [self.dataSource insertItem:newItem
                         atIndexPath:[NSIndexPath indexPathForRow:(NSInteger)row
                                                   inSection:(NSInteger)section]];

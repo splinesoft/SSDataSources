@@ -66,7 +66,7 @@
     return [self.sections count];
 }
 
-- (NSUInteger)numberOfItemsInSection:(NSUInteger)section {
+- (NSUInteger)numberOfItemsInSection:(NSInteger)section {
     return [[self sectionAtIndex:section] numberOfItems];
 }
 
@@ -81,13 +81,13 @@
 }
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
-    return [[self sectionAtIndex:indexPath.section] itemAtIndex:indexPath.row];
+    return [[self sectionAtIndex:indexPath.section] itemAtIndex:(NSUInteger)indexPath.row];
 }
 
 #pragma mark - Section access
 
-- (SSSection *)sectionAtIndex:(NSUInteger)index {
-    return (SSSection *)[self.sections objectAtIndex:index];
+- (SSSection *)sectionAtIndex:(NSInteger)index {
+    return (SSSection *)self.sections[(NSUInteger)index];
 }
 
 - (SSSection *)sectionWithIdentifier:(id)identifier {
@@ -97,7 +97,7 @@
         return nil;
     }
     
-    return [self sectionAtIndex:index];
+    return [self sectionAtIndex:(NSInteger)index];
 }
 
 - (NSUInteger)indexOfSectionWithIdentifier:(id)identifier {
@@ -123,20 +123,20 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
       toIndexPath:(NSIndexPath *)destinationIndexPath {
   
     id item = [self itemAtIndexPath:sourceIndexPath];
-    [[self sectionAtIndex:sourceIndexPath.section].items removeObjectAtIndex:sourceIndexPath.row];
+    [[self sectionAtIndex:sourceIndexPath.section].items removeObjectAtIndex:(NSUInteger)sourceIndexPath.row];
     [[self sectionAtIndex:destinationIndexPath.section].items insertObject:item
-                                                                   atIndex:destinationIndexPath.row];
+                                                                   atIndex:(NSUInteger)destinationIndexPath.row];
   
 }
 
 #pragma mark - Moving
 
-- (void)moveSectionAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex {
+- (void)moveSectionAtIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
     SSSection *section = [self sectionAtIndex:fromIndex];
     
-    [self.sections removeObjectAtIndex:fromIndex];
+    [self.sections removeObjectAtIndex:(NSUInteger)fromIndex];
     [self.sections insertObject:section
-                        atIndex:toIndex];
+                        atIndex:(NSUInteger)toIndex];
     
     [self moveSectionAtIndex:fromIndex toIndex:toIndex];
 }
@@ -145,14 +145,14 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 
 - (void) appendSection:(SSSection *)newSection {
     [self insertSection:newSection 
-                atIndex:[self numberOfSections]];
+                atIndex:(NSInteger)[self numberOfSections]];
 }
 
-- (void) insertSection:(SSSection *)newSection atIndex:(NSUInteger)index {
+- (void) insertSection:(SSSection *)newSection atIndex:(NSInteger)index {
     [self.sections insertObject:newSection
-                        atIndex:index];
+                        atIndex:(NSUInteger)index];
     
-    [self insertSectionsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
+    [self insertSectionsAtIndexes:[NSIndexSet indexSetWithIndex:(NSUInteger)index]];
 }
 
 - (void) insertSections:(NSArray *)newSections atIndexes:(NSIndexSet *)indexes {
@@ -177,14 +177,14 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 
 - (void)insertItem:(id)item atIndexPath:(NSIndexPath *)indexPath {
     [[self sectionAtIndex:indexPath.section].items insertObject:item
-                                                        atIndex:indexPath.row];
+                                                        atIndex:(NSUInteger)indexPath.row];
     
     [self insertCellsAtIndexPaths:@[ indexPath ]];
 }
 
 - (void)insertItems:(NSArray *)items
           atIndexes:(NSIndexSet *)indexes
-          inSection:(NSUInteger)section {
+          inSection:(NSInteger)section {
     
     [[self sectionAtIndex:section].items insertObjects:items
                                              atIndexes:indexes];
@@ -193,7 +193,7 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
                                                                inSection:section]];
 }
 
-- (void)appendItems:(NSArray *)items toSection:(NSUInteger)section {
+- (void)appendItems:(NSArray *)items toSection:(NSInteger)section {
     NSUInteger sectionCount = [self numberOfItemsInSection:section];
     
     [[self sectionAtIndex:section].items addObjectsFromArray:items];
@@ -207,9 +207,9 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 
 - (void)replaceItemAtIndexPath:(NSIndexPath *)indexPath withItem:(id)item {
     
-    [[self sectionAtIndex:indexPath.section].items removeObjectAtIndex:indexPath.row];
+    [[self sectionAtIndex:indexPath.section].items removeObjectAtIndex:(NSUInteger)indexPath.row];
     [[self sectionAtIndex:indexPath.section].items insertObject:item
-                                                        atIndex:indexPath.row];
+                                                        atIndex:(NSUInteger)indexPath.row];
     
     [self reloadCellsAtIndexPaths:@[ indexPath ]];
 }
@@ -225,8 +225,8 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     [self clearSections];
 }
 
-- (void)removeSectionAtIndex:(NSUInteger)index {
-    [self removeSectionsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
+- (void)removeSectionAtIndex:(NSInteger)index {
+    [self removeSectionsAtIndexes:[NSIndexSet indexSetWithIndex:(NSUInteger)index]];
 }
 
 - (void)removeSectionsInRange:(NSRange)range {
@@ -239,16 +239,16 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 }
 
 - (void)removeItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:indexPath.row]
+    [self removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:(NSUInteger)indexPath.row]
                      inSection:indexPath.section];
 }
 
-- (void)removeItemsInRange:(NSRange)range inSection:(NSUInteger)section {
+- (void)removeItemsInRange:(NSRange)range inSection:(NSInteger)section {
     [self removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range]
                      inSection:section];
 }
 
-- (void)removeItemsAtIndexes:(NSIndexSet *)indexes inSection:(NSUInteger)section {
+- (void)removeItemsAtIndexes:(NSIndexSet *)indexes inSection:(NSInteger)section {
     [[self sectionAtIndex:section].items removeObjectsAtIndexes:indexes];
     
     if (self.shouldRemoveEmptySections && [self numberOfItemsInSection:section] == 0) {
@@ -271,27 +271,27 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     return headerFooterView;
 }
 
-- (SSBaseHeaderFooterView *)viewForHeaderInSection:(NSUInteger)section {
+- (SSBaseHeaderFooterView *)viewForHeaderInSection:(NSInteger)section {
     return [self headerFooterViewWithClass:[self sectionAtIndex:section].headerClass];
 }
 
-- (SSBaseHeaderFooterView *)viewForFooterInSection:(NSUInteger)section {
+- (SSBaseHeaderFooterView *)viewForFooterInSection:(NSInteger)section {
     return [self headerFooterViewWithClass:[self sectionAtIndex:section].footerClass];
 }
 
-- (CGFloat)heightForHeaderInSection:(NSUInteger)section {
+- (CGFloat)heightForHeaderInSection:(NSInteger)section {
     return [self sectionAtIndex:section].headerHeight;
 }
 
-- (CGFloat)heightForFooterInSection:(NSUInteger)section {
+- (CGFloat)heightForFooterInSection:(NSInteger)section {
     return [self sectionAtIndex:section].footerHeight;
 }
 
-- (NSString *)titleForHeaderInSection:(NSUInteger)section {
+- (NSString *)titleForHeaderInSection:(NSInteger)section {
     return [self sectionAtIndex:section].header;
 }
 
-- (NSString *)titleForFooterInSection:(NSUInteger)section {
+- (NSString *)titleForFooterInSection:(NSInteger)section {
     return [self sectionAtIndex:section].footer;
 }
 

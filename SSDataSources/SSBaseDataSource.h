@@ -173,7 +173,7 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
 /**
  * Return the total number of items in a given section. Override me!
  */
-- (NSUInteger) numberOfItemsInSection:(NSUInteger)section;
+- (NSUInteger) numberOfItemsInSection:(NSInteger)section;
 
 #pragma mark - Custom Animations
 
@@ -192,7 +192,7 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
 - (void) reloadCellsAtIndexPaths:(NSArray *)indexPaths;
 
 - (void) moveCellAtIndexPath:(NSIndexPath *)index1 toIndexPath:(NSIndexPath *)index2;
-- (void) moveSectionAtIndex:(NSUInteger)index1 toIndex:(NSUInteger)index2;
+- (void) moveSectionAtIndex:(NSInteger)index1 toIndex:(NSInteger)index2;
 
 - (void) insertSectionsAtIndexes:(NSIndexSet *)indexes;
 - (void) deleteSectionsAtIndexes:(NSIndexSet *)indexes;
@@ -204,7 +204,7 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
 /**
  * Helper functions to generate arrays of NSIndexPaths.
  */
-+ (NSArray *) indexPathArrayWithRange:(NSRange)range inSection:(NSUInteger)section;
-+ (NSArray *) indexPathArrayWithIndexSet:(NSIndexSet *)indexes inSection:(NSUInteger)section;
++ (NSArray *) indexPathArrayWithRange:(NSRange)range inSection:(NSInteger)section;
++ (NSArray *) indexPathArrayWithIndexSet:(NSIndexSet *)indexes inSection:(NSInteger)section;
 
 @end

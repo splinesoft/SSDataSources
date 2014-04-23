@@ -62,7 +62,7 @@
     return 0;
 }
 
-- (NSUInteger)numberOfItemsInSection:(NSUInteger)section {
+- (NSUInteger)numberOfItemsInSection:(NSInteger)section {
     [self doesNotRecognizeSelector:_cmd];
     return 0;
 }
@@ -129,11 +129,11 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self numberOfSections];
+    return (NSInteger)[self numberOfSections];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self numberOfItemsInSection:section];
+    return (NSInteger)[self numberOfItemsInSection:section];
 }
 
 - (BOOL)tableView:(UITableView *)tv canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -197,13 +197,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return [self numberOfSections];
+    return (NSInteger)[self numberOfSections];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
   
-    return [self numberOfItemsInSection:section];
+    return (NSInteger)[self numberOfItemsInSection:section];
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)cv
@@ -324,28 +324,28 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                              toIndexPath:index2];
 }
 
-- (void)moveSectionAtIndex:(NSUInteger)index1 toIndex:(NSUInteger)index2 {
-    [_tableView moveSection:index1
-                  toSection:index2];
+- (void)moveSectionAtIndex:(NSInteger)index1 toIndex:(NSInteger)index2 {
+    [self.tableView moveSection:index1
+                      toSection:index2];
     
-    [_collectionView moveSection:index1
-                       toSection:index2];
+    [self.collectionView moveSection:index1
+                           toSection:index2];
 }
 
 - (void)insertSectionsAtIndexes:(NSIndexSet *)indexes {
-    [_tableView insertSections:indexes
-              withRowAnimation:self.rowAnimation];
+    [self.tableView insertSections:indexes
+                  withRowAnimation:self.rowAnimation];
     
-    [_collectionView insertSections:indexes];
+    [self.collectionView insertSections:indexes];
     
     [self _updateEmptyView];
 }
 
 - (void)deleteSectionsAtIndexes:(NSIndexSet *)indexes {
-    [_tableView deleteSections:indexes
-              withRowAnimation:self.rowAnimation];
+    [self.tableView deleteSections:indexes
+                  withRowAnimation:self.rowAnimation];
     
-    [_collectionView deleteSections:indexes];
+    [self.collectionView deleteSections:indexes];
     
     [self _updateEmptyView];
 }
@@ -360,24 +360,24 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - NSIndexPath helpers
 
 + (NSArray *)indexPathArrayWithIndexSet:(NSIndexSet *)indexes
-                              inSection:(NSUInteger)section {
+                              inSection:(NSInteger)section {
     
     NSMutableArray *ret = [NSMutableArray array];
     
     [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-        [ret addObject:[NSIndexPath indexPathForRow:index inSection:section]];
+        [ret addObject:[NSIndexPath indexPathForRow:(NSInteger)index inSection:section]];
     }];
     
     return ret;
 }
 
 + (NSArray *)indexPathArrayWithRange:(NSRange)range
-                           inSection:(NSUInteger)section {
+                           inSection:(NSInteger)section {
     
     NSMutableArray *ret = [NSMutableArray array];
     
     for (NSUInteger i = range.location; i < NSMaxRange(range); i++)
-        [ret addObject:[NSIndexPath indexPathForRow:i inSection:section]];
+        [ret addObject:[NSIndexPath indexPathForRow:(NSInteger)i inSection:section]];
     
     return ret;
 }
