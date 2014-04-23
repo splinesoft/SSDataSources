@@ -77,14 +77,16 @@
         return;
     }
     
+    UITableView *tableView = self.tableView;
+    
     [CATransaction begin];
     [CATransaction setCompletionBlock:completion];
     
     [UIView animateWithDuration:duration
                      animations:^{
-                         [self.tableView beginUpdates];
+                         [tableView beginUpdates];
                          animations();
-                         [self.tableView endUpdates];
+                         [tableView endUpdates];
                      }];
     
     [CATransaction commit];
@@ -245,7 +247,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         return;
     }
     
-    UIScrollView *targetView = (self.tableView ?: self.collectionView);
+    UITableView *tableView = self.tableView;
+    UICollectionView *collectionView = self.collectionView;
+    UIScrollView *targetView = (tableView ? tableView : collectionView);
     
     if (!targetView) {
         return;
@@ -263,14 +267,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     if (shouldShowEmptyView) {
-        self.cachedSeparatorStyle = self.tableView.separatorStyle;
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        self.cachedSeparatorStyle = tableView.separatorStyle;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         
         if (CGRectEqualToRect(self.emptyView.frame, CGRectZero)) {
             CGRect frame = UIEdgeInsetsInsetRect(targetView.bounds, targetView.contentInset);
             
-            if (self.tableView.tableHeaderView) {
-                frame.size.height -= CGRectGetHeight(self.tableView.tableHeaderView.frame);
+            if (tableView.tableHeaderView) {
+                frame.size.height -= CGRectGetHeight(tableView.tableHeaderView.frame);
             }
             
             [self.emptyView setFrame:frame];
@@ -278,50 +282,50 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         
         self.emptyView.autoresizingMask = targetView.autoresizingMask;
     } else {
-        self.tableView.separatorStyle = self.cachedSeparatorStyle;
+        tableView.separatorStyle = self.cachedSeparatorStyle;
     }
     
     self.emptyView.hidden = !shouldShowEmptyView;
     
     // Reloading seems to work around an awkward delay where the empty view
     // is not immediately visible but the separator lines still are
-    [self.tableView reloadData];
-    [self.collectionView reloadData];
+    [tableView reloadData];
+    [collectionView reloadData];
 }
 
 #pragma mark - UITableView/UICollectionView Operations
 
 - (void)insertCellsAtIndexPaths:(NSArray *)indexPaths {
-    [_tableView insertRowsAtIndexPaths:indexPaths
-                      withRowAnimation:self.rowAnimation];
+    [self.tableView insertRowsAtIndexPaths:indexPaths
+                          withRowAnimation:self.rowAnimation];
     
-    [_collectionView insertItemsAtIndexPaths:indexPaths];
+    [self.collectionView insertItemsAtIndexPaths:indexPaths];
     
     [self _updateEmptyView];
 }
 
 - (void)deleteCellsAtIndexPaths:(NSArray *)indexPaths {
-    [_tableView deleteRowsAtIndexPaths:indexPaths
-                      withRowAnimation:self.rowAnimation];
+    [self.tableView deleteRowsAtIndexPaths:indexPaths
+                          withRowAnimation:self.rowAnimation];
     
-    [_collectionView deleteItemsAtIndexPaths:indexPaths];
+    [self.collectionView deleteItemsAtIndexPaths:indexPaths];
     
     [self _updateEmptyView];
 }
 
 - (void)reloadCellsAtIndexPaths:(NSArray *)indexPaths {
-    [_tableView reloadRowsAtIndexPaths:indexPaths
-                      withRowAnimation:self.rowAnimation];
+    [self.tableView reloadRowsAtIndexPaths:indexPaths
+                          withRowAnimation:self.rowAnimation];
     
-    [_collectionView reloadItemsAtIndexPaths:indexPaths];
+    [self.collectionView reloadItemsAtIndexPaths:indexPaths];
 }
 
 - (void)moveCellAtIndexPath:(NSIndexPath *)index1 toIndexPath:(NSIndexPath *)index2 {
-    [_tableView moveRowAtIndexPath:index1
-                       toIndexPath:index2];
+    [self.tableView moveRowAtIndexPath:index1
+                           toIndexPath:index2];
     
-    [_collectionView moveItemAtIndexPath:index1
-                             toIndexPath:index2];
+    [self.collectionView moveItemAtIndexPath:index1
+                                 toIndexPath:index2];
 }
 
 - (void)moveSectionAtIndex:(NSInteger)index1 toIndex:(NSInteger)index2 {
