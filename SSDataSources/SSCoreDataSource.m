@@ -32,9 +32,9 @@
 - (instancetype) initWithFetchedResultsController:(NSFetchedResultsController *)aController {
     if ((self = [self init])) {
         _controller = aController;
-        _controller.delegate = self;
+        self.controller.delegate = self;
         
-        if (!_controller.fetchedObjects) {
+        if (!self.controller.fetchedObjects) {
             [self _performFetch];
         }
     }
@@ -52,7 +52,7 @@
                                                             sectionNameKeyPath:sectionNameKeyPath
                                                                      cacheName:nil];
         
-        _controller.delegate = self;
+        self.controller.delegate = self;
         
         [self _performFetch];
     }
@@ -70,27 +70,28 @@
 #pragma mark - Fetching
 
 - (void)_performFetch {
-    NSError *fetchErr = nil;
-    [_controller performFetch:&fetchErr];
+    NSError *fetchErr;
+    [self.controller performFetch:&fetchErr];
     _fetchError = fetchErr;
 }
 
 #pragma mark - Base data source
 
 - (NSUInteger)numberOfSections {
-    return (NSUInteger)[[_controller sections] count];
+    return (NSUInteger)[[self.controller sections] count];
 }
 
 - (NSUInteger)numberOfItemsInSection:(NSInteger)section {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [_controller sections][(NSUInteger)section];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.controller sections][(NSUInteger)section];
     return (NSUInteger)[sectionInfo numberOfObjects];
 }
 
 - (NSUInteger)numberOfItems {
     NSUInteger count = 0;
   
-    for (id <NSFetchedResultsSectionInfo> section in [_controller sections])
+    for (id <NSFetchedResultsSectionInfo> section in [self.controller sections]) {
         count += [section numberOfObjects];
+    }
   
     return count;
 }
@@ -98,12 +99,12 @@
 #pragma mark - item access
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
-    return [_controller objectAtIndexPath:indexPath];
+    return [self.controller objectAtIndexPath:indexPath];
 }
 
 - (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)objectId {
     for (NSUInteger section = 0; section < [self numberOfSections]; section++) {
-        id <NSFetchedResultsSectionInfo> sec = [_controller sections][section];
+        id <NSFetchedResultsSectionInfo> sec = [self.controller sections][section];
         
         NSUInteger index = [[sec objects] indexOfObjectPassingTest:^BOOL(NSManagedObject *object,
                                                                          NSUInteger idx,
@@ -111,8 +112,9 @@
             return [[object objectID] isEqual:objectId];
         }];
     
-        if (index != NSNotFound)
+        if (index != NSNotFound) {
             return [NSIndexPath indexPathForRow:(NSInteger)index inSection:(NSInteger)section];
+        }
     }
   
     return nil;
@@ -120,18 +122,17 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView
-sectionForSectionIndexTitle:(NSString *)title
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title
                atIndex:(NSInteger)index {
-    return [_controller sectionForSectionIndexTitle:title atIndex:index];
+    return [self.controller sectionForSectionIndexTitle:title atIndex:index];
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    return [_controller sectionIndexTitles];
+    return [self.controller sectionIndexTitles];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    id <NSFetchedResultsSectionInfo> sectionInfo = [_controller sections][(NSUInteger)section];
+    id <NSFetchedResultsSectionInfo> sectionInfo = [self.controller sections][(NSUInteger)section];
     return [sectionInfo name];
 }
 

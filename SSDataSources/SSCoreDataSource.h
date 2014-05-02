@@ -20,6 +20,37 @@
 @interface SSCoreDataSource : SSBaseDataSource <NSFetchedResultsControllerDelegate>
 
 /**
+ *  Create a data source with a fetch request, context, and keypath.
+ *
+ *  @param request            fetch request specifying your objects
+ *  @param context            managed object context to use
+ *  @param sectionNameKeyPath nil or section keypath
+ *
+ *  @return an initialized data source
+ */
+- (instancetype) initWithFetchRequest:(NSFetchRequest *)request
+                            inContext:(NSManagedObjectContext *)context
+                   sectionNameKeyPath:(NSString *)sectionNameKeyPath;
+
+/**
+ *  Create a data source with an FRC that you've already set up.
+ *
+ *  @param controller your FRC
+ *
+ *  @return an initialized data source
+ */
+- (instancetype) initWithFetchedResultsController:(NSFetchedResultsController *)controller;
+
+/**
+ *  Find a managed object by its ID and return its index path.
+ *
+ *  @param objectId managed object ID
+ *
+ *  @return object index path, or nil
+ */
+- (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)objectId;
+
+/**
  * The data source's fetched results controller. You probably don't need to set this directly
  * as both initializers will do this for you.
  */
@@ -30,24 +61,5 @@
  * nil if the fetch succeeded.
  */
 @property (nonatomic, strong, readonly) NSError *fetchError;
-
-/**
- * Create a data source with a fetched results controller.
- * @param controller - the FRC backing this data source
- */
-- (instancetype) initWithFetchedResultsController:(NSFetchedResultsController *)controller;
-
-/**
- * Create a data source with a fetch request and a managed object context.
- * Optionally, specify a section keypath.
- */
-- (instancetype) initWithFetchRequest:(NSFetchRequest *)request
-                            inContext:(NSManagedObjectContext *)context
-                   sectionNameKeyPath:(NSString *)sectionNameKeyPath;
-
-/**
- * Determine an indexpath for the record with a given managed object ID.
- */
-- (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)objectId;
 
 @end

@@ -100,7 +100,7 @@
             indexPath:(NSIndexPath *)indexPath {
     
     if (self.cellConfigureBlock)
-        self.cellConfigureBlock( cell, item, parentView, indexPath );
+        self.cellConfigureBlock(cell, item, parentView, indexPath);
 }
 
 #pragma mark - UITableViewDataSource
@@ -212,18 +212,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
            viewForSupplementaryElementOfKind:(NSString *)kind
                                  atIndexPath:(NSIndexPath *)indexPath {
     
-    UICollectionReusableView *supplementaryView;
+    UICollectionReusableView *supplementaryView =
+        (self.collectionSupplementaryCreationBlock
+         ? self.collectionSupplementaryCreationBlock(kind, cv, indexPath)
+         : [self.collectionViewSupplementaryElementClass
+            supplementaryViewForCollectionView:cv
+            kind:kind
+            indexPath:indexPath]);
     
-    if (self.collectionSupplementaryCreationBlock)
-        supplementaryView = self.collectionSupplementaryCreationBlock(kind, cv, indexPath);
-    else
-        supplementaryView = [self.collectionViewSupplementaryElementClass
-                             supplementaryViewForCollectionView:cv
-                             kind:kind
-                             indexPath:indexPath];
-    
-    if (self.collectionSupplementaryConfigureBlock)
+    if (self.collectionSupplementaryConfigureBlock) {
         self.collectionSupplementaryConfigureBlock(supplementaryView, kind, cv, indexPath);
+    }
     
     return supplementaryView;
 }
