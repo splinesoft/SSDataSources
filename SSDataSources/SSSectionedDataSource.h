@@ -7,7 +7,8 @@
 //
 
 #import "SSBaseDataSource.h"
-#import "SSSection.h"
+
+@class SSBaseHeaderFooterView, SSSection;
 
 /**
  * A data source for multi-sectioned table and collection views.
