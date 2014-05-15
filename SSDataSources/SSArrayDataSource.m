@@ -53,6 +53,12 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
  */
 @property (nonatomic, copy) NSString *keyPath;
 
+/**
+ * The mutable proxy of items for the to-many relationship represented by the
+ * receiver’s keyPath off of the target.
+ */
+@property (nonatomic, strong) NSMutableArray *items;
+
 @end
 
 @implementation SSArrayDataSource
@@ -83,7 +89,10 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
  * data source.
  */
 - (NSMutableArray *)items {
-    return [self.target mutableArrayValueForKey:self.keyPath];
+    if (_items == nil) {
+        _items = [self.target mutableArrayValueForKey:self.keyPath];
+    }
+    return _items;
 }
 
 #pragma mark - Base Data source
