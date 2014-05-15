@@ -80,6 +80,12 @@
 
 #pragma mark - Moving sections
 
+/**
+ *  Move an entire section to another index.
+ *
+ *  @param fromIndex index of the section to move
+ *  @param toIndex   destination index
+ */
 - (void) moveSectionAtIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex;
 
 #pragma mark - Inserting sections

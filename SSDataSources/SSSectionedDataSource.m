@@ -138,7 +138,7 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     [self.sections insertObject:section
                         atIndex:(NSUInteger)toIndex];
     
-    [self moveSectionAtIndex:fromIndex toIndex:toIndex];
+    [super moveSectionAtIndex:fromIndex toIndex:toIndex];
 }
 
 #pragma mark - Adding
