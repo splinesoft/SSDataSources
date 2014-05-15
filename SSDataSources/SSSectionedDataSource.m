@@ -70,16 +70,6 @@
     return [[self sectionAtIndex:section] numberOfItems];
 }
 
-- (NSUInteger)numberOfItems {
-    NSUInteger count = 0;
-  
-    for (SSSection *section in self.sections) {
-        count += [section numberOfItems];
-    }
-  
-    return count;
-}
-
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
     return [[self sectionAtIndex:indexPath.section] itemAtIndex:(NSUInteger)indexPath.row];
 }

@@ -52,11 +52,6 @@
     return nil;
 }
 
-- (NSUInteger)numberOfItems {
-    [self doesNotRecognizeSelector:_cmd];
-    return 0;
-}
-
 - (NSUInteger)numberOfSections {
     [self doesNotRecognizeSelector:_cmd];
     return 0;
@@ -65,6 +60,16 @@
 - (NSUInteger)numberOfItemsInSection:(NSInteger)section {
     [self doesNotRecognizeSelector:_cmd];
     return 0;
+}
+
+- (NSUInteger)numberOfItems {
+    NSUInteger count = 0;
+    
+    for (NSInteger i = 0; i < (NSInteger)[self numberOfSections]; i++) {
+        count += [self numberOfItemsInSection:i];
+    }
+    
+    return count;
 }
 
 #pragma mark - Custom Animations

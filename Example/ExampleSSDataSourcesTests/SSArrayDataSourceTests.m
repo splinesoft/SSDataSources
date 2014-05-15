@@ -97,6 +97,8 @@
 {
     SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[@"foo", @"bar", @"baz"]];
     expect(ds.numberOfItems).to.equal(3);
+    [ds removeItemAtIndex:1];
+    expect(ds.numberOfItems).to.equal(2);
 }
 
 - (void)testIndexPathForItem

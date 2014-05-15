@@ -41,8 +41,8 @@
  * in their table or collection view. By default, SSSectionedDataSource
  * will remove these empty sections for you.
  *
- * If YES, automatically removes any section that becomes empty --
- * the `SSSection` object contains 0 items --
+ * If YES, automatically removes any section that becomes empty
+ * -- that is, the `SSSection` object contains 0 items --
  * after a call to one of the following:
  * 
  * removeItemAtIndexPath:

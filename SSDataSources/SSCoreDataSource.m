@@ -75,7 +75,7 @@
     _fetchError = fetchErr;
 }
 
-#pragma mark - Base data source
+#pragma mark - SSBaseDataSource
 
 - (NSUInteger)numberOfSections {
     return (NSUInteger)[[self.controller sections] count];
@@ -86,21 +86,11 @@
     return (NSUInteger)[sectionInfo numberOfObjects];
 }
 
-- (NSUInteger)numberOfItems {
-    NSUInteger count = 0;
-  
-    for (id <NSFetchedResultsSectionInfo> section in [self.controller sections]) {
-        count += [section numberOfObjects];
-    }
-  
-    return count;
-}
-
-#pragma mark - item access
-
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
     return [self.controller objectAtIndexPath:indexPath];
 }
+
+#pragma mark - Core Data access
 
 - (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)objectId {
     for (NSUInteger section = 0; section < [self numberOfSections]; section++) {

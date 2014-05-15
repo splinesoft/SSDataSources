@@ -161,11 +161,6 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
 - (id) itemAtIndexPath:(NSIndexPath *)indexPath;
 
 /**
- * Return the total number of items in the data source. Override me in your subclass.
- */
-- (NSUInteger) numberOfItems;
-
-/**
  * Return the total number of sections in the data source. Override me!
  */
 - (NSUInteger) numberOfSections;
@@ -174,6 +169,11 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
  * Return the total number of items in a given section. Override me!
  */
 - (NSUInteger) numberOfItemsInSection:(NSInteger)section;
+
+/**
+ * Return the total number of items in the data source.
+ */
+- (NSUInteger) numberOfItems;
 
 #pragma mark - Custom Animations
 

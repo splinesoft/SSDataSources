@@ -80,4 +80,16 @@
     expect(ds.numberOfSections).to.equal(1);
 }
 
+- (void) test_item_count
+{
+    ds = [[SSSectionedDataSource alloc] initWithItems:@[ @"foo" ]];
+    [ds appendSection:[SSSection sectionWithItems:@[ @"bar" ]]];
+    
+    expect(ds.numberOfItems).to.equal(2);
+    
+    [ds removeSectionAtIndex:1];
+    
+    expect(ds.numberOfItems).to.equal(1);
+}
+
 @end

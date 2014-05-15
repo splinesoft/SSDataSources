@@ -10,5 +10,5 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source_files = 'SSDataSources/*.{h,m}'
   s.frameworks   = 'UIKit', 'CoreData'
-  s.social_media_url = 'https://twitter.com/jhersh'
+  s.social_media_url = "https://twitter.com/jhersh"
 end

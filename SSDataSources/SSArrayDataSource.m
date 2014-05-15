@@ -102,10 +102,6 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 }
 
 - (NSUInteger)numberOfItemsInSection:(NSInteger)section {
-    return [self numberOfItems];
-}
-
-- (NSUInteger)numberOfItems {
     return [self.items count];
 }
 
