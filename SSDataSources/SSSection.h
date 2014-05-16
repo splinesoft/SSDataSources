@@ -17,6 +17,34 @@
 
 @interface SSSection : NSObject <NSCopying>
 
+/**
+ * Create a section with an array of items.
+ */
++ (instancetype) sectionWithItems:(NSArray *)items;
+
++ (instancetype) sectionWithItems:(NSArray *)items
+                           header:(NSString *)header
+                           footer:(NSString *)footer
+                       identifier:(id)identifier;
+
+/**
+ * Sometimes I just need a section with a given number of cells,
+ * and all the cell creation and configuration is handled with values stored elsewhere.
+ * This method creates a section with the specified number of placeholder objects.
+ */
++ (instancetype) sectionWithNumberOfItems:(NSUInteger)numberOfItems;
+
++ (instancetype) sectionWithNumberOfItems:(NSUInteger)numberOfItems
+                                   header:(NSString *)header
+                                   footer:(NSString *)footer
+                               identifier:(id)identifier;
+
+/**
+ *  Section items. You probably shouldn't mutate this directly;
+ *  instead see SSSectionedDataSource's
+ *     insertItem:atIndexPath:
+ *     insertItems:atIndexes:inSection:
+ */
 @property (nonatomic, strong) NSMutableArray *items;
 
 /**
@@ -56,26 +84,6 @@
  */
 @property (nonatomic, assign) CGFloat headerHeight;
 @property (nonatomic, assign) CGFloat footerHeight;
-
-/**
- * Create a section with an array of items.
- */
-+ (instancetype) sectionWithItems:(NSArray *)items;
-+ (instancetype) sectionWithItems:(NSArray *)items
-                           header:(NSString *)header
-                           footer:(NSString *)footer
-                       identifier:(id)identifier;
-
-/**
- * Sometimes I just need a section with a given number of cells,
- * and all the cell creation and configuration is handled with values stored elsewhere.
- * This method creates a section with the specified number of placeholder objects.
- */
-+ (instancetype) sectionWithNumberOfItems:(NSUInteger)numberOfItems;
-+ (instancetype) sectionWithNumberOfItems:(NSUInteger)numberOfItems
-                                   header:(NSString *)header
-                                   footer:(NSString *)footer
-                               identifier:(id)identifier;
 
 /**
  * Return the number of items in this section.

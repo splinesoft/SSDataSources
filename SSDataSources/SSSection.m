@@ -34,8 +34,9 @@
     
     SSSection *section = [SSSection new];
     
-    if (items)
+    if (items) {
         [section.items addObjectsFromArray:items];
+    }
     
     section.header = header;
     section.footer = footer;
@@ -58,8 +59,9 @@
     
     NSMutableArray *array = [NSMutableArray new];
     
-    for (NSUInteger i = 0; i < numberOfItems; i++)
+    for (NSUInteger i = 0; i < numberOfItems; i++) {
         [array addObject:@(i)];
+    }
     
     return [self sectionWithItems:array
                            header:header
