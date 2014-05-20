@@ -8,6 +8,8 @@
 
 #import "SSBaseCollectionCell.h"
 
+FOUNDATION_EXPORT CGSize const kColoredCollectionCellSize;
+
 @interface SSSolidColorCollectionCell : SSBaseCollectionCell
 
 @property (nonatomic, strong) UILabel *label;

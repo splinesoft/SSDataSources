@@ -27,7 +27,7 @@
     layout.minimumInteritemSpacing = 4.0f;
     layout.minimumLineSpacing = 10.0f;
     layout.sectionInset = UIEdgeInsetsMake( 5, 5, 5, 5 );
-    layout.itemSize = CGSizeMake(70, 50);
+    layout.itemSize = kColoredCollectionCellSize;
     layout.headerReferenceSize = CGSizeMake( 320, 40 );
     layout.footerReferenceSize = CGSizeMake( 320, 40 );
     
@@ -103,6 +103,8 @@
     if( [self.dataSource numberOfItems] > 0 )
         [self.dataSource removeItemAtIndex:(arc4random_uniform((unsigned int)[self.dataSource numberOfItems]))];
 }
+
+#pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSNumber *item = [self.dataSource itemAtIndexPath:indexPath];

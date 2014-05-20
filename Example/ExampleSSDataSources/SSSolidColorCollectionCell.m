@@ -9,25 +9,26 @@
 #import "SSSolidColorCollectionCell.h"
 #import <QuartzCore/QuartzCore.h>
 
+CGSize const kColoredCollectionCellSize = (CGSize) { 93, 93 };
+
 @implementation SSSolidColorCollectionCell
 
 - (void)configureCell {
-    self.backgroundColor = [UIColor lightGrayColor];
+    self.backgroundColor = [UIColor colorWithRed:0.55f
+                                           green:0.57f
+                                            blue:0.64f
+                                           alpha:1.0f];
     self.layer.cornerRadius = 4.0f;
   
-    self.label = [[UILabel alloc] initWithFrame:CGRectZero];
+    self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
+                                                           kColoredCollectionCellSize.width,
+                                                           kColoredCollectionCellSize.height)];
     self.label.backgroundColor = [UIColor clearColor];
     self.label.textColor = [UIColor whiteColor];
-    self.label.font = [UIFont boldSystemFontOfSize:18.0f];
+    self.label.font = [UIFont boldSystemFontOfSize:30.0f];
     self.label.textAlignment = NSTextAlignmentCenter;
   
     [self addSubview:self.label];
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    [self.label setFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
 }
 
 @end
