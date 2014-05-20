@@ -46,18 +46,11 @@
                            inContext:(NSManagedObjectContext *)context
                   sectionNameKeyPath:(NSString *)sectionNameKeyPath {
     
-    if ((self = [self init])) {
-        _controller = [[NSFetchedResultsController alloc] initWithFetchRequest:request
-                                                          managedObjectContext:context
-                                                            sectionNameKeyPath:sectionNameKeyPath
-                                                                     cacheName:nil];
-        
-        self.controller.delegate = self;
-        
-        [self _performFetch];
-    }
-    
-    return self;
+    return [self initWithFetchedResultsController:
+            [[NSFetchedResultsController alloc] initWithFetchRequest:request
+                                                managedObjectContext:context
+                                                  sectionNameKeyPath:sectionNameKeyPath
+                                                           cacheName:nil]];
 }
 
 - (void)dealloc {
