@@ -28,7 +28,7 @@ CGSize const kColoredCollectionCellSize = (CGSize) { 93, 93 };
     self.label.font = [UIFont boldSystemFontOfSize:30.0f];
     self.label.textAlignment = NSTextAlignmentCenter;
   
-    [self addSubview:self.label];
+    [self.contentView addSubview:self.label];
 }
 
 @end
