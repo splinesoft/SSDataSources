@@ -119,6 +119,17 @@
     return [sectionInfo name];
 }
 
+- (void)tableView:(UITableView *)tableView
+moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
+      toIndexPath:(NSIndexPath *)destinationIndexPath {
+    
+    id item = [self itemAtIndexPath:sourceIndexPath];
+    if (self.coreDataMoveRowBlock)
+    {
+        self.coreDataMoveRowBlock(item, sourceIndexPath, destinationIndexPath);
+    }
+}
+
 #pragma mark - NSFetchedResultsControllerDelegate
 
 - (NSString *)controller:(NSFetchedResultsController *)controller sectionIndexTitleForSectionName:(NSString *)sectionName {
