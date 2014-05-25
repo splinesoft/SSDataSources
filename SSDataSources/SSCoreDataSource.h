@@ -62,4 +62,15 @@
  */
 @property (nonatomic, strong, readonly) NSError *fetchError;
 
+// Block called when move is needed on a CoreData object.
+typedef void (^SSCoreDataMoveRowBlock) (id object,                          // The object being moved
+                                        NSIndexPath *sourceIndexPath,       // The source index path
+                                        NSIndexPath *destinationIndexPath); // The destination index path
+
+/**
+ * CoreData move row block, called after a user has moved a cell and the
+ * associated data should be updated.
+ */
+@property (nonatomic, copy) SSCoreDataMoveRowBlock coreDataMoveRowBlock;
+
 @end
