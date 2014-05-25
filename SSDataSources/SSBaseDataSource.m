@@ -72,31 +72,6 @@
     return count;
 }
 
-#pragma mark - Custom Animations
-
-- (void)performAnimations:(void (^)(void))animations
-                 duration:(NSTimeInterval)duration
-               completion:(void (^)(void))completion {
-    
-    if (!animations) {
-        return;
-    }
-    
-    UITableView *tableView = self.tableView;
-    
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:completion];
-    
-    [UIView animateWithDuration:duration
-                     animations:^{
-                         [tableView beginUpdates];
-                         animations();
-                         [tableView endUpdates];
-                     }];
-    
-    [CATransaction commit];
-}
-
 #pragma mark - Common
 
 - (void)configureCell:(id)cell
@@ -104,8 +79,9 @@
            parentView:(id)parentView
             indexPath:(NSIndexPath *)indexPath {
     
-    if (self.cellConfigureBlock)
+    if (self.cellConfigureBlock) {
         self.cellConfigureBlock(cell, item, parentView, indexPath);
+    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -181,8 +157,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)setCollectionView:(UICollectionView *)collectionView {
     _collectionView = collectionView;
     
-    if (collectionView)
+    if (collectionView) {
         collectionView.dataSource = self;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv
@@ -232,6 +209,31 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     return supplementaryView;
 }
 
+#pragma mark - Custom Animations
+
+- (void)performAnimations:(void (^)(void))animations
+                 duration:(NSTimeInterval)duration
+               completion:(void (^)(void))completion {
+    
+    if (!animations) {
+        return;
+    }
+    
+    UITableView *tableView = self.tableView;
+    
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:completion];
+    
+    [UIView animateWithDuration:duration
+                     animations:^{
+                         [tableView beginUpdates];
+                         animations();
+                         [tableView endUpdates];
+                     }];
+    
+    [CATransaction commit];
+}
+
 #pragma mark - Empty Views
 
 - (void)setEmptyView:(UIView *)emptyView {
@@ -240,8 +242,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     _emptyView = emptyView;
-    
-    _emptyView.hidden = YES;
+    self.emptyView.hidden = YES;
     
     [self _updateEmptyView];
 }
@@ -382,12 +383,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 + (NSArray *)indexPathArrayWithRange:(NSRange)range
                            inSection:(NSInteger)section {
     
-    NSMutableArray *ret = [NSMutableArray array];
-    
-    for (NSUInteger i = range.location; i < NSMaxRange(range); i++)
-        [ret addObject:[NSIndexPath indexPathForRow:(NSInteger)i inSection:section]];
-    
-    return ret;
+    return [self indexPathArrayWithIndexSet:[NSIndexSet indexSetWithIndexesInRange:range]
+                                  inSection:section];
 }
 
 @end
