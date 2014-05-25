@@ -56,6 +56,7 @@
 - (void)dealloc {
     self.controller.delegate = nil;
     self.controller = nil;
+    self.coreDataMoveRowBlock = nil;
     [self.sectionUpdates removeAllObjects];
     [self.objectUpdates removeAllObjects];
 }
@@ -124,8 +125,8 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
       toIndexPath:(NSIndexPath *)destinationIndexPath {
     
     id item = [self itemAtIndexPath:sourceIndexPath];
-    if (self.coreDataMoveRowBlock)
-    {
+    
+    if (self.coreDataMoveRowBlock) {
         self.coreDataMoveRowBlock(item, sourceIndexPath, destinationIndexPath);
     }
 }
