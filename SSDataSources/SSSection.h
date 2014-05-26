@@ -84,13 +84,22 @@
  * See the headerClass and footerClass properties.
  */
 @property (nonatomic, copy) NSString *header;
+
+/**
+ *  Optional string for footer text.
+ */
 @property (nonatomic, copy) NSString *footer;
 
 /**
- * Optional custom classes to use for header and footer views.
+ * Optional custom classes to use for header views.
  * Defaults to SSBaseHeaderFooterView.
  */
 @property (nonatomic, weak) Class headerClass;
+
+/**
+ *  Optional custom class for footer views.
+ *  Defaults to SSBaseHeaderFooterView.
+ */
 @property (nonatomic, weak) Class footerClass;
 
 /**
@@ -106,6 +115,10 @@
  *
  */
 @property (nonatomic, assign) CGFloat headerHeight;
+
+/**
+ *  Helper storage for section footer height.
+ */
 @property (nonatomic, assign) CGFloat footerHeight;
 
 @end

@@ -22,6 +22,11 @@
                                                kind:(NSString *)kind
                                           indexPath:(NSIndexPath *)indexPath;
 
+/**
+ *  Identifier for this supplementary view. You probably don't need to override this.
+ *
+ *  @return identifier for this view
+ */
 + (NSString *) identifier;
 
 @end
