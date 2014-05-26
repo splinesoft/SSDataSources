@@ -175,36 +175,84 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
  */
 - (NSUInteger) numberOfItems;
 
-#pragma mark - Custom Animations
+#pragma mark - NSIndexPath helpers
 
 /**
- * Perform a tableView/collectionView operation, like inserting or deleting rows,
- * with a custom animation duration and completion block.
+ *  Create an array of NSIndexPaths for the given range in the specified section.
+ *
+ *  @param range   range to use
+ *  @param section section to use
+ *
+ *  @return an array of NSIndexPath
  */
-- (void) performAnimations:(void (^)(void))animations
-                  duration:(NSTimeInterval)duration
-                completion:(void (^)(void))completion;
++ (NSArray *) indexPathArrayWithRange:(NSRange)range inSection:(NSInteger)section;
+
+/**
+ *  Create an array of NSIndexPaths for the given indexes in the specified section.
+ *
+ *  @param indexes indexes to use
+ *  @param section section to use
+ *
+ *  @return an array of NSIndexPath
+ */
++ (NSArray *) indexPathArrayWithIndexSet:(NSIndexSet *)indexes inSection:(NSInteger)section;
 
 #pragma mark - Base tableView/collectionView operations
 
+/**
+ *  Insert the specified cells. You probably don't need to call this directly.
+ *
+ *  @param indexPaths index paths to insert
+ */
 - (void) insertCellsAtIndexPaths:(NSArray *)indexPaths;
-- (void) deleteCellsAtIndexPaths:(NSArray *)indexPaths;
-- (void) reloadCellsAtIndexPaths:(NSArray *)indexPaths;
-
-- (void) moveCellAtIndexPath:(NSIndexPath *)index1 toIndexPath:(NSIndexPath *)index2;
-- (void) moveSectionAtIndex:(NSInteger)index1 toIndex:(NSInteger)index2;
-
-- (void) insertSectionsAtIndexes:(NSIndexSet *)indexes;
-- (void) deleteSectionsAtIndexes:(NSIndexSet *)indexes;
-
-- (void) reloadData;
-
-#pragma mark - helpers
 
 /**
- * Helper functions to generate arrays of NSIndexPaths.
+ *  Delete the specified cells. You probably don't need to call this directly.
+ *
+ *  @param indexPaths index paths to delete
  */
-+ (NSArray *) indexPathArrayWithRange:(NSRange)range inSection:(NSInteger)section;
-+ (NSArray *) indexPathArrayWithIndexSet:(NSIndexSet *)indexes inSection:(NSInteger)section;
+- (void) deleteCellsAtIndexPaths:(NSArray *)indexPaths;
+
+/**
+ *  Reload the cells at the specified indexes. You probably don't need to call this directly.
+ *
+ *  @param indexPaths index paths to reload
+ */
+- (void) reloadCellsAtIndexPaths:(NSArray *)indexPaths;
+
+/**
+ *  Move a cell to another index path. You probably don't need to call this directly.
+ *
+ *  @param index1 indexpath to move
+ *  @param index2 destination index path
+ */
+- (void) moveCellAtIndexPath:(NSIndexPath *)index1 toIndexPath:(NSIndexPath *)index2;
+
+/**
+ *  Move an index to another index. You probably don't need to call this directly.
+ *
+ *  @param index1 index to move
+ *  @param index2 destination index
+ */
+- (void) moveSectionAtIndex:(NSInteger)index1 toIndex:(NSInteger)index2;
+
+/**
+ *  Insert the specifeid indexes. You probably don't need to call this directly.
+ *
+ *  @param indexes sections to insert
+ */
+- (void) insertSectionsAtIndexes:(NSIndexSet *)indexes;
+
+/**
+ *  Delete the specified indexes. You probably don't need to call this directly.
+ *
+ *  @param indexes sections to delete
+ */
+- (void) deleteSectionsAtIndexes:(NSIndexSet *)indexes;
+
+/**
+ *  Reload data in the table and collection view and reset empty view state.
+ */
+- (void) reloadData;
 
 @end

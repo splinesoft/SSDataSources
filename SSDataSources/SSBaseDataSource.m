@@ -209,31 +209,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     return supplementaryView;
 }
 
-#pragma mark - Custom Animations
-
-- (void)performAnimations:(void (^)(void))animations
-                 duration:(NSTimeInterval)duration
-               completion:(void (^)(void))completion {
-    
-    if (!animations) {
-        return;
-    }
-    
-    UITableView *tableView = self.tableView;
-    
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:completion];
-    
-    [UIView animateWithDuration:duration
-                     animations:^{
-                         [tableView beginUpdates];
-                         animations();
-                         [tableView endUpdates];
-                     }];
-    
-    [CATransaction commit];
-}
-
 #pragma mark - Empty Views
 
 - (void)setEmptyView:(UIView *)emptyView {

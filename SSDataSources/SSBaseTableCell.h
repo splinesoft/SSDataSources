@@ -23,11 +23,24 @@
  */
 + (instancetype) cellForTableView:(UITableView *)tableView;
 
+/**
+ *  Cell's identifier. You probably don't need to override me.
+ *
+ *  @return an identifier for this cell class
+ */
 + (NSString *) identifier;
 
+/**
+ *  Cell style to use. Override me in a subclass and return a different style.
+ *
+ *  @return cell style to use for this class
+ */
 + (UITableViewCellStyle) cellStyle;
 
-// Called once for each cell after initial creation. Subclass me!
+/**
+ *  Called once for each cell after initial creation.
+ *  Subclass me for one-time logic, like creating subviews.
+ */
 - (void) configureCell;
 
 @end

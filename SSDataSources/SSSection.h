@@ -22,6 +22,9 @@
  */
 + (instancetype) sectionWithItems:(NSArray *)items;
 
+/**
+ * Create a section with an array of items, plus a header, footer, and identifier.
+ */
 + (instancetype) sectionWithItems:(NSArray *)items
                            header:(NSString *)header
                            footer:(NSString *)footer
@@ -34,10 +37,30 @@
  */
 + (instancetype) sectionWithNumberOfItems:(NSUInteger)numberOfItems;
 
+/**
+ *  Create a section with some placeholder items.
+ *
+ *  @param numberOfItems number of items to use
+ *  @param header        nil or section header
+ *  @param footer        nil or section footer
+ *  @param identifier    nil or section identifier
+ *
+ *  @return an initialized section with some placeholder items
+ */
 + (instancetype) sectionWithNumberOfItems:(NSUInteger)numberOfItems
                                    header:(NSString *)header
                                    footer:(NSString *)footer
                                identifier:(id)identifier;
+
+/**
+ * Return the number of items in this section.
+ */
+- (NSUInteger) numberOfItems;
+
+/**
+ * Return the item at a particular index.
+ */
+- (id) itemAtIndex:(NSUInteger)index;
 
 /**
  *  Section items. You probably shouldn't mutate this directly;
@@ -84,15 +107,5 @@
  */
 @property (nonatomic, assign) CGFloat headerHeight;
 @property (nonatomic, assign) CGFloat footerHeight;
-
-/**
- * Return the number of items in this section.
- */
-- (NSUInteger) numberOfItems;
-
-/**
- * Return the item at a particular index.
- */
-- (id) itemAtIndex:(NSUInteger)index;
 
 @end

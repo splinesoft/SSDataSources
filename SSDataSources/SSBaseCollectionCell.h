@@ -23,9 +23,16 @@
 + (instancetype) cellForCollectionView:(UICollectionView *)collectionView
                              indexPath:(NSIndexPath *)indexPath;
 
+/**
+ *  Cell's identifier. You probably don't need to override this.
+ *
+ *  @return an identifier for this cell class
+ */
 + (NSString *) identifier;
 
-// Override me!
+/**
+ *  Override me in your subclass!
+ */
 - (void) configureCell;
 
 @end

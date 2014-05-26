@@ -140,6 +140,10 @@
  * Destroy all sections.
  */
 - (void) clearSections;
+
+/**
+ *  Destroy all sections.
+ */
 - (void) removeAllSections;
 
 /**
@@ -184,22 +188,42 @@
  * See the Example project for sample usage.
  */
 - (SSBaseHeaderFooterView *) viewForHeaderInSection:(NSInteger)section;
+
+/**
+ *  Construct a footer view for the specified section.
+ *
+ *  @param section section to use
+ *
+ *  @return a footer view
+ */
 - (SSBaseHeaderFooterView *) viewForFooterInSection:(NSInteger)section;
 
 /**
- * As above, but for section header/footer heights.
+ * As above, but for section header heights.
  * This is simply a shortcut for
  * [myDataSource sectionAtIndex:section].headerHeight;
  */
 - (CGFloat) heightForHeaderInSection:(NSInteger)section;
+
+/**
+ * As above, but for section footer heights.
+ * This is simply a shortcut for
+ * [myDataSource sectionAtIndex:section].footerHeight;
+ */
 - (CGFloat) heightForFooterInSection:(NSInteger)section;
 
 /**
- * As above, for section header/footer titles.
+ * As above, for section header titles.
  * This is simply a shortcut for
- * [myDataSource sectionAtIndex:section].header/footer
+ * [myDataSource sectionAtIndex:section].header
  */
 - (NSString *) titleForHeaderInSection:(NSInteger)section;
+
+/**
+ * As above, for section footer titles.
+ * This is simply a shortcut for
+ * [myDataSource sectionAtIndex:section].footer
+ */
 - (NSString *) titleForFooterInSection:(NSInteger)section;
 
 @end
