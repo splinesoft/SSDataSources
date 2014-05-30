@@ -58,7 +58,29 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
                                           UITableView *parentView, // the parent table view
                                           NSIndexPath *indexPath); // the indexPath being deleted
 
-#pragma mark - Base Data Source
+#pragma mark - Item access
+
+/**
+ * Return the item at a given index path. Override me in your subclass.
+ */
+- (id) itemAtIndexPath:(NSIndexPath *)indexPath;
+
+/**
+ * Return the total number of sections in the data source. Override me!
+ */
+- (NSUInteger) numberOfSections;
+
+/**
+ * Return the total number of items in a given section. Override me!
+ */
+- (NSUInteger) numberOfItemsInSection:(NSInteger)section;
+
+/**
+ * Return the total number of items in the data source.
+ */
+- (NSUInteger) numberOfItems;
+
+#pragma mark - SSBaseDataSource
 
 /**
  * The base class to use to instantiate new cells.
@@ -152,28 +174,6 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
  * Optional configure block for supplementary collection view elements.
  */
 @property (nonatomic, copy) SSCollectionSupplementaryViewConfigureBlock collectionSupplementaryConfigureBlock;
-
-#pragma mark - Base item access
-
-/**
- * Return the item at a given index path. Override me in your subclass.
- */
-- (id) itemAtIndexPath:(NSIndexPath *)indexPath;
-
-/**
- * Return the total number of sections in the data source. Override me!
- */
-- (NSUInteger) numberOfSections;
-
-/**
- * Return the total number of items in a given section. Override me!
- */
-- (NSUInteger) numberOfItemsInSection:(NSInteger)section;
-
-/**
- * Return the total number of items in the data source.
- */
-- (NSUInteger) numberOfItems;
 
 #pragma mark - NSIndexPath helpers
 
