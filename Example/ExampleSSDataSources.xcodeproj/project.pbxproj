@@ -26,6 +26,10 @@
 		498D8720179B30CF00C8C365 /* SSBaseDataSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 498D871F179B30CF00C8C365 /* SSBaseDataSourceTests.m */; };
 		499A54CE182BDF450009ECF6 /* SSSectionedDataSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 499A54CD182BDF450009ECF6 /* SSSectionedDataSourceTests.m */; };
 		49F8C94618EE001300569F18 /* SSArrayDataSourceKeyPathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 49F8C94518EE001300569F18 /* SSArrayDataSourceKeyPathTests.m */; };
+		5E0C9218193A7F8A00713FBE /* ExampleSSDataSources.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5E0C9216193A7F8A00713FBE /* ExampleSSDataSources.xcdatamodeld */; };
+		5E0C921E193A7FEE00713FBE /* Wizard.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0C921D193A7FEE00713FBE /* Wizard.m */; };
+		5E0C9220193A80D600713FBE /* SSCoreDataSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E0C921F193A80D600713FBE /* SSCoreDataSourceTests.m */; };
+		5E0C9222193A831100713FBE /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E0C9221193A831100713FBE /* CoreData.framework */; };
 		5E144177179B6B7700030595 /* SSRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E144176179B6B7700030595 /* SSRootViewController.m */; };
 		5EBDEC0A18F701780031A2B3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EBDEC0918F701780031A2B3 /* XCTest.framework */; };
 		5EDF4B8E17CC1E5700788CB5 /* SSSectionedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDF4B8D17CC1E5700788CB5 /* SSSectionedViewController.m */; };
@@ -75,6 +79,11 @@
 		499A54CD182BDF450009ECF6 /* SSSectionedDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSectionedDataSourceTests.m; sourceTree = "<group>"; };
 		49F8C94518EE001300569F18 /* SSArrayDataSourceKeyPathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSArrayDataSourceKeyPathTests.m; sourceTree = "<group>"; };
 		51DB34876E1C4A29A4580FA5 /* Pods-ExampleSSDataSourcesTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSSDataSourcesTests.xcconfig"; path = "Pods/Pods-ExampleSSDataSourcesTests.xcconfig"; sourceTree = SOURCE_ROOT; };
+		5E0C9217193A7F8A00713FBE /* ExampleSSDataSources.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ExampleSSDataSources.xcdatamodel; sourceTree = "<group>"; };
+		5E0C921C193A7FEE00713FBE /* Wizard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wizard.h; sourceTree = "<group>"; };
+		5E0C921D193A7FEE00713FBE /* Wizard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wizard.m; sourceTree = "<group>"; };
+		5E0C921F193A80D600713FBE /* SSCoreDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCoreDataSourceTests.m; sourceTree = "<group>"; };
+		5E0C9221193A831100713FBE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		5E144175179B6B7700030595 /* SSRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRootViewController.h; sourceTree = "<group>"; };
 		5E144176179B6B7700030595 /* SSRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRootViewController.m; sourceTree = "<group>"; };
 		5EBDEC0918F701780031A2B3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -102,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E0C9222193A831100713FBE /* CoreData.framework in Frameworks */,
 				5EBDEC0A18F701780031A2B3 /* XCTest.framework in Frameworks */,
 				492A5D2B179B29B600A137CC /* UIKit.framework in Frameworks */,
 				492A5D2C179B29B600A137CC /* Foundation.framework in Frameworks */,
@@ -136,6 +146,7 @@
 		492A5D0A179B29B600A137CC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5E0C9221193A831100713FBE /* CoreData.framework */,
 				5EBDEC0918F701780031A2B3 /* XCTest.framework */,
 				492A5D0B179B29B600A137CC /* UIKit.framework */,
 				492A5D0D179B29B600A137CC /* Foundation.framework */,
@@ -152,18 +163,9 @@
 			children = (
 				492A5D40179B2AC800A137CC /* SSAppDelegate.h */,
 				492A5D41179B2AC800A137CC /* SSAppDelegate.m */,
-				492A5D42179B2AC800A137CC /* SSCollectionViewController.h */,
-				492A5D43179B2AC800A137CC /* SSCollectionViewController.m */,
-				5EDFCA3B17B41DC50018D895 /* SSCollectionViewSectionHeader.h */,
-				5EDFCA3C17B41DC50018D895 /* SSCollectionViewSectionHeader.m */,
-				492A5D44179B2AC800A137CC /* SSSolidColorCollectionCell.h */,
-				492A5D45179B2AC800A137CC /* SSSolidColorCollectionCell.m */,
-				5E144175179B6B7700030595 /* SSRootViewController.h */,
-				5E144176179B6B7700030595 /* SSRootViewController.m */,
-				492A5D46179B2AC800A137CC /* SSTableViewController.h */,
-				492A5D47179B2AC800A137CC /* SSTableViewController.m */,
-				5EDF4B8C17CC1E5700788CB5 /* SSSectionedViewController.h */,
-				5EDF4B8D17CC1E5700788CB5 /* SSSectionedViewController.m */,
+				5E0C921A193A7FA300713FBE /* Cells */,
+				5E0C921B193A7FB400713FBE /* Controllers */,
+				5E0C9219193A7F9300713FBE /* Model */,
 				492A5D12179B29B600A137CC /* Supporting Files */,
 			);
 			path = ExampleSSDataSources;
@@ -180,7 +182,7 @@
 				492A5D1F179B29B600A137CC /* Default@2x.png */,
 				492A5D21179B29B600A137CC /* Default-568h@2x.png */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		492A5D2F179B29B600A137CC /* ExampleSSDataSourcesTests */ = {
@@ -189,6 +191,7 @@
 				4958CB45179B4C75006AB61C /* SSArrayDataSourceTests.m */,
 				49F8C94518EE001300569F18 /* SSArrayDataSourceKeyPathTests.m */,
 				498D871F179B30CF00C8C365 /* SSBaseDataSourceTests.m */,
+				5E0C921F193A80D600713FBE /* SSCoreDataSourceTests.m */,
 				499A54CD182BDF450009ECF6 /* SSSectionedDataSourceTests.m */,
 				492A5D30179B29B600A137CC /* Supporting Files */,
 			);
@@ -202,7 +205,43 @@
 				492A5D32179B29B600A137CC /* InfoPlist.strings */,
 				4958CB47179B4CBD006AB61C /* SSTestHelper.h */,
 			);
-			name = "Supporting Files";
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5E0C9219193A7F9300713FBE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5E0C9216193A7F8A00713FBE /* ExampleSSDataSources.xcdatamodeld */,
+				5E0C921C193A7FEE00713FBE /* Wizard.h */,
+				5E0C921D193A7FEE00713FBE /* Wizard.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5E0C921A193A7FA300713FBE /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5EDFCA3B17B41DC50018D895 /* SSCollectionViewSectionHeader.h */,
+				5EDFCA3C17B41DC50018D895 /* SSCollectionViewSectionHeader.m */,
+				492A5D44179B2AC800A137CC /* SSSolidColorCollectionCell.h */,
+				492A5D45179B2AC800A137CC /* SSSolidColorCollectionCell.m */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		5E0C921B193A7FB400713FBE /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				492A5D42179B2AC800A137CC /* SSCollectionViewController.h */,
+				492A5D43179B2AC800A137CC /* SSCollectionViewController.m */,
+				5E144175179B6B7700030595 /* SSRootViewController.h */,
+				5E144176179B6B7700030595 /* SSRootViewController.m */,
+				492A5D46179B2AC800A137CC /* SSTableViewController.h */,
+				492A5D47179B2AC800A137CC /* SSTableViewController.m */,
+				5EDF4B8C17CC1E5700788CB5 /* SSSectionedViewController.h */,
+				5EDF4B8D17CC1E5700788CB5 /* SSSectionedViewController.m */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,8 +405,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E0C921E193A7FEE00713FBE /* Wizard.m in Sources */,
 				492A5D18179B29B600A137CC /* main.m in Sources */,
 				492A5D48179B2AC800A137CC /* SSAppDelegate.m in Sources */,
+				5E0C9218193A7F8A00713FBE /* ExampleSSDataSources.xcdatamodeld in Sources */,
 				492A5D49179B2AC800A137CC /* SSCollectionViewController.m in Sources */,
 				492A5D4A179B2AC800A137CC /* SSSolidColorCollectionCell.m in Sources */,
 				492A5D4B179B2AC800A137CC /* SSTableViewController.m in Sources */,
@@ -384,6 +425,7 @@
 				498D8720179B30CF00C8C365 /* SSBaseDataSourceTests.m in Sources */,
 				499A54CE182BDF450009ECF6 /* SSSectionedDataSourceTests.m in Sources */,
 				4958CB46179B4C75006AB61C /* SSArrayDataSourceTests.m in Sources */,
+				5E0C9220193A80D600713FBE /* SSCoreDataSourceTests.m in Sources */,
 				49F8C94618EE001300569F18 /* SSArrayDataSourceKeyPathTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -494,7 +536,7 @@
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CLANG_WARN__EXIT_TIME_DESTRUCTORS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ExampleSSDataSources/ExampleSSDataSources-Prefix.pch";
+				GCC_PREFIX_HEADER = "ExampleSSDataSources/Supporting Files/ExampleSSDataSources-Prefix.pch";
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -513,7 +555,7 @@
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
-				INFOPLIST_FILE = "ExampleSSDataSources/ExampleSSDataSources-Info.plist";
+				INFOPLIST_FILE = "ExampleSSDataSources/Supporting Files/ExampleSSDataSources-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
@@ -539,7 +581,7 @@
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
 				CLANG_WARN__EXIT_TIME_DESTRUCTORS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ExampleSSDataSources/ExampleSSDataSources-Prefix.pch";
+				GCC_PREFIX_HEADER = "ExampleSSDataSources/Supporting Files/ExampleSSDataSources-Prefix.pch";
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -558,7 +600,7 @@
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
-				INFOPLIST_FILE = "ExampleSSDataSources/ExampleSSDataSources-Info.plist";
+				INFOPLIST_FILE = "ExampleSSDataSources/Supporting Files/ExampleSSDataSources-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
@@ -573,8 +615,8 @@
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ExampleSSDataSources.app/ExampleSSDataSources";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SDKROOT)/Developer/Library/Frameworks\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ExampleSSDataSources/ExampleSSDataSources-Prefix.pch";
-				INFOPLIST_FILE = "ExampleSSDataSourcesTests/ExampleSSDataSourcesTests-Info.plist";
+				GCC_PREFIX_HEADER = "ExampleSSDataSources/Supporting Files/ExampleSSDataSources-Prefix.pch";
+				INFOPLIST_FILE = "ExampleSSDataSourcesTests/Supporting Files/ExampleSSDataSourcesTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -588,8 +630,8 @@
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ExampleSSDataSources.app/ExampleSSDataSources";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SDKROOT)/Developer/Library/Frameworks\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "ExampleSSDataSources/ExampleSSDataSources-Prefix.pch";
-				INFOPLIST_FILE = "ExampleSSDataSourcesTests/ExampleSSDataSourcesTests-Info.plist";
+				GCC_PREFIX_HEADER = "ExampleSSDataSources/Supporting Files/ExampleSSDataSources-Prefix.pch";
+				INFOPLIST_FILE = "ExampleSSDataSourcesTests/Supporting Files/ExampleSSDataSourcesTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -627,6 +669,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		5E0C9216193A7F8A00713FBE /* ExampleSSDataSources.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5E0C9217193A7F8A00713FBE /* ExampleSSDataSources.xcdatamodel */,
+			);
+			currentVersion = 5E0C9217193A7F8A00713FBE /* ExampleSSDataSources.xcdatamodel */;
+			path = ExampleSSDataSources.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 492A5D00179B29B600A137CC /* Project object */;
 }

@@ -4,6 +4,9 @@ xcodeproj 'ExampleSSDataSources'
 
 pod 'SSDataSources', :path => "../"
 
+# Core Data tests
+pod 'MagicalRecord', '2.2'
+
 target :ExampleSSDataSourcesTests, :exclusive => true do
   # A Matcher Framework for Objective-C/Cocoa with nicer assertions
   # than OCUnit's (though it still works within SenTestCase subclasses).
