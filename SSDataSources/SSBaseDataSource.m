@@ -25,7 +25,7 @@
         self.cellClass = [SSBaseTableCell class];
         self.collectionViewSupplementaryElementClass = [SSBaseCollectionReusableView class];
         self.rowAnimation = UITableViewRowAnimationAutomatic;
-        self.cachedSeparatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        self.cachedSeparatorStyle = UITableViewCellSeparatorStyleNone;
     }
     
     return self;
@@ -65,7 +65,7 @@
 - (NSUInteger)numberOfItems {
     NSUInteger count = 0;
     
-    for (NSInteger i = 0; i < (NSInteger)[self numberOfSections]; i++) {
+    for (NSUInteger i = 0; i < [self numberOfSections]; i++) {
         count += [self numberOfItemsInSection:i];
     }
     
@@ -242,27 +242,28 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     BOOL shouldShowEmptyView = ([self numberOfItems] == 0);
     BOOL isShowingEmptyView = !self.emptyView.hidden;
     
+    if (shouldShowEmptyView) {
+        if (tableView.separatorStyle != UITableViewCellSeparatorStyleNone) {
+            self.cachedSeparatorStyle = tableView.separatorStyle;
+            tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        }
+    } else if (self.cachedSeparatorStyle != UITableViewCellSeparatorStyleNone) {
+        tableView.separatorStyle = self.cachedSeparatorStyle;
+    }
+    
     if (shouldShowEmptyView == isShowingEmptyView) {
         return;
     }
     
-    if (shouldShowEmptyView) {
-        self.cachedSeparatorStyle = tableView.separatorStyle;
-        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    if (CGRectEqualToRect(self.emptyView.frame, CGRectZero)) {
+        CGRect frame = UIEdgeInsetsInsetRect(targetView.bounds, targetView.contentInset);
         
-        if (CGRectEqualToRect(self.emptyView.frame, CGRectZero)) {
-            CGRect frame = UIEdgeInsetsInsetRect(targetView.bounds, targetView.contentInset);
-            
-            if (tableView.tableHeaderView) {
-                frame.size.height -= CGRectGetHeight(tableView.tableHeaderView.frame);
-            }
-            
-            [self.emptyView setFrame:frame];
+        if (tableView.tableHeaderView) {
+            frame.size.height -= CGRectGetHeight(tableView.tableHeaderView.frame);
         }
         
+        [self.emptyView setFrame:frame];
         self.emptyView.autoresizingMask = targetView.autoresizingMask;
-    } else {
-        tableView.separatorStyle = self.cachedSeparatorStyle;
     }
     
     self.emptyView.hidden = !shouldShowEmptyView;
@@ -271,6 +272,27 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     // is not immediately visible but the separator lines still are
     [tableView reloadData];
     [collectionView reloadData];
+}
+
+#pragma mark - NSIndexPath helpers
+
++ (NSArray *)indexPathArrayWithIndexSet:(NSIndexSet *)indexes
+                              inSection:(NSInteger)section {
+    
+    NSMutableArray *ret = [NSMutableArray array];
+    
+    [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+        [ret addObject:[NSIndexPath indexPathForRow:(NSInteger)index inSection:section]];
+    }];
+    
+    return ret;
+}
+
++ (NSArray *)indexPathArrayWithRange:(NSRange)range
+                           inSection:(NSInteger)section {
+    
+    return [self indexPathArrayWithIndexSet:[NSIndexSet indexSetWithIndexesInRange:range]
+                                  inSection:section];
 }
 
 #pragma mark - UITableView/UICollectionView Operations
@@ -339,27 +361,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.collectionView reloadData];
     
     [self _updateEmptyView];
-}
-
-#pragma mark - NSIndexPath helpers
-
-+ (NSArray *)indexPathArrayWithIndexSet:(NSIndexSet *)indexes
-                              inSection:(NSInteger)section {
-    
-    NSMutableArray *ret = [NSMutableArray array];
-    
-    [indexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-        [ret addObject:[NSIndexPath indexPathForRow:(NSInteger)index inSection:section]];
-    }];
-    
-    return ret;
-}
-
-+ (NSArray *)indexPathArrayWithRange:(NSRange)range
-                           inSection:(NSInteger)section {
-    
-    return [self indexPathArrayWithIndexSet:[NSIndexSet indexSetWithIndexesInRange:range]
-                                  inSection:section];
 }
 
 @end
