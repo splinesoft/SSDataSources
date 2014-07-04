@@ -117,12 +117,8 @@
     id mockTableView = tableView;
     ds.tableView = mockTableView;
 
-    [[mockTableView expect] reloadData];
-
     [ds clearItems];
     expect(ds.numberOfItems).to.equal(0);
-
-    [mockTableView verify];
 }
 
 - (void)testClearingCollectionItems
@@ -131,12 +127,8 @@
     id mockCollectionView = collectionView;
     ds.collectionView = mockCollectionView;
 
-    [[mockCollectionView expect] reloadData];
-
     [ds clearItems];
     expect(ds.numberOfItems).to.equal(0);
-
-    [mockCollectionView verify];
 }
 
 #pragma mark All item retrieval and updating
@@ -154,13 +146,10 @@
     id mockTableView = tableView;
     ds.tableView = mockTableView;
 
-    [[mockTableView expect] reloadData];
-
     id newItems = @[ @"iphone", @"ipad", @"apple" ];
     [ds updateItems:newItems];
 
     expect(ds.allItems).to.equal(newItems);
-    [mockTableView verify];
 }
 
 - (void)testUpdatingAllItemsInCollectionView
@@ -169,13 +158,10 @@
     id mockCollectionView = collectionView;
     ds.collectionView = mockCollectionView;
 
-    [[mockCollectionView expect] reloadData];
-
     id newItems = @[ @"iphone", @"ipad", @"apple" ];
     [ds updateItems:newItems];
 
     expect(ds.allItems).to.equal(newItems);
-    [mockCollectionView verify];
 }
 
 #pragma mark Appending items
