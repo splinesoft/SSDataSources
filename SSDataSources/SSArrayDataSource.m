@@ -121,7 +121,9 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 
 - (void)clearItems {
     [self.items removeAllObjects];
-    [self reloadData];
+    
+    // hackish, force empty view state recalculation
+    self.emptyView = self.emptyView;
 }
 
 - (void)removeAllItems {
@@ -130,7 +132,9 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 
 - (void)updateItems:(NSArray *)newItems {
     [self.items replaceObjectsInRange:NSMakeRange(0, self.items.count) withObjectsFromArray:newItems];
-    [self reloadData];
+    
+    // hackish, force empty view state recalculation
+    self.emptyView = self.emptyView;
 }
 
 - (NSArray *)allItems {
