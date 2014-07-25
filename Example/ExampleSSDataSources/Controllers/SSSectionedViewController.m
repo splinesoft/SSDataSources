@@ -55,6 +55,12 @@ CGFloat const kFooterHeight = 30.0f;
                                                NSIndexPath *ip ) {
             cell.textLabel.text = [number stringValue];
         };
+        
+        UILabel *noItemsLabel = [UILabel new];
+        noItemsLabel.text = @"No Items";
+        noItemsLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+        noItemsLabel.textAlignment = NSTextAlignmentCenter;
+        self.dataSource.emptyView = noItemsLabel;
     }
     
     return self;
@@ -69,13 +75,6 @@ CGFloat const kFooterHeight = 30.0f;
 forHeaderFooterViewReuseIdentifier:[SSBaseHeaderFooterView identifier]];
     
     self.dataSource.tableView = self.tableView;
-    
-    UILabel *noItemsLabel = [UILabel new];
-    noItemsLabel.text = @"No Items";
-    noItemsLabel.font = [UIFont boldSystemFontOfSize:18.0f];
-    noItemsLabel.textAlignment = NSTextAlignmentCenter;
-    
-    self.dataSource.emptyView = noItemsLabel;
 }
 
 + (SSSection *)sectionWithRandomNumber {
@@ -93,7 +92,7 @@ forHeaderFooterViewReuseIdentifier:[SSBaseHeaderFooterView identifier]];
 - (void)addRow {
     NSNumber *newItem = @( arc4random_uniform( 10000 ) );
     
-    if( [self.dataSource numberOfSections] == 0 || arc4random_uniform(2) == 0 ) {
+    if ([self.dataSource numberOfSections] == 0 || arc4random_uniform(2) == 0) {
         // new section
         [self.dataSource appendSection:[self.class sectionWithRandomNumber]];
     } else {

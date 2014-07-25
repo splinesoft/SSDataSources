@@ -27,8 +27,9 @@
         
         NSMutableArray *items = [NSMutableArray array];
         
-        for( NSUInteger i = 0; i < 5; i++ )
+        for (NSUInteger i = 0; i < 5; i++) {
             [items addObject:@( arc4random_uniform( 10000 ) )];
+        }
         
         _dataSource = [[SSArrayDataSource alloc] initWithItems:items];
         self.dataSource.rowAnimation = UITableViewRowAnimationRight;
@@ -55,6 +56,12 @@
                                                NSIndexPath *ip ) {
             cell.textLabel.text = [number stringValue];
         };
+        
+        UILabel *noItemsLabel = [UILabel new];
+        noItemsLabel.text = @"No Items";
+        noItemsLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+        noItemsLabel.textAlignment = NSTextAlignmentCenter;
+        self.dataSource.emptyView = noItemsLabel;
     }
     
     return self;
@@ -66,13 +73,6 @@
     [self updateBarButtonItems];
     
     self.dataSource.tableView = self.tableView;
-    
-    UILabel *noItemsLabel = [UILabel new];
-    noItemsLabel.text = @"No Items";
-    noItemsLabel.font = [UIFont boldSystemFontOfSize:18.0f];
-    noItemsLabel.textAlignment = NSTextAlignmentCenter;
-    
-    self.dataSource.emptyView = noItemsLabel;
 }
 
 #pragma mark - actions

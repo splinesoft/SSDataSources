@@ -32,31 +32,59 @@ typedef id   (^SSCellCreationBlock)  (id object,               // The object bei
                                       NSIndexPath *indexPath); // Index path for this cell
 
 // Optional block used to create a UICollectionView supplementary view.
-typedef UICollectionReusableView * (^SSCollectionSupplementaryViewCreationBlock)
+typedef UICollectionReusableView *
+             (^SSCollectionSupplementaryViewCreationBlock)
                                      (NSString *kind,          // the kind of reusable view
                                       UICollectionView *cv,    // the parent collection view
                                       NSIndexPath *indexPath); // index path for this view
 
 // Optional block used to configure UICollectionView supplementary views.
-typedef void (^SSCollectionSupplementaryViewConfigureBlock) (id view,                 // the header/footer view
-                                                             NSString *kind,          // the kind of reusable view
-                                                             UICollectionView *cv,    // the parent collection view
-                                                             NSIndexPath *indexPath); // index path where this view appears
+typedef void (^SSCollectionSupplementaryViewConfigureBlock)
+                                     (id view,                 // the header/footer view
+                                      NSString *kind,          // the kind of reusable view
+                                      UICollectionView *cv,    // the parent collection view
+                                      NSIndexPath *indexPath); // index path where this view appears
 
-// Optional block used to configure table move/edit behavior.
 typedef NS_ENUM(NSUInteger, SSCellActionType) {
     SSCellActionTypeEdit,
     SSCellActionTypeMove
 };
 
-typedef BOOL (^SSTableCellActionBlock) (SSCellActionType actionType,  // The action type requested for this cell (edit or move)
-                                        UITableView *parentView,      // the parent table view
-                                        NSIndexPath *indexPath);      // the indexPath being edited or moved
+// Optional block used to configure table move/edit behavior.
+typedef BOOL (^SSTableCellActionBlock)
+                                     (SSCellActionType actionType,  // The action type requested for this cell (edit or move)
+                                      UITableView *parentView,      // the parent table view
+                                      NSIndexPath *indexPath);      // the indexPath being edited or moved
 
 // Optional block used to handle deletion behavior.
-typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the datasource performing the deletion
-                                          UITableView *parentView, // the parent table view
-                                          NSIndexPath *indexPath); // the indexPath being deleted
+typedef void (^SSTableCellDeletionBlock)
+                                     (id dataSource,           // the datasource performing the deletion
+                                      UITableView *parentView, // the parent table view
+                                      NSIndexPath *indexPath); // the indexPath being deleted
+
+#pragma mark - NSIndexPath helpers
+
+/**
+ *  Create an array of NSIndexPaths for the given range in the specified section.
+ *
+ *  @param range   range to use
+ *  @param section section to use
+ *
+ *  @return an array of NSIndexPath
+ */
++ (NSArray *) indexPathArrayWithRange:(NSRange)range
+                            inSection:(NSInteger)section;
+
+/**
+ *  Create an array of NSIndexPaths for the given indexes in the specified section.
+ *
+ *  @param indexes indexes to use
+ *  @param section section to use
+ *
+ *  @return an array of NSIndexPath
+ */
++ (NSArray *) indexPathArrayWithIndexSet:(NSIndexSet *)indexes
+                               inSection:(NSInteger)section;
 
 #pragma mark - Item access
 
@@ -119,7 +147,7 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
  * Optional: If the tableview property is assigned, the data source will perform
  * insert/reload/delete calls on it as data changes.
  * 
- * Assigning this property will set the receiver as the tableView's `dataSource`
+ * Assigning this property will also set the receiver as the tableView's `dataSource`
  */
 @property (nonatomic, weak) UITableView *tableView;
 
@@ -174,28 +202,6 @@ typedef void (^SSTableCellDeletionBlock) (id dataSource,           // the dataso
  * Optional configure block for supplementary collection view elements.
  */
 @property (nonatomic, copy) SSCollectionSupplementaryViewConfigureBlock collectionSupplementaryConfigureBlock;
-
-#pragma mark - NSIndexPath helpers
-
-/**
- *  Create an array of NSIndexPaths for the given range in the specified section.
- *
- *  @param range   range to use
- *  @param section section to use
- *
- *  @return an array of NSIndexPath
- */
-+ (NSArray *) indexPathArrayWithRange:(NSRange)range inSection:(NSInteger)section;
-
-/**
- *  Create an array of NSIndexPaths for the given indexes in the specified section.
- *
- *  @param indexes indexes to use
- *  @param section section to use
- *
- *  @return an array of NSIndexPath
- */
-+ (NSArray *) indexPathArrayWithIndexSet:(NSIndexSet *)indexes inSection:(NSInteger)section;
 
 #pragma mark - Base tableView/collectionView operations
 
