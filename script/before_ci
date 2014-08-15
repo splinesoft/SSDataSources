@@ -1,9 +1,0 @@
-#!/bin/sh
-
-set -e
-
-export LANG=en_US.UTF-8
-
-gem install -N --no-rdoc --no-update-sources cocoapods xcpretty
-
-cd Example && pod install

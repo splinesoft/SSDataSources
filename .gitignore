@@ -16,5 +16,4 @@ profile
 
 DerivedData
 
-Podfile.lock
-Example/Pods/
+Example/Pods
