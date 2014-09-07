@@ -6,8 +6,7 @@
 //  Copyright (c) 2013 Jonathan Hersh. All rights reserved.
 //
 
-#ifndef __SS_DATASOURCES__
-#define __SS_DATASOURCES__
+#pragma once
 
 #import "SSBaseTableCell.h"
 #import "SSBaseCollectionCell.h"
@@ -19,5 +18,3 @@
 #import "SSSectionedDataSource.h"
 #import "SSArrayDataSource.h"
 #import "SSCoreDataSource.h"
-
-#endif
