@@ -2,7 +2,7 @@ platform :ios, '6.0'
 
 xcodeproj 'ExampleSSDataSources'
 
-pod 'SSDataSources', :path => "../"
+pod 'SSDataSources', :path => "../SSDataSources.podspec"
 
 # Core Data tests
 pod 'MagicalRecord', '2.2'
