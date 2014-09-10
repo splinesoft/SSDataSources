@@ -201,6 +201,8 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
                      withRowAnimation:self.rowAnimation];
             change[@(type)] = @[@(sectionIndex)];
             break;
+        default:
+            return;
     }
     
     [self.sectionUpdates addObject:change];
@@ -229,6 +231,8 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
                                 break;
                             case NSFetchedResultsChangeUpdate:
                                 [collectionView reloadSections:section];
+                                break;
+                            default:
                                 break;
                         }
                     }];
