@@ -13,7 +13,7 @@ No doubt you've done the `tableView:cellForRowAtIndexPath:` and `tableView:numbe
 
 ## Install
 
-Install with [Cocoapods](http://cocoapods.org). Add to your podfile:
+Install with [CocoaPods](http://cocoapods.org). Add to your `Podfile`:
 
 ```
 pod 'SSDataSources', :head # YOLO
