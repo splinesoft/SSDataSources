@@ -131,10 +131,10 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 }
 
 - (void)updateItems:(NSArray *)newItems {
-    [self.items replaceObjectsInRange:NSMakeRange(0, self.items.count) withObjectsFromArray:newItems];
-    
-    // hackish, force empty view state recalculation
-    self.emptyView = self.emptyView;
+    [self unregisterKVO];
+    [self.items setArray:newItems];
+    [self reloadData];
+    [self registerKVO];
 }
 
 - (NSArray *)allItems {
