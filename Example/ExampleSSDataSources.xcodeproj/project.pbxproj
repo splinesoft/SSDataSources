@@ -32,6 +32,7 @@
 		5E0C9222193A831100713FBE /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E0C9221193A831100713FBE /* CoreData.framework */; };
 		5E144177179B6B7700030595 /* SSRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E144176179B6B7700030595 /* SSRootViewController.m */; };
 		5EBDEC0A18F701780031A2B3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EBDEC0918F701780031A2B3 /* XCTest.framework */; };
+		5ED650AB19D7764400514745 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ED650AA19D7764400514745 /* Images.xcassets */; };
 		5EDF4B8E17CC1E5700788CB5 /* SSSectionedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDF4B8D17CC1E5700788CB5 /* SSSectionedViewController.m */; };
 		5EDFCA3D17B41DC50018D895 /* SSCollectionViewSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDFCA3C17B41DC50018D895 /* SSCollectionViewSectionHeader.m */; };
 		6E97BC13EA9A4BD9B57E81D6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60DE92F2CD3643D180EFBAC8 /* libPods.a */; };
@@ -50,6 +51,8 @@
 
 /* Begin PBXFileReference section */
 		0B8DA104C6404BC8ACAC8664 /* libPods-ExampleSSDataSourcesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ExampleSSDataSourcesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		145B5815CA251A320EAA2F44 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		3F849C8E056CB675FF1589B9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		492A5D08179B29B600A137CC /* ExampleSSDataSources.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleSSDataSources.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		492A5D0B179B29B600A137CC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		492A5D0D179B29B600A137CC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -78,7 +81,7 @@
 		498D871F179B30CF00C8C365 /* SSBaseDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSBaseDataSourceTests.m; sourceTree = "<group>"; };
 		499A54CD182BDF450009ECF6 /* SSSectionedDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSectionedDataSourceTests.m; sourceTree = "<group>"; };
 		49F8C94518EE001300569F18 /* SSArrayDataSourceKeyPathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSArrayDataSourceKeyPathTests.m; sourceTree = "<group>"; };
-		51DB34876E1C4A29A4580FA5 /* Pods-ExampleSSDataSourcesTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSSDataSourcesTests.xcconfig"; path = "Pods/Pods-ExampleSSDataSourcesTests.xcconfig"; sourceTree = SOURCE_ROOT; };
+		528C98377D5A90A3638E518A /* Pods-ExampleSSDataSourcesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSSDataSourcesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleSSDataSourcesTests/Pods-ExampleSSDataSourcesTests.release.xcconfig"; sourceTree = "<group>"; };
 		5E0C9217193A7F8A00713FBE /* ExampleSSDataSources.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ExampleSSDataSources.xcdatamodel; sourceTree = "<group>"; };
 		5E0C921C193A7FEE00713FBE /* Wizard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Wizard.h; sourceTree = "<group>"; };
 		5E0C921D193A7FEE00713FBE /* Wizard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Wizard.m; sourceTree = "<group>"; };
@@ -87,12 +90,13 @@
 		5E144175179B6B7700030595 /* SSRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRootViewController.h; sourceTree = "<group>"; };
 		5E144176179B6B7700030595 /* SSRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRootViewController.m; sourceTree = "<group>"; };
 		5EBDEC0918F701780031A2B3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		5ED650AA19D7764400514745 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		5EDF4B8C17CC1E5700788CB5 /* SSSectionedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSSectionedViewController.h; sourceTree = "<group>"; };
 		5EDF4B8D17CC1E5700788CB5 /* SSSectionedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSectionedViewController.m; sourceTree = "<group>"; };
 		5EDFCA3B17B41DC50018D895 /* SSCollectionViewSectionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSCollectionViewSectionHeader.h; sourceTree = "<group>"; };
 		5EDFCA3C17B41DC50018D895 /* SSCollectionViewSectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCollectionViewSectionHeader.m; sourceTree = "<group>"; };
 		60DE92F2CD3643D180EFBAC8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		749801420B034565A7EF0AFB /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		89D445B4C5AB7C33719C3823 /* Pods-ExampleSSDataSourcesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSSDataSourcesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleSSDataSourcesTests/Pods-ExampleSSDataSourcesTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,8 +133,7 @@
 				492A5D2F179B29B600A137CC /* ExampleSSDataSourcesTests */,
 				492A5D0A179B29B600A137CC /* Frameworks */,
 				492A5D09179B29B600A137CC /* Products */,
-				749801420B034565A7EF0AFB /* Pods.xcconfig */,
-				51DB34876E1C4A29A4580FA5 /* Pods-ExampleSSDataSourcesTests.xcconfig */,
+				EC9682453F22A90C12186D37 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -174,6 +177,7 @@
 		492A5D12179B29B600A137CC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5ED650AA19D7764400514745 /* Images.xcassets */,
 				492A5D13179B29B600A137CC /* ExampleSSDataSources-Info.plist */,
 				492A5D14179B29B600A137CC /* InfoPlist.strings */,
 				492A5D17179B29B600A137CC /* main.m */,
@@ -244,6 +248,17 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		EC9682453F22A90C12186D37 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				145B5815CA251A320EAA2F44 /* Pods.debug.xcconfig */,
+				3F849C8E056CB675FF1589B9 /* Pods.release.xcconfig */,
+				89D445B4C5AB7C33719C3823 /* Pods-ExampleSSDataSourcesTests.debug.xcconfig */,
+				528C98377D5A90A3638E518A /* Pods-ExampleSSDataSourcesTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -284,7 +299,7 @@
 			name = ExampleSSDataSourcesTests;
 			productName = ExampleSSDataSourcesTests;
 			productReference = 492A5D28179B29B600A137CC /* ExampleSSDataSourcesTests.xctest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -321,6 +336,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				492A5D16179B29B600A137CC /* InfoPlist.strings in Resources */,
+				5ED650AB19D7764400514745 /* Images.xcassets in Resources */,
 				492A5D1E179B29B600A137CC /* Default.png in Resources */,
 				492A5D20179B29B600A137CC /* Default@2x.png in Resources */,
 				492A5D22179B29B600A137CC /* Default-568h@2x.png in Resources */,
@@ -350,7 +366,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9151E8EF47DD448594DE4DFC /* Check Pods Manifest.lock */ = {
@@ -380,7 +396,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-ExampleSSDataSourcesTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ExampleSSDataSourcesTests/Pods-ExampleSSDataSourcesTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EAE1F0F2C6644850BEFC4381 /* Check Pods Manifest.lock */ = {
@@ -520,8 +536,10 @@
 		};
 		492A5D3B179B29B600A137CC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 749801420B034565A7EF0AFB /* Pods.xcconfig */;
+			baseConfigurationReference = 145B5815CA251A320EAA2F44 /* Pods.debug.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
@@ -565,8 +583,10 @@
 		};
 		492A5D3C179B29B600A137CC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 749801420B034565A7EF0AFB /* Pods.xcconfig */;
+			baseConfigurationReference = 3F849C8E056CB675FF1589B9 /* Pods.release.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
@@ -610,7 +630,7 @@
 		};
 		492A5D3E179B29B600A137CC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 51DB34876E1C4A29A4580FA5 /* Pods-ExampleSSDataSourcesTests.xcconfig */;
+			baseConfigurationReference = 89D445B4C5AB7C33719C3823 /* Pods-ExampleSSDataSourcesTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ExampleSSDataSources.app/ExampleSSDataSources";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SDKROOT)/Developer/Library/Frameworks\"";
@@ -625,7 +645,7 @@
 		};
 		492A5D3F179B29B600A137CC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 51DB34876E1C4A29A4580FA5 /* Pods-ExampleSSDataSourcesTests.xcconfig */;
+			baseConfigurationReference = 528C98377D5A90A3638E518A /* Pods-ExampleSSDataSourcesTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ExampleSSDataSources.app/ExampleSSDataSources";
 				FRAMEWORK_SEARCH_PATHS = "\"$(SDKROOT)/Developer/Library/Frameworks\"";
