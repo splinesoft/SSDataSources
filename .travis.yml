@@ -1,8 +1,5 @@
 language: objective-c
-before_install: 
-  - gem install cocoapods -N
-  - brew update
-  - brew upgrade xctool
+before_install: gem install cocoapods -N
 cache: cocoapods
 podfile: Example/Podfile
 script: script/ci
