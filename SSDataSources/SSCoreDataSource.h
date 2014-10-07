@@ -46,9 +46,9 @@
  *
  *  @param objectId managed object ID
  *
- *  @return object index path, or nil
+ *  @return an index path, or nil if the object is not found
  */
-- (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)objectId;
+- (NSIndexPath *) indexPathForItemWithId:(NSManagedObjectID *)objectId;
 
 /**
  * The data source's fetched results controller. You probably don't need to set this directly
