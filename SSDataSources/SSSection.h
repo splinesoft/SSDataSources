@@ -31,7 +31,7 @@
                        identifier:(id)identifier;
 
 /**
- * Sometimes I just need a section with a given number of cells,
+ * Sometimes you just need a section with a given number of cells
  * and all the cell creation and configuration is handled with values stored elsewhere.
  * This method creates a section with the specified number of placeholder objects.
  */
@@ -68,10 +68,10 @@
  *     insertItem:atIndexPath:
  *     insertItems:atIndexes:inSection:
  */
-@property (nonatomic, strong) NSMutableArray *items;
+@property (nonatomic, strong, readonly) NSMutableArray *items;
 
 /**
- * I find it helpful to assign an identifier to each section
+ * It can be helpful to assign an identifier to each section
  * particularly when constructing tables that have dynamic numbers and types of sections.
  * This identifier is used in the `SSSectionedDataSource` helper method
  * indexOfSectionWithIdentifier:.
@@ -104,7 +104,7 @@
 
 /**
  * Optional header and footer height.
- * Given that `tableView:heightForHeaderInSection:` is part of 
+ * Given that `tableView:heightForHeaderInSection:` and friends are part of
  * UITableViewDelegate, NOT UITableViewDataSource, 
  * SSDataSources does not provide an implementation. These properties
  * are merely helpers so that you can write simpler delegate code similar to this:

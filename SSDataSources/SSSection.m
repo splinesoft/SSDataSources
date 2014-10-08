@@ -12,9 +12,11 @@
 
 - (id)init {
     if ((self = [super init])) {
-        self.items = [NSMutableArray new];
-        self.headerClass = [SSBaseHeaderFooterView class];
-        self.footerClass = [SSBaseHeaderFooterView class];
+        _items = [NSMutableArray new];
+        _headerClass = [SSBaseHeaderFooterView class];
+        _footerClass = [SSBaseHeaderFooterView class];
+        _headerHeight = UITableViewAutomaticDimension;
+        _footerHeight = UITableViewAutomaticDimension;
     }
     
     return self;
