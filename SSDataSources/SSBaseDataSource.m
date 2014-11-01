@@ -84,15 +84,23 @@
     }
 }
 
-#pragma mark - UITableViewDataSource
-
 - (void)setTableView:(UITableView *)tableView {
     _tableView = tableView;
-        
+    
     if (tableView) {
         tableView.dataSource = self;
     }
 }
+
+- (void)setCollectionView:(UICollectionView *)collectionView {
+    _collectionView = collectionView;
+    
+    if (collectionView) {
+        collectionView.dataSource = self;
+    }
+}
+
+#pragma mark - UITableViewDataSource
 
 - (UITableViewCell *)tableView:(UITableView *)tv
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -153,14 +161,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark - UICollectionViewDataSource
-
-- (void)setCollectionView:(UICollectionView *)collectionView {
-    _collectionView = collectionView;
-    
-    if (collectionView) {
-        collectionView.dataSource = self;
-    }
-}
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -229,7 +229,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableView *tableView = self.tableView;
     UICollectionView *collectionView = self.collectionView;
-    UIScrollView *targetView = (tableView ? tableView : collectionView);
+    UIScrollView *targetView = (tableView ?: collectionView);
     
     if (!targetView) {
         return;
