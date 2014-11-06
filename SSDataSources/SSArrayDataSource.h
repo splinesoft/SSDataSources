@@ -118,6 +118,11 @@
  */
 - (void) removeItemsAtIndexes:(NSIndexSet *)indexes;
 
+/**
+ * Remove items found in the provided array
+ */
+- (void) removeItems:(NSArray *)items;
+
 #pragma mark - Moving items
 
 /**

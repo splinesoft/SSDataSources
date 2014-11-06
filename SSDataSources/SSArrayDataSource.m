@@ -202,6 +202,10 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
     [self.items removeObjectsAtIndexes:indexes];
 }
 
+- (void) removeItems:(NSArray *)items {
+    [self.items removeObjectsInArray:items];
+}
+
 #pragma mark - Item Searching
 
 - (NSIndexPath *)indexPathForItem:(id)item {
