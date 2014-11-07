@@ -119,7 +119,8 @@
 - (void) removeItemsAtIndexes:(NSIndexSet *)indexes;
 
 /**
- * Remove items found in the provided array
+ * Remove items found in the provided array.
+ * Items in the provided array should respond to hash and isEqual:.
  */
 - (void) removeItems:(NSArray *)items;
 
