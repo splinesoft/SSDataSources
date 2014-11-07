@@ -207,7 +207,7 @@
     [mockDataSource verify];
 }
 
-- (void)test_removing_items_via_data_source
+- (void)test_removing_item_at_index_via_data_source
 {
     __block NSInteger deleteCellsMessageSendCount = 0;
     [[[[OCMockObject partialMockForObject:dataSource]
@@ -250,6 +250,22 @@
     [dataSource removeItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 3)]];
 
     expect(deleteCellsMessageSendCount).to.equal(1);
+}
+
+- (void)test_removing_items_via_data_source
+{
+    __block NSInteger deleteCellsMessageSendCount = 0;
+    [[[[OCMockObject partialMockForObject:dataSource]
+       stub]
+      andDo:^(NSInvocation *inv) {
+          deleteCellsMessageSendCount++;
+      }]
+     deleteCellsAtIndexPaths:OCMOCK_ANY];
+    
+    NSUInteger itemsCount = department.employees.count;
+    [dataSource removeItems:department.employees];
+    
+    expect(deleteCellsMessageSendCount).to.equal(itemsCount);
 }
 
 #pragma mark Item replacement
