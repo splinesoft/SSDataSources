@@ -6,10 +6,8 @@
 //  Copyright (c) 2013 Splinesoft. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import "SSBaseDataSource.h"
-#import <CoreData/CoreData.h>
+@import CoreData;
 
 /**
  * Generic table/collectionview data source, useful when your data comes from an NSFetchedResultsController.

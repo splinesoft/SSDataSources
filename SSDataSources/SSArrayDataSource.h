@@ -6,10 +6,8 @@
 //  Copyright (c) 2013 Splinesoft. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import "SSBaseDataSource.h"
-#import <CoreData/CoreData.h>
+@import CoreData;
 
 /**
  * Data source for single-sectioned table and collection views.

@@ -11,4 +11,5 @@ Pod::Spec.new do |s|
   s.source_files = 'SSDataSources/*.{h,m}'
   s.frameworks   = 'UIKit', 'CoreData'
   s.social_media_url = "https://twitter.com/jhersh"
+  s.compiler_flags = "-fmodules"
 end

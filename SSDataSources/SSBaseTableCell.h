@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Jonathan Hersh. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 /**
  * A simple base table cell. Subclass me and override configureCell

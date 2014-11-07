@@ -11,7 +11,7 @@
  * Subclass me if necessary.
  */
 
-#import <UIKit/UIKit.h>
+@import UIKit;
 
 @interface SSBaseHeaderFooterView : UITableViewHeaderFooterView
 
