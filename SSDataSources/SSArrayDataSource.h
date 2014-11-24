@@ -102,7 +102,7 @@
 /**
  * Replace objects in the specified range with objects in the provided range
  */
-- (void)replaceObjectsInRange:(NSRange)range withObjectsFromArray:(NSArray *)otherArray;
+- (void) replaceItemsInRange:(NSRange)range withItemsFromArray:(NSArray *)otherArray;
  
 #pragma mark - Removing items
 

@@ -172,7 +172,7 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
     [self.items replaceObjectAtIndex:index withObject:item];
 }
 
-- (void)replaceObjectsInRange:(NSRange)range withObjectsFromArray:(NSArray *)otherArray {
+- (void)replaceItemsInRange:(NSRange)range withItemsFromArray:(NSArray *)otherArray {
     [self.items replaceObjectsInRange:range withObjectsFromArray:otherArray];
 }
 

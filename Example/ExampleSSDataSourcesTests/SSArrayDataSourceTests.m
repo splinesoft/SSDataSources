@@ -282,7 +282,7 @@
 - (void)testReplaceObjectsInRange
 {
     SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[@"foo", @"baz"]];
-    [ds replaceObjectsInRange:NSMakeRange(0, 1) withObjectsFromArray:@[@"iphone"]];
+    [ds replaceItemsInRange:NSMakeRange(0, 1) withItemsFromArray:@[@"iphone"]];
     expect(ds.allItems).to.equal((@[@"iphone", @"baz"]));
 }
 
@@ -295,7 +295,7 @@
     [[mockTableView expect] reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
                                   withRowAnimation:ds.rowAnimation];
     
-    [ds replaceObjectsInRange:NSMakeRange(0, 1) withObjectsFromArray:@[@"iphone"]];
+    [ds replaceItemsInRange:NSMakeRange(0, 1) withItemsFromArray:@[@"iphone"]];
     
     [mockTableView verify];
 }
@@ -308,7 +308,7 @@
     
     [[mockCollectionView expect] reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]];
     
-    [ds replaceObjectsInRange:NSMakeRange(0, 1) withObjectsFromArray:@[@"iphone"]];
+    [ds replaceItemsInRange:NSMakeRange(0, 1) withItemsFromArray:@[@"iphone"]];
     
     [mockCollectionView verify];
 }
