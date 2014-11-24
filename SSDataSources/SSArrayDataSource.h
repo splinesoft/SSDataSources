@@ -99,6 +99,11 @@
  */
 - (void) replaceItemAtIndex:(NSUInteger)index withItem:(id)item;
 
+/**
+ * Replace objects in the specified range with objects in the provided range
+ */
+- (void) replaceItemsInRange:(NSRange)range withItemsFromArray:(NSArray *)otherArray;
+ 
 #pragma mark - Removing items
 
 /**

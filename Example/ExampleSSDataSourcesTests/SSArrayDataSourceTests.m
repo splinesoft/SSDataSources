@@ -279,6 +279,40 @@
     [mockCollectionView verify];
 }
 
+- (void)testReplaceObjectsInRange
+{
+    SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[@"foo", @"baz"]];
+    [ds replaceItemsInRange:NSMakeRange(0, 1) withItemsFromArray:@[@"iphone"]];
+    expect(ds.allItems).to.equal((@[@"iphone", @"baz"]));
+}
+
+- (void)testReplaceObjectsInRangeReloadsRowsInDataSourceTableView
+{
+    SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[@"foo", @"baz"]];
+    id mockTableView = tableView;
+    ds.tableView = mockTableView;
+    
+    [[mockTableView expect] reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
+                                  withRowAnimation:ds.rowAnimation];
+    
+    [ds replaceItemsInRange:NSMakeRange(0, 1) withItemsFromArray:@[@"iphone"]];
+    
+    [mockTableView verify];
+}
+
+- (void)testReplaceObjectsInRangeReloadsItemsInDataSourceCollectionView
+{
+    SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[@"foo", @"baz"]];
+    id mockCollectionView = collectionView;
+    ds.collectionView = mockCollectionView;
+    
+    [[mockCollectionView expect] reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]];
+    
+    [ds replaceItemsInRange:NSMakeRange(0, 1) withItemsFromArray:@[@"iphone"]];
+    
+    [mockCollectionView verify];
+}
+
 #pragma mark Removing items
 
 - (void)testRemoveItemsInRange

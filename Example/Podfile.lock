@@ -1,7 +1,7 @@
 PODS:
   - Expecta (0.2.4)
   - MagicalRecord (2.2):
-    - MagicalRecord/Core
+    - MagicalRecord/Core (= 2.2)
   - MagicalRecord/Core (2.2)
   - OCMock (2.2.4)
   - SSDataSources (0.7.3)
@@ -22,4 +22,4 @@ SPEC CHECKSUMS:
   OCMock: 6db79185520e24f9f299548f2b8b07e41d881bd5
   SSDataSources: 983dfd27f1256f3a271f2aaa917851234f0a152e
 
-COCOAPODS: 0.34.4
+COCOAPODS: 0.35.0
