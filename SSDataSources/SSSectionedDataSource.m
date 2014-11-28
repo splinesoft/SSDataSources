@@ -60,7 +60,7 @@
     return self;
 }
 
-#pragma mark - Base Data Source
+#pragma mark - SSBaseDataSource
 
 - (NSUInteger)numberOfSections {
     return [self.sections count];

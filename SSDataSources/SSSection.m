@@ -8,6 +8,12 @@
 
 #import "SSDataSources.h"
 
+@interface SSSection ()
+
+@property (nonatomic, assign, readwrite, getter=isExpanded) BOOL expanded;
+
+@end
+
 @implementation SSSection
 
 - (id)init {
@@ -17,6 +23,7 @@
         _footerClass = [SSBaseHeaderFooterView class];
         _headerHeight = UITableViewAutomaticDimension;
         _footerHeight = UITableViewAutomaticDimension;
+        _expanded = YES;
     }
     
     return self;

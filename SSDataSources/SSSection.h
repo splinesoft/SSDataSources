@@ -121,4 +121,11 @@
  */
 @property (nonatomic, assign) CGFloat footerHeight;
 
+/**
+ *  YES if this section is currently expanded, NO if collapsed. Specific to SSExpandingDataSource.
+ *  See setSection:expanded: and
+ *  setSectionAtIndex:expanded: in SSExpandingDataSource.
+ */
+@property (nonatomic, assign, readonly, getter=isExpanded) BOOL expanded;
+
 @end
