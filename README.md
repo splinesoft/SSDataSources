@@ -183,6 +183,56 @@ self.elementDataSource.rowAnimation = UITableViewRowAnimationFade;
 [self.elementDataSource removeSectionAtIndex:([elementDataSource numberOfSections] - 1)];
 ```
 
+## Expanding Data Source
+
+`SSExpandingDataSource` powers a table or collection view with multiple sections, much like `SSSectionedDataSource`, but also allows for sections to be expanded and collapsed. 
+
+Any number of sections may be toggled open or closed. Different sections can display different numbers of rows when they are collapsed.
+
+Check out the example project for a sample table using the expanding data source.
+
+```objc
+@interface ExpandingTableViewController : UITableViewController
+
+@property (nonatomic, strong) SSExpandingDataSource *dataSource;
+
+@end
+
+@implementation ExpandingTableViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    _dataSource = [[SSExpandingDataSource alloc] initWithItems:@[ @1, @2, @3 ]];
+    [self.dataSource appendSection:[SSSection sectionWithItems:@[ @4, @5, @6 ]]];
+
+    self.dataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
+                                           NSNumber *number,
+                                           UITableView *tableView,
+                                           NSIndexPath *indexPath) {
+         cell.textLabel.text = [number stringValue];
+    };
+    
+    self.dataSource.collapsedSectionCountBlock = ^NSInteger(SSSection *section,
+                                                            NSInteger sectionIndex) {
+         // Each section can show different numbers of rows when collapsed.
+         // Here, sections collapse down to 1 row more than their index in the table.
+         // Section 0 collapses to 1 row, section 1 collapses to 2 rows...
+         return 1 + sectionIndex;
+    };
+    
+    // Setting the tableView property automatically updates 
+    // the table in response to data changes.
+    // This also sets the table's `dataSource` property.
+    self.dataSource.tableView = self.tableView;
+    
+    // Collapse the second section.
+    // You could also do this in response to a touch or any other event.
+    [self.dataSource setSectionAtIndex:1 expanded:NO];
+}
+@end
+```
+
 ## Core Data
 
 You're a modern wo/man-about-Internet and sometimes you want to present a `UITableView` or `UICollectionView` backed by a core data fetch request or fetched results controller. `SSDataSources` has you covered with `SSCoreDataSource`, featured here with a cameo by [MagicalRecord](https://github.com/magicalpanda/MagicalRecord).

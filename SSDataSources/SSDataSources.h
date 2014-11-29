@@ -18,3 +18,4 @@
 #import "SSSectionedDataSource.h"
 #import "SSArrayDataSource.h"
 #import "SSCoreDataSource.h"
+#import "SSExpandingDataSource.h"

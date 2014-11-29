@@ -32,6 +32,8 @@
 		5E0C9222193A831100713FBE /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E0C9221193A831100713FBE /* CoreData.framework */; };
 		5E144177179B6B7700030595 /* SSRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E144176179B6B7700030595 /* SSRootViewController.m */; };
 		5EBDEC0A18F701780031A2B3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EBDEC0918F701780031A2B3 /* XCTest.framework */; };
+		5ED4A3381A266090001E72B1 /* SSExpandingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED4A3371A266090001E72B1 /* SSExpandingViewController.m */; };
+		5ED4A33A1A26685A001E72B1 /* SSExpandingDataSourceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED4A3391A26685A001E72B1 /* SSExpandingDataSourceTests.m */; };
 		5ED650AB19D7764400514745 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ED650AA19D7764400514745 /* Images.xcassets */; };
 		5EDF4B8E17CC1E5700788CB5 /* SSSectionedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDF4B8D17CC1E5700788CB5 /* SSSectionedViewController.m */; };
 		5EDFCA3D17B41DC50018D895 /* SSCollectionViewSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDFCA3C17B41DC50018D895 /* SSCollectionViewSectionHeader.m */; };
@@ -90,6 +92,9 @@
 		5E144175179B6B7700030595 /* SSRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSRootViewController.h; sourceTree = "<group>"; };
 		5E144176179B6B7700030595 /* SSRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSRootViewController.m; sourceTree = "<group>"; };
 		5EBDEC0918F701780031A2B3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		5ED4A3361A266090001E72B1 /* SSExpandingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSExpandingViewController.h; sourceTree = "<group>"; };
+		5ED4A3371A266090001E72B1 /* SSExpandingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSExpandingViewController.m; sourceTree = "<group>"; };
+		5ED4A3391A26685A001E72B1 /* SSExpandingDataSourceTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSExpandingDataSourceTests.m; sourceTree = "<group>"; };
 		5ED650AA19D7764400514745 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		5EDF4B8C17CC1E5700788CB5 /* SSSectionedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSSectionedViewController.h; sourceTree = "<group>"; };
 		5EDF4B8D17CC1E5700788CB5 /* SSSectionedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSSectionedViewController.m; sourceTree = "<group>"; };
@@ -197,6 +202,7 @@
 				498D871F179B30CF00C8C365 /* SSBaseDataSourceTests.m */,
 				5E0C921F193A80D600713FBE /* SSCoreDataSourceTests.m */,
 				499A54CD182BDF450009ECF6 /* SSSectionedDataSourceTests.m */,
+				5ED4A3391A26685A001E72B1 /* SSExpandingDataSourceTests.m */,
 				492A5D30179B29B600A137CC /* Supporting Files */,
 			);
 			path = ExampleSSDataSourcesTests;
@@ -238,6 +244,8 @@
 			children = (
 				492A5D42179B2AC800A137CC /* SSCollectionViewController.h */,
 				492A5D43179B2AC800A137CC /* SSCollectionViewController.m */,
+				5ED4A3361A266090001E72B1 /* SSExpandingViewController.h */,
+				5ED4A3371A266090001E72B1 /* SSExpandingViewController.m */,
 				5E144175179B6B7700030595 /* SSRootViewController.h */,
 				5E144176179B6B7700030595 /* SSRootViewController.m */,
 				492A5D46179B2AC800A137CC /* SSTableViewController.h */,
@@ -427,6 +435,7 @@
 				5E0C9218193A7F8A00713FBE /* ExampleSSDataSources.xcdatamodeld in Sources */,
 				492A5D49179B2AC800A137CC /* SSCollectionViewController.m in Sources */,
 				492A5D4A179B2AC800A137CC /* SSSolidColorCollectionCell.m in Sources */,
+				5ED4A3381A266090001E72B1 /* SSExpandingViewController.m in Sources */,
 				492A5D4B179B2AC800A137CC /* SSTableViewController.m in Sources */,
 				5E144177179B6B7700030595 /* SSRootViewController.m in Sources */,
 				5EDFCA3D17B41DC50018D895 /* SSCollectionViewSectionHeader.m in Sources */,
@@ -443,6 +452,7 @@
 				4958CB46179B4C75006AB61C /* SSArrayDataSourceTests.m in Sources */,
 				5E0C9220193A80D600713FBE /* SSCoreDataSourceTests.m in Sources */,
 				49F8C94618EE001300569F18 /* SSArrayDataSourceKeyPathTests.m in Sources */,
+				5ED4A33A1A26685A001E72B1 /* SSExpandingDataSourceTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

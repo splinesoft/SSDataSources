@@ -10,7 +10,7 @@
  * A generic data source object for table and collection views. Takes care of creating new cells 
  * and exposes a block interface to configure cells with the object they represent.
  * Don't use this class directly except to subclass - instead, see 
- * SSArrayDataSource, SSSectionedDataSource, and SSCoreDataSource.
+ * SSArrayDataSource, SSSectionedDataSource, SSCoreDataSource, and SSExpandingDataSource.
  */
 
 @import Foundation;
