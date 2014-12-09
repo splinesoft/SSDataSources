@@ -11,8 +11,7 @@
 
 /**
  * Generic table/collectionview data source, useful when your data comes from an NSFetchedResultsController.
- * Optional: assign this object to be the FRC's delegate, in which case it'll make
- * updates in response to FRC events.
+ * Automatically inserts/reloads/deletes rows in the table or collection view in response to FRC events.
  */
 
 @interface SSCoreDataSource : SSBaseDataSource <NSFetchedResultsControllerDelegate>

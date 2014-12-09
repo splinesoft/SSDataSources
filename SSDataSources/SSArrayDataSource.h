@@ -100,7 +100,7 @@
 - (void) replaceItemAtIndex:(NSUInteger)index withItem:(id)item;
 
 /**
- * Replace objects in the specified range with objects in the provided range
+ * Replace items in the specified range with items from the provided array.
  */
 - (void) replaceItemsInRange:(NSRange)range withItemsFromArray:(NSArray *)otherArray;
  
