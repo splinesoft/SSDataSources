@@ -101,7 +101,7 @@ typedef NSInteger (^SSCollapsedSectionCountBlock) (SSSection *section,
 /**
  *  Expand or collapse the section at the specified index.
  *  Inserts or deletes rows as appropriate to bring this section to the number of rows
- *  you specify in `sectionCountBlock`.
+ *  you specify in `collapsedSectionCountBlock`.
  *
  *  @param index    the index of the section to expand or collapse
  *  @param expanded whether to expand (YES) or collapse (NO) this section
