@@ -33,7 +33,8 @@
 }
 
 - (NSIndexSet *) expandedSectionIndexes {
-    NSMutableIndexSet *expandedIndexes = [NSMutableIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [self numberOfSections])];
+    NSMutableIndexSet *expandedIndexes = [NSMutableIndexSet indexSetWithIndexesInRange:
+                                          NSMakeRange(0, [self numberOfSections])];
     
     [self.sections enumerateObjectsUsingBlock:^(SSSection *section,
                                                 NSUInteger index,
@@ -43,7 +44,7 @@
         }
     }];
     
-    return [expandedIndexes copy];
+    return [[NSIndexSet alloc] initWithIndexSet:expandedIndexes];
 }
 
 - (NSUInteger)numberOfCollapsedRowsInSection:(NSInteger)section {
