@@ -65,6 +65,15 @@ typedef NS_ENUM( NSUInteger, SSDataSourcesExample ) {
             cell.textLabel.text = title;
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         };
+        
+        self.dataSource.tableActionBlock = ^BOOL(SSCellActionType action,
+                                                 UITableView *tableView,
+                                                 NSIndexPath *indexPath) {
+            // Disallow both moving and editing.
+            // You could instead do something like disallow move but allow editing:
+            // return action == SSCellActionTypeEdit;
+            return NO;
+        };
     }
     
     return self;
