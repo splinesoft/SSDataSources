@@ -92,4 +92,15 @@
     expect(ds.numberOfItems).to.equal(1);
 }
 
+- (void) test_item_searching
+{
+    ds = [[SSSectionedDataSource alloc] initWithItems:@[@"foo", @"bar", @"baz"]];
+    expect([ds indexPathForItem:@"foo"]).to.equal([NSIndexPath indexPathForRow:0 inSection:0]);
+    expect([ds indexPathForItem:@"bar"]).to.equal([NSIndexPath indexPathForRow:1 inSection:0]);
+    expect([ds indexPathForItem:@"baz"]).to.equal([NSIndexPath indexPathForRow:2 inSection:0]);
+    
+    [ds appendSection:[SSSection sectionWithItems:@[@"bilbo", @"frodo"]]];
+    expect([ds indexPathForItem:@"frodo"]).to.equal([NSIndexPath indexPathForRow:1 inSection:1]);
+}
+
 @end

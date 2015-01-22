@@ -72,6 +72,20 @@
     return count;
 }
 
+- (NSIndexPath *)indexPathForItem:(id)item {
+    for (NSUInteger section = 0; section < [self numberOfSections]; section++) {
+        for (NSUInteger row = 0; row < [self numberOfItemsInSection:section]; row++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+            
+            if ([[self itemAtIndexPath:indexPath] isEqual:item]) {
+                return indexPath;
+            }
+        }
+    }
+    
+    return nil;
+}
+
 #pragma mark - Common
 
 - (void)configureCell:(id)cell

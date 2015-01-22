@@ -36,11 +36,6 @@
 #pragma mark - Item access
 
 /**
- * Return the indexpath for a given item in the data source.
- */
-- (NSIndexPath *) indexPathForItem:(id)item;
-
-/**
  * Helper for managed objects. As with `indexPathForItem`, but for managed object IDs.
  */
 - (NSIndexPath *) indexPathForItemWithId:(NSManagedObjectID *)itemId;
