@@ -123,10 +123,20 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 
 - (BOOL)adjustSectionAtIndex:(NSInteger)index toNumberOfItems:(NSUInteger)numberOfItems reloadSection:(BOOL)reloadSection {
     SSSection *section = [self sectionAtIndex:index];
-    BOOL didAdjust = [section adjustToNumberOfItems:numberOfItems];
+
+    BOOL didAdjust = NO;
+    if (section.items.count != numberOfItems) {
+        if (numberOfItems > section.items.count) {
+            for (NSUInteger i = section.items.count; i < numberOfItems; i++) {
+                [section.items insertObject:@(i) atIndex:i];
+            }
+        } else {
+            [section.items removeObjectsInRange:NSMakeRange(numberOfItems, section.items.count - numberOfItems)];
+        }
+        didAdjust = YES;
+    }
     if (reloadSection) {
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:index]
-                      withRowAnimation:self.rowAnimation];
+        [super reloadSectionsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
     }
     return didAdjust;
 }

@@ -370,6 +370,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self _updateEmptyView];
 }
 
+- (void)reloadSectionsAtIndexes:(NSIndexSet *)indexes {
+    [self.tableView reloadSections:indexes
+                  withRowAnimation:self.rowAnimation];
+
+    [self.collectionView reloadSections:indexes];
+}
+
 - (void)reloadData {
     [self.tableView reloadData];
     [self.collectionView reloadData];
