@@ -103,4 +103,23 @@
     expect([ds indexPathForItem:@"frodo"]).to.equal([NSIndexPath indexPathForRow:1 inSection:1]);
 }
 
+- (void) test_removing_section_with_identifier
+{
+    ds = [[SSSectionedDataSource alloc] initWithSection:[SSSection sectionWithNumberOfItems:3
+                                                                                     header:nil
+                                                                                     footer:nil
+                                                                                 identifier:@0]];
+    
+    [ds appendSection:[SSSection sectionWithNumberOfItems:4
+                                                   header:nil
+                                                   footer:nil
+                                               identifier:@1]];
+    
+    expect([ds numberOfSections]).to.equal(2);
+    [ds removeSectionWithIdentifier:@3];
+    expect([ds numberOfSections]).to.equal(2);
+    [ds removeSectionWithIdentifier:@0];
+    expect([ds numberOfSections]).to.equal(1);
+}
+
 @end

@@ -161,6 +161,12 @@
  */
 - (void) removeSectionsAtIndexes:(NSIndexSet *)indexes;
 
+/**
+ *  Remove the first section with the specified identifier, 
+ *  if such a section is currently in the data source.
+ */
+- (void) removeSectionWithIdentifier:(id)identifier;
+
 #pragma mark - Removing items
 
 /**

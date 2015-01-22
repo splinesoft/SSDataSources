@@ -228,6 +228,14 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     [self deleteSectionsAtIndexes:indexes];
 }
 
+- (void)removeSectionWithIdentifier:(id)identifier {
+    NSUInteger index = [self indexOfSectionWithIdentifier:identifier];
+    
+    if (index != NSNotFound) {
+        [self removeSectionAtIndex:index];
+    }
+}
+
 - (void)removeItemAtIndexPath:(NSIndexPath *)indexPath {
     [self removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:(NSUInteger)indexPath.row]
                      inSection:indexPath.section];
