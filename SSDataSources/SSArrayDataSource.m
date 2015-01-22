@@ -214,16 +214,6 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 
 #pragma mark - Item Searching
 
-- (NSIndexPath *)indexPathForItem:(id)item {
-    NSUInteger row = [self.items indexOfObjectIdenticalTo:item];
-  
-    if (row == NSNotFound) {
-        return nil;
-    }
-  
-    return [NSIndexPath indexPathForRow:(NSInteger)row inSection:0];
-}
-
 - (NSIndexPath *)indexPathForItemWithId:(NSManagedObjectID *)itemId {
     NSUInteger row = [self.items indexOfObjectPassingTest:^BOOL(NSManagedObject *object,
                                                                 NSUInteger index,

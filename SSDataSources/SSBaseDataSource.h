@@ -108,6 +108,15 @@ typedef void (^SSTableCellDeletionBlock)
  */
 - (NSUInteger) numberOfItems;
 
+/**
+ * Search all sections for the specified item. Sends -isEqual: to every object in the data source.
+ *
+ * @param item item for which to search
+ *
+ * @return an indexpath, or nil if not found
+ */
+- (NSIndexPath *) indexPathForItem:(id)item;
+
 #pragma mark - SSBaseDataSource
 
 /**

@@ -159,4 +159,13 @@
     expect(didMove).to.beTruthy;
 }
 
+- (void)testFindingManagedObjects
+{
+    Wizard *aWizard = [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth"];
+    
+    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    
+    expect([dataSource indexPathForItem:aWizard]).to.equal([NSIndexPath indexPathForRow:0 inSection:0]);
+}
+
 @end
