@@ -86,6 +86,20 @@
     return self.items[index];
 }
 
+- (BOOL)adjustToNumberOfItems:(NSUInteger)numberOfItems {
+    if (self.items.count == numberOfItems)
+        return NO;
+
+    if (numberOfItems > self.items.count) {
+        for (NSUInteger i = self.items.count; i < numberOfItems; i++) {
+            [self.items insertObject:@(i) atIndex:i];
+        }
+    } else {
+        [self.items removeObjectsInRange:NSMakeRange(numberOfItems, self.items.count - numberOfItems)];
+    }
+    return YES;
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {

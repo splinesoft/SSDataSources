@@ -122,4 +122,23 @@
     expect([ds numberOfSections]).to.equal(1);
 }
 
+- (void) test_adjust_section_row_count
+{
+    ds = [[SSSectionedDataSource alloc] initWithSection:[SSSection sectionWithNumberOfItems:3
+                                                                                     header:nil
+                                                                                     footer:nil
+                                                                                 identifier:@0]];
+
+    // test that the return value indicates there was an adjustment made (decrement)
+    expect([ds adjustSectionAtIndex:0 toNumberOfItems:1 reloadSection:NO]).to.equal(YES);
+    expect([[ds sectionAtIndex:0] numberOfItems]).to.equal(1);
+
+    // test that the return value indicates there was an adjustment made (increment)
+    expect([ds adjustSectionAtIndex:0 toNumberOfItems:5 reloadSection:NO]).to.equal(YES);
+    expect([[ds sectionAtIndex:0] numberOfItems]).to.equal(5);
+
+    // test that the return value indicates there was not an adjustment made
+    expect([ds adjustSectionAtIndex:0 toNumberOfItems:5 reloadSection:NO]).to.equal(NO);
+}
+
 @end

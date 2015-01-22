@@ -78,6 +78,13 @@
  */
 - (NSUInteger) indexOfSectionWithIdentifier:(id)identifier;
 
+#pragma mark - Adjusting sections
+
+/**
+ * Adjust a section to the given number of items and optionally reloads the section.
+ */
+- (BOOL)adjustSectionAtIndex:(NSInteger)index toNumberOfItems:(NSUInteger)numberOfItems reloadSection:(BOOL)reloadSection;
+
 #pragma mark - Moving sections
 
 /**

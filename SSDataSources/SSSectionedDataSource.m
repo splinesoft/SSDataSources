@@ -119,6 +119,18 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
   
 }
 
+#pragma mark - Adjusting
+
+- (BOOL)adjustSectionAtIndex:(NSInteger)index toNumberOfItems:(NSUInteger)numberOfItems reloadSection:(BOOL)reloadSection {
+    SSSection *section = [self sectionAtIndex:index];
+    BOOL didAdjust = [section adjustToNumberOfItems:numberOfItems];
+    if (reloadSection) {
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:index]
+                      withRowAnimation:self.rowAnimation];
+    }
+    return didAdjust;
+}
+
 #pragma mark - Moving
 
 - (void)moveSectionAtIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {

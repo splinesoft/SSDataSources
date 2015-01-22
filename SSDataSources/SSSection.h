@@ -63,6 +63,13 @@
 - (id) itemAtIndex:(NSUInteger)index;
 
 /**
+ * In case you have a dynamic row count, this method is useful to adjust the number
+ * of items of this section.
+ * Return YES if the number of items was adjusted, NO otherwise.
+ */
+- (BOOL) adjustToNumberOfItems:(NSUInteger)numberOfItems;
+
+/**
  *  Section items. You probably shouldn't mutate this directly;
  *  instead see SSSectionedDataSource's
  *     insertItem:atIndexPath:
