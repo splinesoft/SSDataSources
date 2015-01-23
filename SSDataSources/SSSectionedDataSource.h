@@ -83,7 +83,7 @@
 /**
  * Adjust a section to the given number of items and optionally reloads the section.
  */
-- (BOOL)adjustSectionAtIndex:(NSInteger)index toNumberOfItems:(NSUInteger)numberOfItems reloadSection:(BOOL)reloadSection;
+- (BOOL)adjustSectionAtIndex:(NSInteger)index toNumberOfItems:(NSUInteger)numberOfItems;
 
 #pragma mark - Moving sections
 

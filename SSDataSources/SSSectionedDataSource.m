@@ -121,7 +121,7 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
 
 #pragma mark - Adjusting
 
-- (BOOL)adjustSectionAtIndex:(NSInteger)index toNumberOfItems:(NSUInteger)numberOfItems reloadSection:(BOOL)reloadSection {
+- (BOOL)adjustSectionAtIndex:(NSInteger)index toNumberOfItems:(NSUInteger)numberOfItems {
     SSSection *section = [self sectionAtIndex:index];
 
     BOOL didAdjust = NO;
@@ -135,9 +135,7 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
         }
         didAdjust = YES;
     }
-    if (reloadSection) {
-        [super reloadSectionsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
-    }
+    [super reloadSectionsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
     return didAdjust;
 }
 
