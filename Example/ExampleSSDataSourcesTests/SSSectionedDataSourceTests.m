@@ -75,6 +75,7 @@
 - (void) test_automatic_section_removal
 {
     ds = [[SSSectionedDataSource alloc] initWithItems:@[ @"foo" ]];
+    ds.shouldRemoveEmptySections = YES;
     [ds appendSection:[SSSection sectionWithItems:@[ @"bar" ]]];
     
     expect(ds.numberOfSections).to.equal(2);
@@ -96,6 +97,7 @@
     [ds removeSectionAtIndex:1];
     
     expect(ds.numberOfItems).to.equal(1);
+    expect([ds sectionAtIndex:0].items.firstObject).to.equal(@"foo");
 }
 
 - (void) test_item_searching
@@ -126,6 +128,7 @@
     expect([ds numberOfSections]).to.equal(2);
     [ds removeSectionWithIdentifier:@0];
     expect([ds numberOfSections]).to.equal(1);
+    expect([ds indexOfSectionWithIdentifier:@1]).to.equal(0);
 }
 
 - (void) test_adjust_section_row_count
