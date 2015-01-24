@@ -266,6 +266,13 @@ typedef void (^SSTableCellDeletionBlock)
 - (void) deleteSectionsAtIndexes:(NSIndexSet *)indexes;
 
 /**
+*  Reload the specified indexes. You probably don't need to call this directly.
+*
+*  @param indexes sections to reload
+*/
+- (void) reloadSectionsAtIndexes:(NSIndexSet *)indexes;
+
+/**
  *  Reload data in the table and collection view and reset empty view state.
  */
 - (void) reloadData;

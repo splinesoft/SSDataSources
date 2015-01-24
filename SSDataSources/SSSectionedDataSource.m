@@ -204,6 +204,34 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
     [self reloadCellsAtIndexPaths:@[ indexPath ]];
 }
 
+#pragma mark - Adjusting
+
+- (BOOL)adjustSectionAtIndex:(NSUInteger)index toNumberOfItems:(NSUInteger)numberOfItems {
+    
+    if ([self numberOfItemsInSection:index] == numberOfItems) {
+        return NO;
+    }
+    
+    if (numberOfItems == 0 && self.shouldRemoveEmptySections) {
+        [self removeSectionAtIndex:index];
+        return YES;
+    }
+    
+    SSSection *section = [self sectionAtIndex:index];
+
+    if (numberOfItems > [section numberOfItems]) {
+        for (NSUInteger i = [section numberOfItems]; i < numberOfItems; i++) {
+            [section.items insertObject:@(i) atIndex:i];
+        }
+    } else {
+        [section.items removeObjectsInRange:NSMakeRange(numberOfItems, [section numberOfItems] - numberOfItems)];
+    }
+    
+    [self reloadSectionsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
+    
+    return YES;
+}
+
 #pragma mark - Removing
 
 - (void)clearSections {

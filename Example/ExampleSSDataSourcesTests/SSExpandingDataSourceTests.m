@@ -230,4 +230,24 @@
     [mockTable verify];
 }
 
+- (void)testAdjustingSectionRespectsCollapseCount {
+    ds = [[SSExpandingDataSource alloc] initWithItems:@[ @1, @2, @3 ]];
+    ds.collapsedSectionCountBlock = ^NSInteger(SSSection *sec, NSInteger sectionIndex) {
+        return 1;
+    };
+    [ds setSectionAtIndex:0 expanded:NO];
+    
+    [ds adjustSectionAtIndex:0 toNumberOfItems:1];
+    
+    expect([ds numberOfItemsInSection:0]).to.equal(1);
+    
+    [ds adjustSectionAtIndex:0 toNumberOfItems:5];
+    
+    expect([ds numberOfItemsInSection:0]).to.equal(1);
+    
+    [ds setSectionAtIndex:0 expanded:YES];
+    
+    expect([ds numberOfItemsInSection:0]).to.equal(5);
+}
+
 @end
