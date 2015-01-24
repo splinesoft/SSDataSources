@@ -119,26 +119,6 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
   
 }
 
-#pragma mark - Adjusting
-
-- (BOOL)adjustSectionAtIndex:(NSInteger)index toNumberOfItems:(NSUInteger)numberOfItems {
-    SSSection *section = [self sectionAtIndex:index];
-
-    BOOL didAdjust = NO;
-    if (section.items.count != numberOfItems) {
-        if (numberOfItems > section.items.count) {
-            for (NSUInteger i = section.items.count; i < numberOfItems; i++) {
-                [section.items insertObject:@(i) atIndex:i];
-            }
-        } else {
-            [section.items removeObjectsInRange:NSMakeRange(numberOfItems, section.items.count - numberOfItems)];
-        }
-        didAdjust = YES;
-    }
-    [super reloadSectionsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
-    return didAdjust;
-}
-
 #pragma mark - Moving
 
 - (void)moveSectionAtIndex:(NSInteger)fromIndex toIndex:(NSInteger)toIndex {
@@ -222,6 +202,34 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
                                                         atIndex:(NSUInteger)indexPath.row];
     
     [self reloadCellsAtIndexPaths:@[ indexPath ]];
+}
+
+#pragma mark - Adjusting
+
+- (BOOL)adjustSectionAtIndex:(NSUInteger)index toNumberOfItems:(NSUInteger)numberOfItems {
+    
+    if ([self numberOfItemsInSection:index] == numberOfItems) {
+        return NO;
+    }
+    
+    if (numberOfItems == 0 && self.shouldRemoveEmptySections) {
+        [self removeSectionAtIndex:index];
+        return YES;
+    }
+    
+    SSSection *section = [self sectionAtIndex:index];
+
+    if (numberOfItems > [section numberOfItems]) {
+        for (NSUInteger i = [section numberOfItems]; i < numberOfItems; i++) {
+            [section.items insertObject:@(i) atIndex:i];
+        }
+    } else {
+        [section.items removeObjectsInRange:NSMakeRange(numberOfItems, [section numberOfItems] - numberOfItems)];
+    }
+    
+    [self reloadSectionsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
+    
+    return YES;
 }
 
 #pragma mark - Removing

@@ -48,6 +48,7 @@
  * removeItemAtIndexPath:
  * removeItemsAtIndexes:inSection:
  * removeItemsInRange:inSection:
+ * adjustSectionAtIndex:toNumberOfItems:
  *
  * Defaults to YES.
  */
@@ -77,13 +78,6 @@
  * See `sectionIdentifier` in SSSection.
  */
 - (NSUInteger) indexOfSectionWithIdentifier:(id)identifier;
-
-#pragma mark - Adjusting sections
-
-/**
- * Adjust a section to the given number of items and optionally reloads the section.
- */
-- (BOOL)adjustSectionAtIndex:(NSInteger)index toNumberOfItems:(NSUInteger)numberOfItems;
 
 #pragma mark - Moving sections
 
@@ -140,6 +134,29 @@
  * Append multiple items to the end of a single section.
  */
 - (void) appendItems:(NSArray *)items toSection:(NSInteger)section;
+
+#pragma mark - Adjusting sections
+
+/**
+ *  Adjust the number of items in this section to the desired number of items, then
+ *  reload the section. This is particularly useful with sections that contain placeholder
+ *  objects; see +[SSSection sectionWithNumberOfItems:]
+ *
+ *  @param index         the index of the section to adjust
+ *  @param numberOfItems the desired number of items for this section. If this is greater
+ *  than the number of items currently in this section, then one or more placeholder
+ *  objects will be inserted to bring this section up to the desired amount.
+ *  If this is less than the number of items currently in this section, then one or more
+ *  items will be deleted, starting with the last item in the section and working backwards.
+ *
+ *  @note if numberOfItems is 0 and shouldRemoveEmptySection is YES, the section will be
+ *  removed.
+ *
+ *  @return YES if one or more items were inserted or removed. NO if there was no action
+ *  taken due to numberOfItems being equal to the current number of items in the section.
+ */
+- (BOOL)adjustSectionAtIndex:(NSUInteger)index
+             toNumberOfItems:(NSUInteger)numberOfItems;
 
 #pragma mark - Removing sections
 

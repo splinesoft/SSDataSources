@@ -40,7 +40,6 @@
     expect(^{
         [ds collectionView:collectionView numberOfItemsInSection:0];
     }).to.raiseAny();
-
 }
 
 #pragma mark Defaults

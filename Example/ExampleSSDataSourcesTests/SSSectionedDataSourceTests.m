@@ -7,6 +7,12 @@
 @implementation SSSectionedDataSourceTests
 {
     SSSectionedDataSource *ds; // system-under-test
+    OCMockObject *mockTable;
+}
+
+- (void)setUp
+{
+    mockTable = [OCMockObject niceMockForClass:[UITableView class]];
 }
 
 - (void)test_removing_all_items_in_section_removes_the_section
@@ -130,15 +136,84 @@
                                                                                  identifier:@0]];
 
     // test that the return value indicates there was an adjustment made (decrement)
-    expect([ds adjustSectionAtIndex:0 toNumberOfItems:1]).to.equal(YES);
-    expect([[ds sectionAtIndex:0] numberOfItems]).to.equal(1);
+    expect([ds adjustSectionAtIndex:0 toNumberOfItems:1]).to.beTruthy();
+    expect([ds numberOfItemsInSection:0]).to.equal(1);
 
     // test that the return value indicates there was an adjustment made (increment)
-    expect([ds adjustSectionAtIndex:0 toNumberOfItems:5]).to.equal(YES);
-    expect([[ds sectionAtIndex:0] numberOfItems]).to.equal(5);
+    expect([ds adjustSectionAtIndex:0 toNumberOfItems:5]).to.beTruthy();
+    expect([ds numberOfItemsInSection:0]).to.equal(5);
 
     // test that the return value indicates there was not an adjustment made
-    expect([ds adjustSectionAtIndex:0 toNumberOfItems:5]).to.equal(NO);
+    expect([ds adjustSectionAtIndex:0 toNumberOfItems:5]).to.beFalsy();
+}
+
+- (void) test_adjusting_section_removes_from_end
+{
+    ds = [[SSSectionedDataSource alloc] initWithItems:@[ @1, @2, @3, @4, @5 ]];
+    
+    [ds adjustSectionAtIndex:0 toNumberOfItems:3];
+    
+    expect([ds numberOfItemsInSection:0]).to.equal(3);
+    expect([ds sectionAtIndex:0].items).to.equal(@[ @1, @2, @3 ]);
+}
+
+- (void) test_adjusting_section_reloads_section
+{
+    ds = [[SSSectionedDataSource alloc] initWithSection:[SSSection sectionWithNumberOfItems:6]];
+    
+    ds.tableView = (UITableView *)mockTable;
+    
+    [[mockTable expect] reloadSections:[NSIndexSet indexSetWithIndex:0]
+                      withRowAnimation:ds.rowAnimation];
+    
+    [ds adjustSectionAtIndex:0 toNumberOfItems:5];
+    
+    [mockTable verify];
+}
+
+- (void) test_adjusting_to_empty_deletes_section
+{
+    ds = [[SSSectionedDataSource alloc] initWithSection:[SSSection sectionWithNumberOfItems:5]];
+    ds.shouldRemoveEmptySections = YES;
+    ds.tableView = (UITableView *)mockTable;
+    
+    [[mockTable expect] deleteSections:[NSIndexSet indexSetWithIndex:0]
+                      withRowAnimation:ds.rowAnimation];
+    
+    [ds adjustSectionAtIndex:0 toNumberOfItems:0];
+    
+    [mockTable verify];
+    expect([ds numberOfSections]).to.equal(0);
+}
+
+- (void) test_adjusting_to_empty_without_deletion
+{
+    ds = [[SSSectionedDataSource alloc] initWithSection:[SSSection sectionWithNumberOfItems:5]];
+    ds.shouldRemoveEmptySections = NO;
+    ds.tableView = (UITableView *)mockTable;
+    
+    [[mockTable expect] reloadSections:[NSIndexSet indexSetWithIndex:0]
+                      withRowAnimation:ds.rowAnimation];
+    
+    [ds adjustSectionAtIndex:0 toNumberOfItems:0];
+    
+    [mockTable verify];
+    expect([ds numberOfSections]).to.equal(1);
+    expect([ds numberOfItemsInSection:0]).to.equal(0);
+}
+
+- (void) test_nonadjustment_does_not_reload_section
+{
+    ds = [[SSSectionedDataSource alloc] initWithSection:[SSSection sectionWithNumberOfItems:6]];
+    
+    ds.tableView = (UITableView *)mockTable;
+    
+    [[mockTable reject] reloadSections:[NSIndexSet indexSetWithIndex:0]
+                      withRowAnimation:ds.rowAnimation];
+    
+    [ds adjustSectionAtIndex:0 toNumberOfItems:6];
+    
+    [mockTable verify];
 }
 
 @end
