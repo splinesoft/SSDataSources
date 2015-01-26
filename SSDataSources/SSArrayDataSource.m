@@ -7,7 +7,6 @@
 //
 
 #import "SSDataSources.h"
-#import <CoreData/CoreData.h>
 
 /**
  * An internal container to hold the raw items that are handed to SSArrayDataSource
