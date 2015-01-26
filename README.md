@@ -19,9 +19,21 @@ Install with [CocoaPods](http://cocoapods.org). Add to your `Podfile`:
 pod 'SSDataSources', :head # YOLO
 ```
 
-## Samples
+## Example
 
 All the tables and collection views in the `Example` project are built with `SSDataSources`.
+
+```bash
+pod try SSDataSources
+```
+
+Or:
+
+```bash
+cd Example
+pod install
+open ExampleSSDataSources.xcworkspace
+```
 
 ## Array Data Source
 

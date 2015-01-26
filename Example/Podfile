@@ -7,13 +7,7 @@ xcodeproj 'ExampleSSDataSources'
 pod 'SSDataSources', :path => "../SSDataSources.podspec"
 
 target :ExampleSSDataSourcesTests, :exclusive => true do
-  # A Matcher Framework for Objective-C/Cocoa with nicer assertions
-  # than OCUnit's (though it still works within SenTestCase subclasses).
-  pod 'Expecta', '~> 0.2.1'
-
-  # For mocking/faking objects, primarily UITableView/UICollectionView
-  pod 'OCMock', '~> 2.2'
-  
-  # Core Data tests
-  pod 'MagicalRecord', '2.2'
+  pod 'Expecta'
+  pod 'OCMock'
+  pod 'MagicalRecord'
 end
