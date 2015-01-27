@@ -59,16 +59,25 @@ Check out the example project for sample table and collection views that use the
     _wizardDataSource = [[SSArrayDataSource alloc] initWithItems:
                          @[ @"Merlyn", @"Gandalf", @"Melisandre" ]];
 
-	// SSDataSources creates your cell and calls
-	// this configure block for each cell with 
-	// the object being presented in that cell,
-	// the parent table or collection view,
-	// and the index path at which the cell appears.
+    // SSDataSources creates your cell and calls
+    // this configure block for each cell with 
+    // the object being presented in that cell,
+    // the parent table or collection view,
+    // and the index path at which the cell appears.
     self.wizardDataSource.cellConfigureBlock = ^(SSBaseTableCell *cell, 
                                                  NSString *wizard,
                                                  UITableView *tableView,
                                                  NSIndexPath *indexPath) {
         cell.textLabel.text = wizard;
+    };
+    
+    self.wizardDataSource.tableActionBlock = ^BOOL(SSCellActionType action,
+                                                   UITableView *tableView,
+                                                   NSIndexPath *indexPath) {
+        // Disallow gestures for moving and editing.
+        // You could instead do something like allowing only editing:
+        // return action == SSCellActionTypeEdit;
+        return NO;
     };
     
     // Set the tableView property and the data source will perform
@@ -95,7 +104,7 @@ self.wizardDataSource.emptyView = noItemsLabel;
 
 // Optional - row animation for table updates.
 self.wizardDataSource.rowAnimation = UITableViewRowAnimationFade;
-	
+    
 // Automatically inserts two new cells at the end of the table.
 [self.wizardDataSource appendItems:@[ @"Saruman", @"Alatar" ]];
 
@@ -104,7 +113,7 @@ self.wizardDataSource.rowAnimation = UITableViewRowAnimationFade;
 
 // Sorry Merlyn :(
 [self.wizardDataSource moveItemAtIndex:0 toIndex:1];
-	
+    
 // Remove the second and third cells.
 [self.wizardDataSource removeItemsInRange:NSMakeRange( 1, 2 )];
 ```
@@ -115,10 +124,10 @@ Perhaps you have custom table cell classes or multiple classes in the same table
 self.wizardDataSource.cellCreationBlock = ^id(NSString *wizard, 
                                               UITableView *tableView, 
                                               NSIndexPath *indexPath) {
-	if ([wizard isEqualToString:@"Gandalf"]) {
-		return [MiddleEarthWizardCell cellForTableView:tableView];
-	} else if ([wizard isEqualToString:@"Merlyn"]) {
-		return [ArthurianWizardCell cellForTableView:tableView];
+    if ([wizard isEqualToString:@"Gandalf"]) {
+        return [MiddleEarthWizardCell cellForTableView:tableView];
+    } else if ([wizard isEqualToString:@"Merlyn"]) {
+        return [ArthurianWizardCell cellForTableView:tableView];
     }
 };
 
@@ -128,9 +137,20 @@ Your view controller should continue to implement `UITableViewDelegate`. `SSData
 
 ```objc
 - (void)tableView:(UITableView *)tv didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	NSString *wizard = [self.wizardDataSource itemAtIndexPath:indexPath];
-	
-	// do something with `wizard`
+    NSString *wizard = [self.wizardDataSource itemAtIndexPath:indexPath];
+    
+    // do something with `wizard`
+}
+
+- (CGFloat)tableView:(UITableView *)tv heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *wizard = [self.wizardDataSource itemAtIndexPath:indexPath];
+
+    // Calculate and return a height for `wizard`.
+    // You might do something like...
+    return [wizard boundingRectWithSize:CGSizeMake(CGRectGetWidth(tv), CGFLOAT_MAX)
+                                options:NSStringDrawingUsesLineFragmentOrigin
+                             attributes:@{ NSFontAttributeName : [UIFont boldSystemFontOfSize:14] }
+                                context:NULL].height;
 }
 ```
 
@@ -259,9 +279,9 @@ You're a modern wo/man-about-Internet and sometimes you want to present a `UITab
 @implementation SSCoreDataTableViewController
 
 - (void) viewDidLoad {
-	[super viewDidLoad];
-	
-	NSFetchRequest *triggerFetch = [Trigger MR_requestAllSortedBy:[Trigger defaultSortField]
+    [super viewDidLoad];
+    
+    NSFetchRequest *triggerFetch = [Trigger MR_requestAllSortedBy:[Trigger defaultSortField]
                                                         ascending:[Trigger defaultSortAscending]];
    
     _dataSource = [[SSCoreDataSource alloc] initWithFetchRequest:triggerFetch
