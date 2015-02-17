@@ -95,6 +95,11 @@
 - (void) replaceItemAtIndex:(NSUInteger)index withItem:(id)item;
 
 /**
+ *  Replace items at the specified indexes with items from the provided array.
+ */
+- (void) replaceItemsAtIndexes:(NSIndexSet *)indexes withItemsFromArray:(NSArray *)array;
+
+/**
  * Replace items in the specified range with items from the provided array.
  */
 - (void) replaceItemsInRange:(NSRange)range withItemsFromArray:(NSArray *)otherArray;

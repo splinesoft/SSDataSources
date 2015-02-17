@@ -645,7 +645,6 @@
 			baseConfigurationReference = 89D445B4C5AB7C33719C3823 /* Pods-ExampleSSDataSourcesTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ExampleSSDataSources.app/ExampleSSDataSources";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SDKROOT)/Developer/Library/Frameworks\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleSSDataSources/Supporting Files/ExampleSSDataSources-Prefix.pch";
 				INFOPLIST_FILE = "ExampleSSDataSourcesTests/Supporting Files/ExampleSSDataSourcesTests-Info.plist";
@@ -660,7 +659,6 @@
 			baseConfigurationReference = 528C98377D5A90A3638E518A /* Pods-ExampleSSDataSourcesTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/ExampleSSDataSources.app/ExampleSSDataSources";
-				FRAMEWORK_SEARCH_PATHS = "\"$(SDKROOT)/Developer/Library/Frameworks\"";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleSSDataSources/Supporting Files/ExampleSSDataSources-Prefix.pch";
 				INFOPLIST_FILE = "ExampleSSDataSourcesTests/Supporting Files/ExampleSSDataSourcesTests-Info.plist";

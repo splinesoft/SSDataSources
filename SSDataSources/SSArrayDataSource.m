@@ -168,11 +168,15 @@ static void *SSArrayKeyPathDataSourceContext = &SSArrayKeyPathDataSourceContext;
 #pragma mark - Replacing items
 
 - (void)replaceItemAtIndex:(NSUInteger)index withItem:(id)item {
-    [self.items replaceObjectAtIndex:index withObject:item];
+    [self replaceItemsAtIndexes:[NSIndexSet indexSetWithIndex:index] withItemsFromArray:@[ item ]];
 }
 
 - (void)replaceItemsInRange:(NSRange)range withItemsFromArray:(NSArray *)otherArray {
-    [self.items replaceObjectsInRange:range withObjectsFromArray:otherArray];
+    [self replaceItemsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range] withItemsFromArray:otherArray];
+}
+
+- (void)replaceItemsAtIndexes:(NSIndexSet *)indexes withItemsFromArray:(NSArray *)array {
+    [self.items replaceObjectsAtIndexes:indexes withObjects:array];
 }
 
 #pragma mark - Moving Items
