@@ -35,6 +35,13 @@
     }).to.raiseAny();
 }
 
+- (void)testRequiresSubclassesToImplementSectionCount
+{
+    expect(^{
+        [ds numberOfSections];
+    }).to.raiseAny();
+}
+
 - (void)testRequiresSubclassesToImplementCollectionViewSectionCounting
 {
     expect(^{

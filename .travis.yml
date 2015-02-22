@@ -1,7 +1,7 @@
 osx_image: xcode611
 language: objective-c
 before_install: 
-- gem install cocoapods xcpretty obcd -N
+- gem install cocoapods xcpretty obcd slather -N
 cache: cocoapods
 podfile: Example/Podfile
 env:
@@ -9,9 +9,10 @@ env:
 script:
 - set -o pipefail && xcodebuild -workspace Example/ExampleSSDataSources.xcworkspace
   -scheme ExampleSSDataSources -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 6" 
-  clean test | xcpretty -c
+  GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES clean test | xcpretty -c
 - pod lib lint --quick
 - obcd --path SSDataSources find HeaderStyle
 notifications:
   slack:
     secure: Lu0j1+59o9FCSe/sM7Pf8Qx0aD7akVXaYjstbta8vGJxaW4a3w20Em1N1KHapYCYOiVHKiBOHRVcMdO+4yfA7TREinVf1sUUskgZu3Ou18Tx0bB53fRFnhE8Wz+zOYzeL89K20hEvSzHVj13/DLCwIcERXIkBKwoAjJIH8HiKi8=
+after_success: slather
