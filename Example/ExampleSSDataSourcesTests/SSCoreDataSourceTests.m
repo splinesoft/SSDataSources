@@ -19,6 +19,7 @@
 {
     SSCoreDataSource *dataSource;
     UITableView *tableView;
+    UICollectionView *collectionView;
 }
 
 - (void)setUp
@@ -29,6 +30,7 @@
     [MagicalRecord setupCoreDataStackWithInMemoryStore];
     
     tableView = [OCMockObject niceMockForClass:UITableView.class];
+    collectionView = [OCMockObject niceMockForClass:UICollectionView.class];
     
     dataSource = [[SSCoreDataSource alloc] initWithFetchRequest:[Wizard MR_requestAllSortedBy:@"name" ascending:YES]
                                                       inContext:[NSManagedObjectContext MR_defaultContext]
@@ -120,6 +122,8 @@
     }];
 
     [mockTable verify];
+    
+    expect([dataSource tableView:dataSource.tableView sectionForSectionIndexTitle:@"Name" atIndex:0]).to.equal(0);
 }
 
 - (void)testDeletingItemDeletesRow
@@ -198,6 +202,8 @@
     expect([dataSource indexPathForItem:aWizard]).to.equal([NSIndexPath indexPathForRow:0 inSection:0]);
     
     expect([dataSource indexPathForItemWithId:[aWizard objectID]]).to.equal([NSIndexPath indexPathForRow:0 inSection:0]);
+
+    expect([dataSource indexPathForItemWithId:[NSManagedObjectID new]]).to.beNil();
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate

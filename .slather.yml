@@ -3,4 +3,3 @@ xcodeproj: Example/ExampleSSDataSources.xcodeproj
 source_directory: SSDataSources
 ignore:
   - Example/ExampleSSDataSourcesTests
-  
