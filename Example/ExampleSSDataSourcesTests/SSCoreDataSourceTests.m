@@ -41,6 +41,8 @@
     [super tearDown];
     
     [Wizard MR_truncateAll];
+    
+    dataSource = nil;
 }
 
 - (void)testRetrievesItems
@@ -90,6 +92,33 @@
     
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     
+    [mockTable verify];
+}
+
+- (void)testInsertingSectionInsertsSection
+{
+    id mockTable = tableView;
+    dataSource = [[SSCoreDataSource alloc] initWithFetchRequest:[Wizard MR_requestAllSortedBy:@"name" ascending:YES]
+                                                      inContext:[NSManagedObjectContext MR_defaultContext]
+                                             sectionNameKeyPath:@"name"];
+    dataSource.tableView = tableView;
+    dataSource.rowAnimation = UITableViewRowAnimationLeft;
+    
+    [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *context) {
+        [Wizard MR_truncateAllInContext:context];
+    }];
+    
+    expect([dataSource numberOfSections]).to.equal(0);
+    
+    [[mockTable expect] insertSections:[NSIndexSet indexSetWithIndex:0]
+                      withRowAnimation:dataSource.rowAnimation];
+    
+    [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *context) {
+        Wizard *w = [Wizard MR_createInContext:context];
+        w.name = @"Name";
+        w.realm = @"Realm";
+    }];
+
     [mockTable verify];
 }
 
@@ -153,10 +182,11 @@
     
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     
-    [tableView moveRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
-                      toIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    [dataSource tableView:dataSource.tableView
+       moveRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+              toIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
     
-    expect(didMove).to.beTruthy;
+    expect(didMove).to.beTruthy();
 }
 
 - (void)testFindingManagedObjects
@@ -166,6 +196,15 @@
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     
     expect([dataSource indexPathForItem:aWizard]).to.equal([NSIndexPath indexPathForRow:0 inSection:0]);
+    
+    expect([dataSource indexPathForItemWithId:[aWizard objectID]]).to.equal([NSIndexPath indexPathForRow:0 inSection:0]);
+}
+
+#pragma mark - NSFetchedResultsControllerDelegate
+
+- (void)testSectionIndexTitles
+{
+    expect([dataSource controller:dataSource.controller sectionIndexTitleForSectionName:@"Section"]).to.equal(@"Section");
 }
 
 @end

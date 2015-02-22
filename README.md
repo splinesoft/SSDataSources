@@ -1,7 +1,7 @@
 SSDataSources
 =============
 
-[![Build Status](https://travis-ci.org/splinesoft/SSDataSources.svg?branch=master)](https://travis-ci.org/splinesoft/SSDataSources) [![Documentation](http://img.shields.io/cocoapods/v/SSDataSources.svg?style=flat)](http://cocoadocs.org/docsets/SSDataSources/) 
+[![Build Status](https://travis-ci.org/splinesoft/SSDataSources.svg?branch=master)](https://travis-ci.org/splinesoft/SSDataSources) [![Documentation](http://img.shields.io/cocoapods/v/SSDataSources.svg?style=flat)](http://cocoadocs.org/docsets/SSDataSources/) [![Coverage Status](https://coveralls.io/repos/splinesoft/SSDataSources/badge.svg)](https://coveralls.io/r/splinesoft/SSDataSources)
 
 Flexible data sources for your `UITableView` and `UICollectionView`. *wow, much DRY*
 

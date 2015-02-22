@@ -203,6 +203,28 @@
     [mockTable verify];
 }
 
+- (void)testSectionToggle
+{
+    ds = [[SSExpandingDataSource alloc] initWithItems:@[ @1, @2 ]];
+    ds.collapsedSectionCountBlock = ^NSInteger(SSSection *sec, NSInteger sectionIndex) {
+        return 1;
+    };
+    
+    expect([ds numberOfItemsInSection:0]).to.equal(2);
+    [ds toggleSectionAtIndex:0];
+    expect([ds numberOfItemsInSection:0]).to.equal(1);
+    SSSection *section = [ds sectionAtIndex:0];
+    [ds setSection:section expanded:NO];
+    [ds setSection:nil expanded:NO];
+    expect([ds numberOfItemsInSection:0]).to.equal(1);
+    [ds replaceItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] withItem:@2];
+    expect([ds itemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]).to.equal(@2);
+    [ds removeItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+    expect([ds numberOfItemsInSection:0]).to.equal(1);
+    [ds insertItem:@3 atIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+    expect([ds numberOfItemsInSection:0]).to.equal(1);
+}
+
 - (void)testMovingSection {
     ds = [[SSExpandingDataSource alloc] initWithItems:@[ @1, @2, @3 ]];
     ds.collapsedSectionCountBlock = ^NSInteger(SSSection *sec, NSInteger sectionIndex) {

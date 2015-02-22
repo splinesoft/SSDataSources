@@ -1,5 +1,6 @@
 #import "SSTestHelper.h"
 #import <SSDataSources.h>
+#import "Wizard.h"
 
 @interface SSArrayDataSourceTests : XCTestCase
 @end
@@ -8,14 +9,25 @@
 {
     UITableView *tableView;
     UICollectionView *collectionView;
+    SSArrayDataSource *dataSource;
 }
 
 - (void)setUp
 {
     [super setUp];
+    
+    [MagicalRecord setupCoreDataStackWithInMemoryStore];
 
     tableView = [OCMockObject niceMockForClass:UITableView.class];
     collectionView = [OCMockObject niceMockForClass:UICollectionView.class];
+    dataSource = [[SSArrayDataSource alloc] initWithItems:nil];
+}
+
+- (void)tearDown
+{
+    [super tearDown];
+    
+    [Wizard MR_truncateAll];
 }
 
 - (void)testInitializable
@@ -41,6 +53,16 @@
     expect(^{
         [ds collectionView:collectionView numberOfItemsInSection:0];
     }).toNot.raiseAny();
+}
+
+- (void)testNilIndexPathAccess
+{
+    expect([dataSource itemAtIndexPath:nil]).to.beNil();
+}
+
+- (void)testOutOfBoundsIndexPathAccess
+{
+    expect([dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:10 inSection:0]]).to.beNil();
 }
 
 #pragma mark UITableViewDataSource
@@ -118,6 +140,12 @@
     ds.tableView = mockTableView;
 
     [ds clearItems];
+    expect(ds.numberOfItems).to.equal(0);
+    
+    [ds appendItem:@"Item"];
+    expect(ds.numberOfItems).to.equal(1);
+    
+    [ds removeAllItems];
     expect(ds.numberOfItems).to.equal(0);
 }
 
@@ -214,6 +242,12 @@
     SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[@"foo"]];
     [ds insertItems:@[@"baz"] atIndexes:[NSIndexSet indexSetWithIndex:0]];
     expect(ds.allItems).to.equal((@[@"baz", @"foo"]));
+}
+
+- (void)testInsertingItemsGuard
+{
+    [dataSource insertItems:@[] atIndexes:nil];
+    expect(dataSource.numberOfItems).to.equal(0);
 }
 
 - (void)testInsertingItemsInsertsRowsIntoDataSourceTableView
@@ -537,15 +571,48 @@
 
     expect(ds.numberOfItems).to.equal(@3);
     
-    ds.tableDeletionBlock = ^(SSArrayDataSource *dataSource,
+    ds.tableDeletionBlock = ^(SSArrayDataSource *dsds,
                               UITableView *tableView,
                               NSIndexPath *indexPath) {
         
-        [dataSource removeItemAtIndex:(NSUInteger)indexPath.row];
+        [dsds removeItemAtIndex:(NSUInteger)indexPath.row];
     };
     
     [ds tableView:tableView commitEditingStyle:UITableViewCellEditingStyleDelete forRowAtIndexPath:indexPath];
     expect(ds.numberOfItems).to.equal(@2);
+}
+
+#pragma mark - Core Data
+
+- (void)testFindingManagedObjectById
+{
+    Wizard *wizard = [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth"];
+    Wizard *wizard2 = [Wizard wizardWithName:@"Merlyn" realm:@"Arthurian"];
+    
+    [dataSource appendItem:wizard];
+    
+    expect([dataSource indexPathForItemWithId:[wizard objectID]]).to.equal([NSIndexPath indexPathForItem:0 inSection:0]);
+    expect([dataSource indexPathForItemWithId:[wizard2 objectID]]).to.beNil();
+}
+
+#pragma mark - Empty View
+
+- (void)testEmptyView
+{
+    UIView *emptyView = [UIView new];
+    
+    dataSource.tableView = (UITableView *)tableView;
+    dataSource.emptyView = emptyView;
+    
+    expect(emptyView.hidden).to.beFalsy();
+    
+    [dataSource appendItem:@"Item"];
+    
+    expect(emptyView.hidden).to.beTruthy();
+    
+    dataSource.emptyView = emptyView;
+    
+    expect(emptyView.frame).toNot.equal(CGRectZero);
 }
 
 @end

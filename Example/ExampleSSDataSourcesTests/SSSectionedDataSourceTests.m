@@ -13,6 +13,8 @@
 - (void)setUp
 {
     mockTable = [OCMockObject niceMockForClass:[UITableView class]];
+    ds = [[SSSectionedDataSource alloc] initWithItems:nil];
+    ds.tableView = (UITableView *)mockTable;
 }
 
 - (void)test_removing_all_items_in_section_removes_the_section
@@ -217,6 +219,118 @@
     [ds adjustSectionAtIndex:0 toNumberOfItems:6];
     
     [mockTable verify];
+}
+
+- (void)testSectionAccess
+{
+    expect([ds sectionWithIdentifier:@3]).to.beNil();
+    [ds appendSection:[SSSection sectionWithNumberOfItems:3 header:@"H" footer:@"F" identifier:@3]];
+    expect([ds sectionWithIdentifier:@3]).toNot.beNil();
+    expect([ds tableView:ds.tableView titleForHeaderInSection:0]).to.equal(@"H");
+    expect([ds tableView:ds.tableView titleForFooterInSection:0]).to.equal(@"F");
+}
+
+- (void)testMovingItems
+{
+    [ds appendSection:[SSSection sectionWithNumberOfItems:1]];
+    [ds appendItems:@[ @2, @3 ] toSection:0];
+    expect([ds numberOfItems]).to.equal(3);
+    [ds tableView:ds.tableView
+moveRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+      toIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+    expect([ds itemAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]]).to.equal(@0);
+}
+
+- (void)testInsertingSections
+{
+    [ds insertSections:@[
+               @[ @1, @2 ],
+               [SSSection sectionWithNumberOfItems:4]
+            ]
+             atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)]];
+    
+    expect(ds.numberOfSections).to.equal(2);
+    expect(ds.numberOfItems).to.equal(6);
+    
+    [ds insertItem:@3
+       atIndexPath:[NSIndexPath indexPathForRow:2 inSection:0]];
+    expect([ds numberOfItemsInSection:0]).to.equal(3);
+    
+    [ds insertItems:@[ @3, @4 ]
+          atIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)]
+          inSection:0];
+    
+    expect([ds numberOfItemsInSection:0]).to.equal(5);
+    
+    [ds appendItems:@[ @5, @6 ] toSection:1];
+    
+    expect([ds numberOfItemsInSection:1]).to.equal(6);
+}
+
+- (void)testClearingSections
+{
+    [ds appendSection:[SSSection sectionWithNumberOfItems:1]];
+    expect(ds.numberOfSections).to.equal(1);
+    [ds clearSections];
+    expect(ds.numberOfSections).to.equal(0);
+    [ds appendSection:[SSSection sectionWithNumberOfItems:1]];
+    expect(ds.numberOfSections).to.equal(1);
+    [ds removeAllSections];
+    expect(ds.numberOfSections).to.equal(0);
+    [ds appendSection:[SSSection sectionWithNumberOfItems:1]];
+    expect(ds.numberOfSections).to.equal(1);
+    [ds removeSectionsInRange:NSMakeRange(0, 1)];
+    expect(ds.numberOfSections).to.equal(0);
+}
+
+- (void)testSectionCopy
+{
+    SSSection *section = [SSSection sectionWithNumberOfItems:3 header:@"H" footer:@"F" identifier:@3];
+    SSSection *copySection = [section copy];
+    
+    expect(copySection.numberOfItems).to.equal(section.numberOfItems);
+    expect(copySection.header).to.equal(section.header);
+    expect(copySection.footer).to.equal(section.footer);
+    expect(copySection.sectionIdentifier).to.equal(section.sectionIdentifier);
+}
+
+#pragma mark - Header/Footer
+
+- (void)testHeaderFooterView
+{
+    SSBaseHeaderFooterView *headerFooter;
+    
+    expect([SSBaseHeaderFooterView identifier]).to.equal(NSStringFromClass([SSBaseHeaderFooterView class]));
+    
+    headerFooter = [SSBaseHeaderFooterView new];
+    
+    expect(headerFooter.reuseIdentifier).to.equal([SSBaseHeaderFooterView identifier]);
+}
+
+#pragma mark - UITableViewDelegate helpers
+
+- (void)testHeaderFooterViewDelegate
+{
+    SSSection *section = [SSSection sectionWithNumberOfItems:1];
+    section.headerClass = [SSBaseHeaderFooterView class];
+    section.footerClass = [SSBaseHeaderFooterView class];
+    [ds appendSection:section];
+    
+    SSBaseHeaderFooterView *header = [ds viewForHeaderInSection:0];
+    expect(header).toNot.beNil();
+    
+    SSBaseHeaderFooterView *footer = [ds viewForFooterInSection:0];
+    expect(footer).toNot.beNil();
+    
+    section.headerHeight = 10;
+    section.footerHeight = 20;
+    expect([ds heightForHeaderInSection:0]).to.equal(10);
+    expect([ds heightForFooterInSection:0]).to.equal(20);
+    
+    section.header = @"H";
+    section.footer = @"F";
+    expect([ds titleForHeaderInSection:0]).to.equal(@"H");
+    expect([ds titleForFooterInSection:0]).to.equal(@"F");
 }
 
 @end
