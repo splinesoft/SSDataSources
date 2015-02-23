@@ -15,9 +15,15 @@
 - (void)setUp
 {
     [super setUp];
-    ds = [[SSBaseDataSource alloc] init];
+    ds = [SSBaseDataSource new];
     tableView = [OCMockObject niceMockForClass:UITableView.class];
     collectionView = [OCMockObject niceMockForClass:UICollectionView.class];
+}
+
+- (void)tearDown
+{
+    [super tearDown];
+    ds = nil;
 }
 
 - (void)testInitializable

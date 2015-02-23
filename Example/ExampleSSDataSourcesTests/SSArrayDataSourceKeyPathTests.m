@@ -74,6 +74,7 @@
         .to.equal([NSIndexPath indexPathForRow:0 inSection:0]);
     expect([dataSource indexPathForItem:@"Shelley"])
         .to.equal([NSIndexPath indexPathForRow:1 inSection:0]);
+    expect([dataSource indexPathForItem:[NSNull null]]).to.beNil();
 }
 
 #pragma mark Item addition

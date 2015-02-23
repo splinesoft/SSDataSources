@@ -28,6 +28,8 @@
     [super tearDown];
     
     [Wizard MR_truncateAll];
+    
+    dataSource = nil;
 }
 
 - (void)testInitializable
@@ -586,8 +588,8 @@
 
 - (void)testFindingManagedObjectById
 {
-    Wizard *wizard = [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth"];
-    Wizard *wizard2 = [Wizard wizardWithName:@"Merlyn" realm:@"Arthurian"];
+    Wizard *wizard = [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth" inContext:[NSManagedObjectContext MR_defaultContext]];
+    Wizard *wizard2 = [Wizard wizardWithName:@"Merlyn" realm:@"Arthurian" inContext:[NSManagedObjectContext MR_defaultContext]];
     
     [dataSource appendItem:wizard];
     
@@ -613,6 +615,9 @@
     dataSource.emptyView = emptyView;
     
     expect(emptyView.frame).toNot.equal(CGRectZero);
+    
+    dataSource.tableView = nil;
+    dataSource.emptyView = emptyView;
 }
 
 @end
