@@ -13,6 +13,7 @@
 @interface Wizard : NSManagedObject
 
 + (instancetype) wizardWithName:(NSString *)name realm:(NSString *)realm;
++ (instancetype) wizardWithName:(NSString *)name realm:(NSString *)realm inContext:(NSManagedObjectContext *)context;
 
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSString * realm;

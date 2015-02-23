@@ -14,7 +14,13 @@
 @dynamic realm;
 
 + (instancetype)wizardWithName:(NSString *)name realm:(NSString *)realm {
-    Wizard *wizard = [self MR_createInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+    return [self wizardWithName:name
+                          realm:realm
+                      inContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+}
+
++ (instancetype)wizardWithName:(NSString *)name realm:(NSString *)realm inContext:(NSManagedObjectContext *)context {
+    Wizard *wizard = [self MR_createInContext:context];
     
     wizard.name = name;
     wizard.realm = realm;
