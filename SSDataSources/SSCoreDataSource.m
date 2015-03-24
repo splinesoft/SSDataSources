@@ -237,10 +237,14 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
                         }
                     }];
                 }
-            } completion:nil];
-        }
-        
-        if ([self.objectUpdates count] > 0 && [self.sectionUpdates count] == 0) {
+            } completion:^(BOOL finished) {
+                [self.sectionUpdates removeAllObjects];
+                [self.objectUpdates removeAllObjects];
+                
+                // Hackish; force recalculation of empty view state
+                self.emptyView = self.emptyView;
+            }];
+        } else if ([self.objectUpdates count] > 0) {
             [collectionView performBatchUpdates:^{
                 for (NSDictionary *change in self.objectUpdates) {
                     [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id indexPath, BOOL *stop) {
@@ -263,15 +267,14 @@ moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath
                         }
                     }];
                 }
-            } completion:nil];
+            } completion:^(BOOL finished) {
+                [self.objectUpdates removeAllObjects];
+                
+                // Hackish; force recalculation of empty view state
+                self.emptyView = self.emptyView;
+            }];
         }
     }
-    
-    [self.sectionUpdates removeAllObjects];
-    [self.objectUpdates removeAllObjects];
-    
-    // Hackish; force recalculation of empty view state
-    self.emptyView = self.emptyView;
 }
 
 @end

@@ -29,8 +29,16 @@
     // No-op if stack already setup
     [MagicalRecord setupCoreDataStackWithInMemoryStore];
     
+    [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *context) {
+        [Wizard MR_truncateAllInContext:context];
+    }];
+    
     tableView = [OCMockObject niceMockForClass:UITableView.class];
-    collectionView = [OCMockObject niceMockForClass:UICollectionView.class];
+    collectionView = [[UICollectionView alloc] initWithFrame:[[UIScreen mainScreen] bounds]
+                                        collectionViewLayout:[UICollectionViewFlowLayout new]];
+    
+    [collectionView registerClass:[SSBaseCollectionCell class]
+       forCellWithReuseIdentifier:[SSBaseCollectionCell identifier]];
     
     dataSource = [[SSCoreDataSource alloc] initWithFetchRequest:[Wizard MR_requestAllSortedBy:@"name" ascending:YES]
                                                       inContext:[NSManagedObjectContext MR_defaultContext]
@@ -42,18 +50,22 @@
 {
     [super tearDown];
     
-    [Wizard MR_truncateAll];
+    [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *context) {
+        [Wizard MR_truncateAllInContext:context];
+    }];
     
     dataSource = nil;
 }
 
 - (void)testRetrievesItems
 {
-    Wizard *w = [Wizard wizardWithName:@"Merlyn" realm:@"Arthurian"];
+    __block Wizard *w;
     
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
-    
-    expect([dataSource itemAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]]).to.equal(w);
+    [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *context) {
+        w = [Wizard wizardWithName:@"Merlyn" realm:@"Arthurian" inContext:context];
+    }];
+  
+    expect(dataSource.numberOfItems).to.equal(1);
 }
 
 - (void)testCountsItems
@@ -62,17 +74,17 @@
     
     dataSource.tableView = tv;
     
-    [Wizard wizardWithName:@"Merlyn" realm:@"Arthurian"];
+    [Wizard wizardWithName:@"Merlyn" realm:@"Arthurian" inContext:[NSManagedObjectContext MR_defaultContext]];
     
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     expect(dataSource.numberOfItems).to.equal(1);
     
     expect([tv numberOfRowsInSection:0]).to.equal(1);
     
-    [Wizard MR_truncateAll];
+    [Wizard MR_truncateAllInContext:[NSManagedObjectContext MR_defaultContext]];
     
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     expect(dataSource.numberOfItems).to.equal(0);
     
@@ -90,11 +102,24 @@
     [[mockTable expect] insertRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ]
                               withRowAnimation:animation];
     
-    [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth"];
+    [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth" inContext:[NSManagedObjectContext MR_defaultContext]];
     
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     [mockTable verify];
+}
+
+- (void)testInsertingItemInsertsRowInCollectionView
+{
+    dataSource.cellClass = [SSBaseCollectionCell class];
+    dataSource.collectionView = collectionView;
+    
+    [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *context) {
+        [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth" inContext:context];
+    }];
+    
+    expect([dataSource numberOfItemsInSection:0]).will.equal(1);
+    expect([collectionView numberOfItemsInSection:0]).will.equal(1);
 }
 
 - (void)testInsertingSectionInsertsSection
@@ -126,6 +151,24 @@
     expect([dataSource tableView:dataSource.tableView sectionForSectionIndexTitle:@"Name" atIndex:0]).to.equal(0);
 }
 
+- (void)testDeletingItemDeletesRowInCollectionView
+{
+    dataSource.cellClass = [SSBaseCollectionCell class];
+    dataSource.collectionView = collectionView;
+
+    [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *context) {
+        [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth" inContext:context];
+    }];
+
+    expect([dataSource numberOfItems]).will.equal(1);
+    
+    [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *context) {
+        [Wizard MR_truncateAllInContext:context];
+    }];
+
+    expect([dataSource numberOfItems]).will.equal(0);
+}
+
 - (void)testDeletingItemDeletesRow
 {
     id mockTable = tableView;
@@ -137,13 +180,13 @@
     [[mockTable expect] deleteRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ]
                               withRowAnimation:animation];
     
-    Wizard *w = [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth"];
+    Wizard *w = [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth" inContext:[NSManagedObjectContext MR_defaultContext]];
     
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
-    [w MR_deleteInContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+    [w MR_deleteInContext:[NSManagedObjectContext MR_defaultContext]];
     
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     [mockTable verify];
 }
@@ -159,13 +202,13 @@
     [[mockTable expect] reloadRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ]
                               withRowAnimation:animation];
     
-    Wizard *w = [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth"];
+    Wizard *w = [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth" inContext:[NSManagedObjectContext MR_defaultContext]];
     
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     w.name = @"Pallando";
     
-    [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
     
     [mockTable verify];
 }
@@ -181,8 +224,8 @@
         didMove = YES;
     };
     
-    [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth"];
-    [Wizard wizardWithName:@"Melisandre" realm:@"Westeros"];
+    [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth" inContext:[NSManagedObjectContext MR_defaultContext]];
+    [Wizard wizardWithName:@"Melisandre" realm:@"Westeros" inContext:[NSManagedObjectContext MR_defaultContext]];
     
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     
@@ -195,7 +238,7 @@
 
 - (void)testFindingManagedObjects
 {
-    Wizard *aWizard = [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth"];
+    Wizard *aWizard = [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth" inContext:[NSManagedObjectContext MR_defaultContext]];
     
     [[NSManagedObjectContext MR_contextForCurrentThread] MR_saveToPersistentStoreAndWait];
     
