@@ -122,6 +122,41 @@
     expect([collectionView numberOfItemsInSection:0]).will.equal(1);
 }
 
+- (void)testInsertingAndDeletingCollectionViewSections
+{
+    dataSource = [[SSCoreDataSource alloc] initWithFetchRequest:[Wizard MR_requestAllSortedBy:@"name" ascending:YES]
+                                                      inContext:[NSManagedObjectContext MR_defaultContext]
+                                             sectionNameKeyPath:@"realm"];
+    dataSource.cellClass = [SSBaseCollectionCell class];
+    dataSource.collectionView = collectionView;
+    
+    expect([dataSource numberOfItems]).to.equal(0);
+    expect([dataSource numberOfSections]).to.equal(0);
+    
+    [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *context) {
+        [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth" inContext:context];
+        [Wizard wizardWithName:@"Pallando" realm:@"Middle-Earth" inContext:context];
+    }];
+    
+    expect([dataSource numberOfSections]).will.equal(1);
+    expect([dataSource numberOfItems]).will.equal(2);
+    
+    [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *context) {
+        [Wizard wizardWithName:@"Merlyn" realm:@"Arthurian" inContext:context];
+    }];
+    
+    expect([dataSource numberOfSections]).will.equal(2);
+    expect([dataSource numberOfItems]).will.equal(3);
+    
+    [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *context) {
+        Wizard *w = [Wizard MR_findFirstByAttribute:@"name" withValue:@"Merlyn" inContext:context];
+        [w MR_deleteInContext:context];
+    }];
+    
+    expect([dataSource numberOfSections]).will.equal(1);
+    expect([dataSource numberOfItems]).will.equal(2);
+}
+
 - (void)testInsertingSectionInsertsSection
 {
     id mockTable = tableView;
