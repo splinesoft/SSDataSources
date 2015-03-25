@@ -53,7 +53,7 @@
     expect(section.items).to.haveCountOf(0);
     expect(ds.numberOfSections).to.equal(0);
 
-    ds = [[SSSectionedDataSource alloc] initWithItems:@[ @"foo", @"bar", @"baz" ]];
+    ds = [[SSSectionedDataSource alloc] initWithSections:@[ [SSSection sectionWithItems:@[ @"foo", @"bar", @"baz" ]] ]];
     section = [ds sectionAtIndex:0];
     expect(section.items).to.haveCountOf(3);
     [ds removeItemsInRange:NSMakeRange(0, 3) inSection:0];

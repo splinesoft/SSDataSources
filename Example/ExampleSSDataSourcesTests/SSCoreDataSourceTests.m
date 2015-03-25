@@ -102,11 +102,39 @@
     [[mockTable expect] insertRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ]
                               withRowAnimation:animation];
     
-    [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth" inContext:[NSManagedObjectContext MR_defaultContext]];
+    [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *context) {
+        [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth" inContext:context];
+    }];
     
-    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    [mockTable verifyWithDelay:1];
+}
+
+- (void)testUpdatingItemMovesRow
+{
+    id mockTable = tableView;
     
-    [mockTable verify];
+    UITableViewRowAnimation animation = UITableViewRowAnimationLeft;
+    
+    dataSource.rowAnimation = animation;
+    
+    [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *context) {
+        [Wizard wizardWithName:@"Gandalf" realm:@"Middle-Earth" inContext:context];
+        [Wizard wizardWithName:@"Pallando" realm:@"Middle-Earth" inContext:context];
+    }];
+    
+    expect([dataSource numberOfItems]).will.equal(2);
+    
+    [[mockTable expect] deleteRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:0 inSection:0] ]
+                              withRowAnimation:animation];
+    [[mockTable expect] insertRowsAtIndexPaths:@[ [NSIndexPath indexPathForRow:1 inSection:0] ]
+                              withRowAnimation:animation];
+    
+    [MagicalRecord saveWithBlockAndWait:^(NSManagedObjectContext *context) {
+        Wizard *w = [Wizard MR_findFirstByAttribute:@"name" withValue:@"Gandalf" inContext:context];
+        w.name = @"ZGandalf";
+    }];
+    
+    [mockTable verifyWithDelay:1];
 }
 
 - (void)testInsertingItemInsertsRowInCollectionView
