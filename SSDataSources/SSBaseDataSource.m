@@ -284,8 +284,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // Reloading seems to work around an awkward delay where the empty view
     // is not immediately visible but the separator lines still are
-    [tableView reloadData];
-    [collectionView reloadData];
+    if (shouldShowEmptyView) {
+        [tableView reloadData];
+        [collectionView reloadData];
+    }
 }
 
 #pragma mark - NSIndexPath helpers
