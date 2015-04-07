@@ -13,8 +13,7 @@
  * SSArrayDataSource, SSSectionedDataSource, SSCoreDataSource, and SSExpandingDataSource.
  */
 
-@import Foundation;
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 @interface SSBaseDataSource : NSObject <UITableViewDataSource, UICollectionViewDataSource>
 

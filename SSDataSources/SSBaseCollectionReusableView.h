@@ -10,7 +10,7 @@
  * A simple base collection reusable view. Subclass me if necessary.
  */
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 @interface SSBaseCollectionReusableView : UICollectionReusableView
 

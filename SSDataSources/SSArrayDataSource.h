@@ -7,7 +7,7 @@
 //
 
 #import "SSBaseDataSource.h"
-@import CoreData;
+#import <CoreData/CoreData.h>
 
 /**
  * Data source for single-sectioned table and collection views.

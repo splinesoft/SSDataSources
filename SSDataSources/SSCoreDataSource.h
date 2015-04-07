@@ -7,7 +7,7 @@
 //
 
 #import "SSBaseDataSource.h"
-@import CoreData;
+#import <CoreData/CoreData.h>
 
 /**
  * Generic table/collectionview data source, useful when your data comes from an NSFetchedResultsController.

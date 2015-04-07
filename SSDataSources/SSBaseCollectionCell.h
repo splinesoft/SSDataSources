@@ -12,7 +12,7 @@
  * You probably don't need to override `identifier`.
  */
 
-@import UIKit;
+#import <UIKit/UIKit.h>
 
 @interface SSBaseCollectionCell : UICollectionViewCell
 

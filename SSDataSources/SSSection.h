@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Splinesoft. All rights reserved.
 //
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
 /**
  * SSSection models a single section in a multi-sectioned table or collection view
