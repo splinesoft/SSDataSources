@@ -189,4 +189,36 @@
     expect(indexPaths).to.equal(@[[NSIndexPath indexPathForRow:1 inSection:0]]);
 }
 
+#pragma mark Empty View
+
+- (void)testBasicEmptyViewVisibility
+{
+    // hidden empty view
+    SSArrayDataSource *arrayDataSource = [[SSArrayDataSource alloc] initWithItems:@[ @"item" ]];
+    arrayDataSource.tableView = tableView;
+    arrayDataSource.emptyView = [UIView new];
+    expect(arrayDataSource.emptyView.hidden).to.beTruthy();
+
+    // visible empty view
+    [arrayDataSource removeAllItems];
+    expect(arrayDataSource.emptyView.hidden).to.beFalsy();
+}
+
+- (void)testEmptyViewSetUpIsNotDependentOnParentViewConfiguration
+{
+    // The intent is to ensure that you can set up your emptyView *before* you
+    // assign the data source’s table or collection view.
+    SSArrayDataSource *arrayDataSource;
+
+    arrayDataSource = [[SSArrayDataSource alloc] initWithItems:@[]];
+    arrayDataSource.emptyView = [UIView new];
+    arrayDataSource.tableView = tableView;
+    expect(arrayDataSource.emptyView.hidden).to.beFalsy();
+
+    arrayDataSource = [[SSArrayDataSource alloc] initWithItems:@[]];
+    arrayDataSource.emptyView = [UIView new];
+    arrayDataSource.collectionView = collectionView;
+    expect(arrayDataSource.emptyView.hidden).to.beFalsy();
+}
+
 @end

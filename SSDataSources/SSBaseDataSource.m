@@ -104,6 +104,8 @@
     if (tableView) {
         tableView.dataSource = self;
     }
+
+    [self _updateEmptyView];
 }
 
 - (void)setCollectionView:(UICollectionView *)collectionView {
@@ -112,6 +114,8 @@
     if (collectionView) {
         collectionView.dataSource = self;
     }
+
+    [self _updateEmptyView];
 }
 
 #pragma mark - UITableViewDataSource
