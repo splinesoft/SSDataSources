@@ -204,4 +204,21 @@
     expect(arrayDataSource.emptyView.hidden).to.beFalsy();
 }
 
+- (void)testEmptyViewSetUpIsNotDependentOnParentViewConfiguration
+{
+    // The intent is to ensure that you can set up your emptyView *before* you
+    // assign the data source’s table or collection view.
+    SSArrayDataSource *arrayDataSource;
+
+    arrayDataSource = [[SSArrayDataSource alloc] initWithItems:@[]];
+    arrayDataSource.emptyView = [UIView new];
+    arrayDataSource.tableView = tableView;
+    expect(arrayDataSource.emptyView.hidden).to.beFalsy();
+
+    arrayDataSource = [[SSArrayDataSource alloc] initWithItems:@[]];
+    arrayDataSource.emptyView = [UIView new];
+    arrayDataSource.collectionView = collectionView;
+    expect(arrayDataSource.emptyView.hidden).to.beFalsy();
+}
+
 @end
