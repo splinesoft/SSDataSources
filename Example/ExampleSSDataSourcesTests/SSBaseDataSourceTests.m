@@ -189,4 +189,19 @@
     expect(indexPaths).to.equal(@[[NSIndexPath indexPathForRow:1 inSection:0]]);
 }
 
+#pragma mark Empty View
+
+- (void)testBasicEmptyViewVisibility
+{
+    // hidden empty view
+    SSArrayDataSource *arrayDataSource = [[SSArrayDataSource alloc] initWithItems:@[ @"item" ]];
+    arrayDataSource.tableView = tableView;
+    arrayDataSource.emptyView = [UIView new];
+    expect(arrayDataSource.emptyView.hidden).to.beTruthy();
+
+    // visible empty view
+    [arrayDataSource removeAllItems];
+    expect(arrayDataSource.emptyView.hidden).to.beFalsy();
+}
+
 @end
