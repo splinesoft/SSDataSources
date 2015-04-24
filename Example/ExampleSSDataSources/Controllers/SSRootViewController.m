@@ -28,7 +28,7 @@ typedef NS_ENUM( NSUInteger, SSDataSourcesExample ) {
 
 @implementation SSRootViewController
 
-- (id)init {
+- (instancetype)init {
     if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
         self.title = NSLocalizedString(@"SSDataSources", nil);
         

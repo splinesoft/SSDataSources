@@ -26,7 +26,7 @@
 
 - (instancetype)initWithItems:(NSArray *)items {
     if ((self = [self init])) {
-        self.items = (items ? items : [NSArray new]);
+        self.items = (items ? items : @[]);
     }
     
     return self;

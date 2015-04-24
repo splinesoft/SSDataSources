@@ -274,7 +274,7 @@
 - (void)test_updating_item_at_keyPath_updates_data_source
 {
     NSMutableArray *employees = [department mutableArrayValueForKey:@"employees"];
-    [employees replaceObjectAtIndex:1 withObject:@"Samuel"];
+    employees[1] = @"Samuel";
     expect([dataSource itemAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]])
             .to.equal(@"Samuel");
 }
@@ -287,7 +287,7 @@
     ]];
 
     NSMutableArray *employees = [department mutableArrayValueForKey:@"employees"];
-    [employees replaceObjectAtIndex:1 withObject:@"Samuel"];
+    employees[1] = @"Samuel";
 
     [mockDataSource verify];
 }

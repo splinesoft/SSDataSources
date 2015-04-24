@@ -16,7 +16,7 @@
 
 @implementation SSSection
 
-- (id)init {
+- (instancetype)init {
     if ((self = [super init])) {
         _items = [NSMutableArray new];
         _headerClass = [SSBaseHeaderFooterView class];
