@@ -43,6 +43,10 @@
     self.collectionSupplementaryCreationBlock = nil;
     self.tableActionBlock = nil;
     self.tableDeletionBlock = nil;
+    self.tableView.delegate = nil;
+    self.tableView.dataSource = nil;
+    self.collectionView.delegate = nil;
+    self.collectionView.dataSource = nil;
 }
 
 #pragma mark - SSBaseDataSource
