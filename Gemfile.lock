@@ -1,23 +1,4 @@
 GIT
-  remote: git@github.com:CocoaPods/CocoaPods.git
-  revision: 1393a2c89a54e1e0a1d0ed77fb7b13238ccb6297
-  branch: master
-  specs:
-    cocoapods (0.37.0)
-      activesupport (>= 3.2.15)
-      claide (~> 0.8.1)
-      cocoapods-core (= 0.37.0)
-      cocoapods-downloader (~> 0.9.0)
-      cocoapods-plugins (~> 0.4.2)
-      cocoapods-trunk (~> 0.6.0)
-      cocoapods-try (~> 0.4.3)
-      colored (~> 1.2)
-      escape (~> 0.0.4)
-      molinillo (~> 0.2.3)
-      nap (~> 0.8)
-      xcodeproj (~> 0.24.1)
-
-GIT
   remote: git@github.com:jhersh/slather.git
   revision: d4a6a762d625bb0abedc3865e6b9bababe8ce035
   branch: circleci-env
@@ -38,7 +19,20 @@ GEM
       tzinfo (~> 1.1)
     claide (0.8.1)
     clamp (0.6.5)
-    cocoapods-core (0.37.0)
+    cocoapods (0.37.1)
+      activesupport (>= 3.2.15)
+      claide (~> 0.8.1)
+      cocoapods-core (= 0.37.1)
+      cocoapods-downloader (~> 0.9.0)
+      cocoapods-plugins (~> 0.4.2)
+      cocoapods-trunk (~> 0.6.0)
+      cocoapods-try (~> 0.4.4)
+      colored (~> 1.2)
+      escape (~> 0.0.4)
+      molinillo (~> 0.2.3)
+      nap (~> 0.8)
+      xcodeproj (~> 0.24.1)
+    cocoapods-core (0.37.1)
       activesupport (>= 3.2.15)
       fuzzy_match (~> 2.0.4)
       nap (~> 0.8.0)
@@ -48,7 +42,7 @@ GEM
     cocoapods-trunk (0.6.0)
       nap (>= 0.8)
       netrc (= 0.7.8)
-    cocoapods-try (0.4.3)
+    cocoapods-try (0.4.4)
     colored (1.2)
     escape (0.0.4)
     fuzzy_match (2.0.4)
@@ -77,7 +71,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  cocoapods!
+  cocoapods
   obcd
   slather!
   xcpretty
