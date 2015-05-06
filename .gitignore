@@ -17,3 +17,5 @@ profile
 DerivedData
 
 Example/Pods
+vendor/bundle
+.bundle

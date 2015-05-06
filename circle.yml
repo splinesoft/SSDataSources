@@ -7,16 +7,18 @@ machine:
 dependencies:
   pre:
     - xcrun instruments -w "iPhone 6 (8.3 Simulator)" || exit 0
+    - sudo gem install bundler -N
+    - sudo gem update --system
   override:    
-    - sudo gem install cocoapods:0.36.4 xcpretty obcd slather:1.7 -N
-    - pod install --project-directory=Example
+    - bundle install --path=vendor/bundle --jobs=4
+    - bundle exec pod install --project-directory=Example
 test:
   override:
-    - set -o pipefail && xcodebuild -workspace Example/ExampleSSDataSources.xcworkspace
+    - set -o pipefail && bundle exec xcodebuild -workspace Example/ExampleSSDataSources.xcworkspace
       -scheme ExampleSSDataSources -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 6" 
       GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES clean test | xcpretty -c 
       --report junit --output ${CIRCLE_TEST_REPORTS}/junit.xml
-    - pod lib lint --quick
-    - obcd --path SSDataSources find HeaderStyle
+    - bundle exec pod lib lint --quick
+    - bundle exec obcd --path SSDataSources find HeaderStyle
   post:
-    - slather
+    - bundle exec slather
