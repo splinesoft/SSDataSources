@@ -14,7 +14,7 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   SSDataSources:
-    :path: ../SSDataSources.podspec
+    :path: "../SSDataSources.podspec"
 
 SPEC CHECKSUMS:
   Expecta: 392a6b5bfb9f4097e47dd8064d9b732079490332
@@ -22,4 +22,4 @@ SPEC CHECKSUMS:
   OCMock: a10ea9f0a6e921651f96f78b6faee95ebc813b92
   SSDataSources: b01170fb23b82acf0649194e9189b0bf5f702681
 
-COCOAPODS: 0.36.3
+COCOAPODS: 0.37.1
