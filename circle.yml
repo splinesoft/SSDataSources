@@ -18,5 +18,8 @@ test:
       --report junit --output ${CIRCLE_TEST_REPORTS}/junit.xml
     - pod lib lint --quick
     - obcd --path SSDataSources find HeaderStyle
-  post:
-    - slather
+deployment:
+  coveralls:
+    branch: /.*/
+    commands:
+      - slather
