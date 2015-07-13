@@ -1,7 +1,7 @@
 SSDataSources
 =============
 
-[![Circle CI](https://circleci.com/gh/splinesoft/SSDataSources.svg?style=svg&circle-token=cdbc822ee90ca92ed398f8a3277389474ef613f2)](https://circleci.com/gh/splinesoft/SSDataSources) [![Documentation](http://img.shields.io/cocoapods/v/SSDataSources.svg?style=flat)](http://cocoadocs.org/docsets/SSDataSources/) [![Coverage Status](https://coveralls.io/repos/splinesoft/SSDataSources/badge.svg)](https://coveralls.io/r/splinesoft/SSDataSources)
+[![Circle CI](https://circleci.com/gh/splinesoft/SSDataSources.svg?style=svg&circle-token=cdbc822ee90ca92ed398f8a3277389474ef613f2)](https://circleci.com/gh/splinesoft/SSDataSources) [![Documentation](http://img.shields.io/cocoapods/v/SSDataSources.svg?style=flat)](http://cocoadocs.org/docsets/SSDataSources/) [![Coverage Status](http://codecov.io/github/splinesoft/SSDataSources/coverage.svg?branch=master)](http://codecov.io/github/splinesoft/SSDataSources?branch=master)
 
 Flexible data sources for your `UITableView` and `UICollectionView`. *wow, much DRY*
 

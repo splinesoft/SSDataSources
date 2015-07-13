@@ -1,5 +1,0 @@
-ci_service: circleci
-coverage_service: coveralls
-xcodeproj: Example/ExampleSSDataSources.xcodeproj
-source_directory: SSDataSources
-ci_access_token: d2KYLO4m9WQxipzBTViXUgC6oiHt5nXBb

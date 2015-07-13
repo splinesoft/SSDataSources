@@ -8,7 +8,7 @@ dependencies:
   pre:
     - xcrun instruments -w "iPhone 6 (8.3 Simulator)" || exit 0
   override:    
-    - sudo gem install cocoapods:0.37.1 xcpretty obcd slather:1.7.1 -N
+    - sudo gem install cocoapods xcpretty obcd -N
     - pod install --project-directory=Example
 test:
   override:
@@ -19,7 +19,7 @@ test:
     - pod lib lint --quick
     - obcd --path SSDataSources find HeaderStyle
 deployment:
-  coveralls:
+  codecov:
     branch: /.*/
     commands:
-      - slather
+      - bash <(curl -s https://codecov.io/bash)
