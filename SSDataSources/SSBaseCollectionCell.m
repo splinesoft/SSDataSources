@@ -23,7 +23,7 @@
 + (instancetype)cellForCollectionView:(UICollectionView *)collectionView
                             indexPath:(NSIndexPath *)indexPath {
     
-    SSBaseCollectionCell *cell = (SSBaseCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:[self identifier]
+    SSBaseCollectionCell *cell = (SSBaseCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:[[self class] identifier]
                                                                                                    forIndexPath:indexPath];
   
     if (!cell.didCompleteSetup) {

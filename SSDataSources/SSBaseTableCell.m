@@ -19,11 +19,11 @@
 }
 
 + (instancetype)cellForTableView:(UITableView *)tableView {
-    SSBaseTableCell *cell = (SSBaseTableCell *)[tableView dequeueReusableCellWithIdentifier:[self identifier]];
+    SSBaseTableCell *cell = (SSBaseTableCell *)[tableView dequeueReusableCellWithIdentifier:[[self class] identifier]];
     
     if (!cell) {
-        cell = [[self alloc] initWithStyle:[self cellStyle]
-                           reuseIdentifier:[self identifier]];
+        cell = [[self alloc] initWithStyle:[[self class] cellStyle]
+                           reuseIdentifier:[[self class] identifier]];
         
         [cell configureCell];
     }
