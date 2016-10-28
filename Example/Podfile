@@ -1,13 +1,14 @@
-source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
 
-platform :ios, '6.0'
+target 'ExampleSSDataSources' do
+  pod 'SSDataSources', :path => '../'
 
-xcodeproj 'ExampleSSDataSources'
+  target 'ExampleSSDataSourcesTests' do
+    inherit! :search_paths
 
-pod 'SSDataSources', :path => "../SSDataSources.podspec"
-
-target :ExampleSSDataSourcesTests, :exclusive => true do
   pod 'Expecta'
   pod 'OCMock'
   pod 'MagicalRecord'
+  end
 end
+
