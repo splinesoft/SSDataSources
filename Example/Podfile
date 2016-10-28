@@ -1,14 +1,18 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
 platform :ios, '8.0'
+inhibit_all_warnings!
 
 target 'ExampleSSDataSources' do
   pod 'SSDataSources', :path => '../'
-
+  pod 'MagicalRecord', '~> 2.3'
+  
   target 'ExampleSSDataSourcesTests' do
     inherit! :search_paths
 
   pod 'Expecta'
   pod 'OCMock'
-  pod 'MagicalRecord'
+  
   end
 end
 
