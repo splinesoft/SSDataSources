@@ -68,7 +68,7 @@
                                                       target:self
                                                       action:@selector(addItem)],
         [[UIBarButtonItem alloc] initWithTitle:@"Remove Cell"
-                                         style:UIBarButtonItemStyleBordered
+                                         style:UIBarButtonItemStylePlain
                                         target:self
                                         action:@selector(removeItem)],
                                                
