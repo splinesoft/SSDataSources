@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import <MagicalRecord/MagicalRecord.h>
+#import <CoreData+MagicalRecord.h>
+
 
 @interface Wizard : NSManagedObject
 

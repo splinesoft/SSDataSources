@@ -1,14 +1,14 @@
 PODS:
   - Expecta (1.0.5)
-  - MagicalRecord (2.3.2):
-    - MagicalRecord/Core (= 2.3.2)
-  - MagicalRecord/Core (2.3.2)
+  - MagicalRecord (2.2):
+    - MagicalRecord/Core (= 2.2)
+  - MagicalRecord/Core (2.2)
   - OCMock (3.3.1)
   - SSDataSources (0.8.5)
 
 DEPENDENCIES:
   - Expecta
-  - MagicalRecord (~> 2.3)
+  - MagicalRecord
   - OCMock
   - SSDataSources (from `../`)
 
@@ -18,10 +18,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Expecta: e1c022fcd33910b6be89c291d2775b3fe27a89fe
-  MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
+  MagicalRecord: 2dc87179ae7c1f2a274442624ec65a07d4357a6f
   OCMock: f3f61e6eaa16038c30caa5798c5e49d3307b6f22
-  SSDataSources: aeb19695da5b06c49c2d682bf6db84c726d49f91
+  SSDataSources: b01170fb23b82acf0649194e9189b0bf5f702681
 
-PODFILE CHECKSUM: 54339f243cea25ee1a8764d910c4c22c8375d235
+PODFILE CHECKSUM: a825c470a277c6414e70013f6c8fb50387acf57d
 
 COCOAPODS: 1.1.1
