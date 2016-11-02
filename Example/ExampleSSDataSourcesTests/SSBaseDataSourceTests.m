@@ -197,11 +197,11 @@
     SSArrayDataSource *arrayDataSource = [[SSArrayDataSource alloc] initWithItems:@[ @"item" ]];
     arrayDataSource.tableView = tableView;
     arrayDataSource.emptyView = [UIView new];
-    expect(arrayDataSource.emptyView.hidden).to.beTruthy();
+    expect(arrayDataSource.emptyView.isHidden).to.beTruthy();
 
     // visible empty view
     [arrayDataSource removeAllItems];
-    expect(arrayDataSource.emptyView.hidden).to.beFalsy();
+    expect(arrayDataSource.emptyView.isHidden).to.beFalsy();
 }
 
 - (void)testEmptyViewSetUpIsNotDependentOnParentViewConfiguration

@@ -71,8 +71,11 @@
 
 - (void)testSingleTableSectionForItems
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[@"foo", @"bar"]];
     expect([ds numberOfSectionsInTableView:nil]).to.equal(1);
+#pragma clang diagnostic pop
 }
 
 - (void)testMapsTableRowPerItem
@@ -105,8 +108,11 @@
 
 - (void)testSingleCollectionSectionForItems
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnonnull"
     SSArrayDataSource *ds = [[SSArrayDataSource alloc] initWithItems:@[@"foo", @"bar"]];
     expect([ds numberOfSectionsInTableView:nil]).to.equal(1);
+#pragma clang diagnostic pop
 }
 
 - (void)testMapsCollectionItemPerItem
