@@ -196,7 +196,7 @@
     // hidden empty view
     SSArrayDataSource *arrayDataSource = [[SSArrayDataSource alloc] initWithItems:@[ @"item" ]];
     arrayDataSource.tableView = tableView;
-    arrayDataSource.emptyView = [UIView new];
+    arrayDataSource.emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     expect(arrayDataSource.emptyView.isHidden).to.beTruthy();
 
     // visible empty view
@@ -211,12 +211,12 @@
     SSArrayDataSource *arrayDataSource;
 
     arrayDataSource = [[SSArrayDataSource alloc] initWithItems:@[]];
-    arrayDataSource.emptyView = [UIView new];
+    arrayDataSource.emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     arrayDataSource.tableView = tableView;
     expect(arrayDataSource.emptyView.hidden).to.beFalsy();
 
     arrayDataSource = [[SSArrayDataSource alloc] initWithItems:@[]];
-    arrayDataSource.emptyView = [UIView new];
+    arrayDataSource.emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     arrayDataSource.collectionView = collectionView;
     expect(arrayDataSource.emptyView.hidden).to.beFalsy();
 }
