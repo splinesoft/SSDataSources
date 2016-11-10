@@ -607,7 +607,7 @@
 
 - (void)testEmptyView
 {
-    UIView *emptyView = [UIView new];
+    UIView *emptyView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     
     dataSource.tableView = (UITableView *)tableView;
     dataSource.emptyView = emptyView;
