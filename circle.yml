@@ -12,10 +12,17 @@ dependencies:
     - pod install --project-directory=Example
 test:
   override:
-    - set -o pipefail && xcodebuild -workspace Example/ExampleSSDataSources.xcworkspace
-      -scheme ExampleSSDataSources -sdk iphonesimulator -destination "platform=iOS Simulator,id=23C6B49D-AF9A-4EBD-ABF3-A6960149327D"
-      GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES clean test | xcpretty -c 
-      --report junit --output ${CIRCLE_TEST_REPORTS}/junit.xml
+    - set -o pipefail &&
+      xcodebuild
+        GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES 
+        GCC_GENERATE_TEST_COVERAGE_FILES=YES
+        -sdk iphonesimulator 
+        -destination 'platform=iOS Simulator,OS=9.0,name=iPhone 6'
+        -workspace Example/ExampleSSDataSources.xcworkspace
+        -scheme "ExampleSSDataSources"
+        clean build test |
+      tee $CIRCLE_ARTIFACTS/xcode_raw.log |
+      xcpretty --color --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml
     - pod lib lint --quick
     - obcd --path SSDataSources find HeaderStyle
 deployment:
