@@ -10,7 +10,6 @@
 #import <CoreData/CoreData.h>
 #import <CoreData+MagicalRecord.h>
 
-
 @interface Wizard : NSManagedObject
 
 + (instancetype) wizardWithName:(NSString *)name realm:(NSString *)realm;
