@@ -6,7 +6,7 @@ machine:
     version: "8.0"
 dependencies:
   pre:
-    - xcrun instruments -w '23C6B49D-AF9A-4EBD-ABF3-A6960149327D' || true
+    - xcrun instruments -w 'D0D2EBA2-A0DC-4710-87C5-79DFDBF7E123' || true
   override:    
     - sudo gem install cocoapods xcpretty obcd -N
     - pod install --project-directory=Example
@@ -16,8 +16,8 @@ test:
       xcodebuild
         GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES 
         GCC_GENERATE_TEST_COVERAGE_FILES=YES
-        -sdk iphonesimulator 
-        -destination 'platform=iOS Simulator,OS=10.0,name=iPhone 6'
+        -sdk iphonesimulator
+        -destination 'platform=iOS Simulator,name=iPhone 6,OS=latest'
         -workspace Example/ExampleSSDataSources.xcworkspace
         -scheme "ExampleSSDataSources"
         clean build test |
