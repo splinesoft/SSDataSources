@@ -37,7 +37,7 @@
 		5ED650AB19D7764400514745 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5ED650AA19D7764400514745 /* Images.xcassets */; };
 		5EDF4B8E17CC1E5700788CB5 /* SSSectionedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDF4B8D17CC1E5700788CB5 /* SSSectionedViewController.m */; };
 		5EDFCA3D17B41DC50018D895 /* SSCollectionViewSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EDFCA3C17B41DC50018D895 /* SSCollectionViewSectionHeader.m */; };
-		6E97BC13EA9A4BD9B57E81D6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 60DE92F2CD3643D180EFBAC8 /* libPods.a */; };
+		9F12BB4FC277A5AFD6375A50 /* libPods-ExampleSSDataSources.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFBB68A55EAF81A1565BB89 /* libPods-ExampleSSDataSources.a */; };
 		A69E5B74D1A04ADB91B98B23 /* libPods-ExampleSSDataSourcesTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B8DA104C6404BC8ACAC8664 /* libPods-ExampleSSDataSourcesTests.a */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +54,8 @@
 /* Begin PBXFileReference section */
 		0B8DA104C6404BC8ACAC8664 /* libPods-ExampleSSDataSourcesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ExampleSSDataSourcesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		145B5815CA251A320EAA2F44 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		1FFBB68A55EAF81A1565BB89 /* libPods-ExampleSSDataSources.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ExampleSSDataSources.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		252708AA31CB740D809359FB /* Pods-ExampleSSDataSources.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSSDataSources.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleSSDataSources/Pods-ExampleSSDataSources.debug.xcconfig"; sourceTree = "<group>"; };
 		3F849C8E056CB675FF1589B9 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		492A5D08179B29B600A137CC /* ExampleSSDataSources.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleSSDataSources.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		492A5D0B179B29B600A137CC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -102,6 +104,7 @@
 		5EDFCA3C17B41DC50018D895 /* SSCollectionViewSectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSCollectionViewSectionHeader.m; sourceTree = "<group>"; };
 		60DE92F2CD3643D180EFBAC8 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		89D445B4C5AB7C33719C3823 /* Pods-ExampleSSDataSourcesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSSDataSourcesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleSSDataSourcesTests/Pods-ExampleSSDataSourcesTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A98CEEB5685492806F901A01 /* Pods-ExampleSSDataSources.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSSDataSources.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleSSDataSources/Pods-ExampleSSDataSources.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,7 +115,7 @@
 				492A5D0C179B29B600A137CC /* UIKit.framework in Frameworks */,
 				492A5D0E179B29B600A137CC /* Foundation.framework in Frameworks */,
 				492A5D10179B29B600A137CC /* CoreGraphics.framework in Frameworks */,
-				6E97BC13EA9A4BD9B57E81D6 /* libPods.a in Frameworks */,
+				9F12BB4FC277A5AFD6375A50 /* libPods-ExampleSSDataSources.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +165,7 @@
 				492A5D29179B29B600A137CC /* SenTestingKit.framework */,
 				60DE92F2CD3643D180EFBAC8 /* libPods.a */,
 				0B8DA104C6404BC8ACAC8664 /* libPods-ExampleSSDataSourcesTests.a */,
+				1FFBB68A55EAF81A1565BB89 /* libPods-ExampleSSDataSources.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -263,6 +267,8 @@
 				3F849C8E056CB675FF1589B9 /* Pods.release.xcconfig */,
 				89D445B4C5AB7C33719C3823 /* Pods-ExampleSSDataSourcesTests.debug.xcconfig */,
 				528C98377D5A90A3638E518A /* Pods-ExampleSSDataSourcesTests.release.xcconfig */,
+				252708AA31CB740D809359FB /* Pods-ExampleSSDataSources.debug.xcconfig */,
+				A98CEEB5685492806F901A01 /* Pods-ExampleSSDataSources.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -274,11 +280,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 492A5D3A179B29B600A137CC /* Build configuration list for PBXNativeTarget "ExampleSSDataSources" */;
 			buildPhases = (
-				EAE1F0F2C6644850BEFC4381 /* Check Pods Manifest.lock */,
+				EAE1F0F2C6644850BEFC4381 /* [CP] Check Pods Manifest.lock */,
 				492A5D04179B29B600A137CC /* Sources */,
 				492A5D05179B29B600A137CC /* Frameworks */,
 				492A5D06179B29B600A137CC /* Resources */,
-				309CC932E2D44C2198CFA9D8 /* Copy Pods Resources */,
+				309CC932E2D44C2198CFA9D8 /* [CP] Copy Pods Resources */,
+				3077EDECE603424093E32E52 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -293,11 +300,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 492A5D3D179B29B600A137CC /* Build configuration list for PBXNativeTarget "ExampleSSDataSourcesTests" */;
 			buildPhases = (
-				9151E8EF47DD448594DE4DFC /* Check Pods Manifest.lock */,
+				9151E8EF47DD448594DE4DFC /* [CP] Check Pods Manifest.lock */,
 				492A5D23179B29B600A137CC /* Sources */,
 				492A5D24179B29B600A137CC /* Frameworks */,
 				492A5D25179B29B600A137CC /* Resources */,
-				B57A123B2C074AD29EAC1F0A /* Copy Pods Resources */,
+				B57A123B2C074AD29EAC1F0A /* [CP] Copy Pods Resources */,
+				B7514BCFC82FFA7126B31F4D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -317,7 +325,7 @@
 			attributes = {
 				CLASSPREFIX = SS;
 				LastTestingUpgradeCheck = 0510;
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Splinesoft;
 			};
 			buildConfigurationList = 492A5D03179B29B600A137CC /* Build configuration list for PBXProject "ExampleSSDataSources" */;
@@ -362,44 +370,59 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		309CC932E2D44C2198CFA9D8 /* Copy Pods Resources */ = {
+		3077EDECE603424093E32E52 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ExampleSSDataSources/Pods-ExampleSSDataSources-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		9151E8EF47DD448594DE4DFC /* Check Pods Manifest.lock */ = {
+		309CC932E2D44C2198CFA9D8 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ExampleSSDataSources/Pods-ExampleSSDataSources-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B57A123B2C074AD29EAC1F0A /* Copy Pods Resources */ = {
+		9151E8EF47DD448594DE4DFC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B57A123B2C074AD29EAC1F0A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -407,19 +430,34 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ExampleSSDataSourcesTests/Pods-ExampleSSDataSourcesTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EAE1F0F2C6644850BEFC4381 /* Check Pods Manifest.lock */ = {
+		B7514BCFC82FFA7126B31F4D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ExampleSSDataSourcesTests/Pods-ExampleSSDataSourcesTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EAE1F0F2C6644850BEFC4381 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run \'pod install\' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -494,27 +532,37 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -529,20 +577,29 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -552,7 +609,7 @@
 		};
 		492A5D3B179B29B600A137CC /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 145B5815CA251A320EAA2F44 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 252708AA31CB740D809359FB /* Pods-ExampleSSDataSources.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -590,7 +647,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				INFOPLIST_FILE = "ExampleSSDataSources/Supporting Files/ExampleSSDataSources-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.splinesoft.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = app;
@@ -599,7 +657,7 @@
 		};
 		492A5D3C179B29B600A137CC /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3F849C8E056CB675FF1589B9 /* Pods.release.xcconfig */;
+			baseConfigurationReference = A98CEEB5685492806F901A01 /* Pods-ExampleSSDataSources.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -637,7 +695,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_LABEL = YES;
 				INFOPLIST_FILE = "ExampleSSDataSources/Supporting Files/ExampleSSDataSources-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "net.splinesoft.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = app;
@@ -652,6 +711,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleSSDataSources/Supporting Files/ExampleSSDataSources-Prefix.pch";
 				INFOPLIST_FILE = "ExampleSSDataSourcesTests/Supporting Files/ExampleSSDataSourcesTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.splinesoft.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -666,6 +726,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleSSDataSources/Supporting Files/ExampleSSDataSources-Prefix.pch";
 				INFOPLIST_FILE = "ExampleSSDataSourcesTests/Supporting Files/ExampleSSDataSourcesTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.splinesoft.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
