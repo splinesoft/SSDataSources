@@ -254,7 +254,7 @@
     [mockTable verify];
 }
 
-- (void)_testUpdatingItemReloadsRow
+- (void)testUpdatingItemReloadsRow
 {
     id mockTable = tableView;
     
